@@ -1,3 +1,3 @@
 class PrefsKeys {
-  static const String isShowOnBoard = "is_show_on_board";
+  static const String isSeenOnBoard = "is_seen_on_board";
 }

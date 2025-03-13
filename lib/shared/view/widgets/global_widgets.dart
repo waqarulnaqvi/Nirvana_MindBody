@@ -35,6 +35,13 @@ void openUrl(
   }
 }
 
+Image staticImage(
+        {required String assetName,
+        double? width,
+        double? height,
+        BoxFit fit = BoxFit.cover}) =>
+    Image.asset(assetName, width: width, height: height, fit: fit);
+
 SizedBox spacerH([double height = 20]) => SizedBox(height: height);
 
 SizedBox spacerW([double width = 20]) => SizedBox(width: width);
