@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 
 class AppColors{
-  static const Color themeLight= Colors.green;
-  // static const Color themeLight= Color.fromRGBO(37, 146, 166, 1);
-  static const Color themeLightLighter = Color(0xFF25D366);
-  static const Color themeDarkDarkest = Color(0xFF075E54);
+  // static const Color themeLight= Colors.green;
+  static const Color themeLight= Color.fromRGBO(37, 146, 166, 1);
   // static const Color themeLightLighter = Color.fromRGBO(92, 182, 197, 1);
-  static const Color themeDark = Color(0xFF25D366);
+  static const Color themeDark = Color.fromRGBO(92, 182, 197, 1);
+  // static const Color themeDark = Color.fromRGBO(26, 131, 147, 1.0);
+  // static const Color themeDark = Color(0xFF25D366);
   static const Color sendMessageColor = Color(0xffDCF8C6);
-
 
   // static const Color themeDark = Color(0xFF09FBD3);
   static const Color primaryContainerLight= Color.fromRGBO(74, 171, 189, 1.0);

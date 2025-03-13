@@ -19,9 +19,12 @@ dependencies:
   provider: ^6.1.2                           # For state management
   flutter_native_splash: ^2.4.4              # For setting splash screen
 
-  permission_handler: ^11.4.0                # For handling permissions
+#  permission_handler: ^11.4.0               # For handling permissions
   shared_preferences: ^2.5.2                 # For storing key-value pairs
   url_launcher: ^6.3.1                       # For launching URLs
+  curved_navigation_bar: ^1.0.6              # For using curved bottom navigation bar
+  introduction_screen: ^3.1.14               # For showing onboarding screens
+#  change_app_package_name: ^1.5.0
 
 dev_dependencies:
   flutter_test:
@@ -30,9 +33,12 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/images/
-    - assets/icons/
+    - assets/audio/
     - assets/fonts/
+    - assets/icons/
+    - assets/images/
+    - assets/images/soothing_music/
+    - assets/images/binaural_beats/
 
   fonts:
     - family: Poppins
@@ -44,8 +50,9 @@ flutter:
         - asset: assets/fonts/Montserrat-Regular.ttf
 
 icons_launcher:
-  image_path: "assets/icons/app_icon.jpg"
+  image_path: "assets/icons/app_icon.png"
   adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_maskable: true
   platforms:
     android:
       enable: true
@@ -53,16 +60,16 @@ icons_launcher:
       enable: true
 
 flutter_native_splash:
-  color: "#FFFFFF"
-  image: assets/icons/splash_screen.jpg
-  color_dark: "#000000"
-  image_dark: assets/icons/splash_screen.jpg
-
+  color: "#F5F5F5"
+  image: assets/icons/splash_screen_icon.png
+  branding: assets/icons/mysterious_coder_branding_icon.png
+#  color_dark: "#000000"
+#  image_dark: assets/icons/splash_screen.jpg
   android: true
   ios: true
-
   android_12:
-    color: "#FFFFFF"
-    image: assets/icons/splash_screen.jpg
-    color_dark: "#000000"
-    image_dark: assets/icons/splash_screen.jpg
+    color: "#F5F5F5"
+    image: assets/icons/splash_screen_icon.png
+    branding: assets/icons/mysterious_coder_branding_icon.png
+#    color_dark: "#000000"
+#    image_dark: assets/icons/splash_screen.jpg

@@ -1,4 +1,4 @@
-package com.mysteriouscoder.nirvanafit
+package com.mysteriouscoder.nirvanamindbody
 
 import io.flutter.embedding.android.FlutterActivity
 

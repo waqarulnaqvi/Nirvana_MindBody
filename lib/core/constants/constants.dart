@@ -1,3 +1,3 @@
 class Constants{
-  static const String appTitle = 'Nirvana Fit: Mind and Body Wellness';
+  static const String appTitle = 'Nirvana MindBody';
 }
