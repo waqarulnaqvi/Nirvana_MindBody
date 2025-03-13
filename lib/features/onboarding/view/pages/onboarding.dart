@@ -3,6 +3,7 @@ import 'package:nirvanafit/core/constants/prefs_keys.dart';
 import 'package:nirvanafit/core/constants/static_assets.dart';
 import 'package:nirvanafit/core/theme/app_styles.dart';
 import 'package:nirvanafit/shared/view/widgets/bottom_nav_bar/bottom_nav_bar.dart';
+import 'package:nirvanafit/shared/view/widgets/reusable_circular_image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/foundation.dart';
 import 'package:introduction_screen/introduction_screen.dart';
@@ -49,18 +50,7 @@ class OnboardingState extends State<Onboarding> {
         child: SafeArea(
           child: Padding(
               padding: EdgeInsets.only(top: 16, right: 16),
-              child: Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  image: AssetImage(StaticAssets.appIcon),
-                  fit: BoxFit.cover,
-                ),
-                border: Border.all(color: theme.onSurface, width: 1),
-              ),
-              )
+              child: ReusableCircularImage()
           ),
         ),
       ),
