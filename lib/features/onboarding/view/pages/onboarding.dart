@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:nirvanafit/core/constants/prefs_keys.dart';
-import 'package:nirvanafit/core/constants/static_assets.dart';
 import 'package:nirvanafit/core/theme/app_styles.dart';
 import 'package:nirvanafit/shared/view/widgets/bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:nirvanafit/shared/view/widgets/reusable_circular_image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/foundation.dart';
 import 'package:introduction_screen/introduction_screen.dart';
-
 import '../resources/page_view_model_list.dart';
-
-
 
 class Onboarding extends StatefulWidget {
   const Onboarding({super.key});
@@ -21,7 +17,7 @@ class Onboarding extends StatefulWidget {
 
 class OnboardingState extends State<Onboarding> {
   final introKey = GlobalKey<IntroductionScreenState>();
-
+  int currentPage = 0;
 
   Future<void> _completeOnboarding() async {
     final prefs = await SharedPreferences.getInstance();
@@ -45,7 +41,7 @@ class OnboardingState extends State<Onboarding> {
       allowImplicitScrolling: false,
       // autoScrollDuration: 2000,
       infiniteAutoScroll: false,
-      globalHeader: Align(
+      globalHeader : currentPage!=0 ? Align(
         alignment: Alignment.topRight,
         child: SafeArea(
           child: Padding(
@@ -53,7 +49,7 @@ class OnboardingState extends State<Onboarding> {
               child: ReusableCircularImage()
           ),
         ),
-      ),
+      ):null,
       // ),
       pages: pageViewModelList(theme,context),
       onDone: () =>    _completeOnboarding(),
@@ -107,7 +103,11 @@ class OnboardingState extends State<Onboarding> {
           borderRadius: BorderRadius.all(Radius.circular(45.0)),
         ),
       ),
+      onChange: (index) {
+        setState(() {
+          currentPage = index;
+        });
+      },
     );
   }
 }
-

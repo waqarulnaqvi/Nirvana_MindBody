@@ -68,7 +68,6 @@ class AppStyles {
     colors: [const Color(0xFFDFFBFC) ,const Color(0xFFBFF5F7) ],
   );
 
-
   static const LinearGradient buttonGradient = LinearGradient(
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
@@ -93,4 +92,6 @@ class AppStyles {
     blurRadius: 12.0,
     offset: const Offset(0.0, 0.0),
   );
+
+
 }

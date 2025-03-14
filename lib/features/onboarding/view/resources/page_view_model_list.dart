@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
-import 'package:nirvanafit/shared/view/widgets/global_widgets.dart';
+import '../../../../core/constants/constants.dart';
 import '../../../../core/constants/static_assets.dart';
 import '../../../../core/theme/app_styles.dart';
 import '../../../../shared/view/widgets/reusable_circular_image.dart';
@@ -8,9 +8,8 @@ import '../../../../shared/view/widgets/reusable_circular_image.dart';
 
 List<PageViewModel> pageViewModelList(final ColorScheme theme,final BuildContext context) =>[
   PageViewModel(
-    title: "Welcome to Nirvana MindBody",
-    body:
-    "Your ultimate companion for mental and physical well-being! Explore guided meditations, soothing music, binaural beats, and effective exercises designed to relax your mind and energize your body. Start your journey to inner peace and holistic health today! 🌿✨",
+    title: "Welcome to ${Constants.appTitle}",
+    body: Constants.appDescription,
     image: ReusableCircularImage(width: 190,height: 190),
     decoration: pageDecoration(theme,context),
   ),
