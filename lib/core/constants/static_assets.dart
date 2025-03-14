@@ -7,6 +7,8 @@ class StaticAssets{
 
   // Icons
   static const String appIcon = 'assets/icons/my_app_icons/nirvana_mind_body_icon.png';
+  static const String soothingMusicIcon = 'assets/icons/soothing_music_icon.png';
+  static const String binauralBeatsIcon = 'assets/icons/binaural_beats_icon.png';
   //All apps Icons
   static const String brainBoosterIcon='assets/icons/my_app_icons/brain_booster_icon.png';
   static const String classicWingedBirdIcon='assets/icons/my_app_icons/classic_winged_bird_icon.png';

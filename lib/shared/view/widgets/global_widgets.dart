@@ -2,17 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icon_snackbar/flutter_icon_snackbar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-// void openWhatsApp([String phone="918400002793"]) async {
-//   String url = "https://wa.me/$phone"; // WhatsApp API link
-//   Uri uri = Uri.parse(url);
-//
-//   if (await canLaunchUrl(uri)) {
-//     await launchUrl(uri, mode: LaunchMode.externalApplication);
-//   } else {
-//     print("Could not launch $url");
-//   }
-// }
-
 void openUrl(
     {required String url,
     required BuildContext context,

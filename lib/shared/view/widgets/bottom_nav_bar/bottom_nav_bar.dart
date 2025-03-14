@@ -51,22 +51,38 @@ class _BottomNavBarState extends State<BottomNavBar> {
       ),
     ];
 
-
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     return Scaffold(
-      body: bottomBarPages[_currentIndex],
-      bottomNavigationBar: CurvedNavigationBar(
-        height: 65,
-        buttonBackgroundColor: Theme.of(context).colorScheme.primary,
-        backgroundColor: Colors.transparent,
-        color: Theme.of(context).colorScheme.primary,
-        items: _buildBottomBarItems(theme.surface),
-        index: _currentIndex,
-        onTap: (index) => setState(() => _currentIndex = index),
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child:  bottomBarPages[_currentIndex],
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: CurvedNavigationBar(
+              height: 65,
+              buttonBackgroundColor: Theme.of(context).colorScheme.primary,
+              backgroundColor: Colors.transparent,
+              color: Theme.of(context).colorScheme.primary,
+              items: _buildBottomBarItems(theme.surface),
+              index: _currentIndex,
+              onTap: (index) => setState(() => _currentIndex = index),
+            ),
+          ),
+        ],
       ),
+      // bottomNavigationBar: CurvedNavigationBar(
+      //   height: 65,
+      //   buttonBackgroundColor: Theme.of(context).colorScheme.primary,
+      //   backgroundColor:Colors.transparent,
+      //   color: Theme.of(context).colorScheme.primary,
+      //   items: _buildBottomBarItems(theme.surface),
+      //   index: _currentIndex,
+      //   onTap: (index) => setState(() => _currentIndex = index),
+      // ),
     );
   }
 }
