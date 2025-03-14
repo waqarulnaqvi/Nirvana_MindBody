@@ -4,6 +4,7 @@ class StaticAssets{
   static const String soundsTherapyBackground='assets/images/sounds_therapy_background.jpg';
   static const String meditationsBackground='assets/images/meditations_background.jpg';
   static const String exercisesBackground='assets/images/exercises_background.png';
+  static const String faqBackground='assets/images/faq_background.png';
 
   // Icons
   static const String appIcon = 'assets/icons/my_app_icons/nirvana_mind_body_icon.png';

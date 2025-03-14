@@ -2,8 +2,8 @@ class Constants{
   static const String appTitle = 'Nirvana MindBody';
   static const String appDescription="Your ultimate companion for mental and physical well-being! Explore guided meditations, soothing music, binaural beats, and effective exercises designed to relax your mind and energize your body. Start your journey to inner peace and holistic health today! 🌿✨";
   static const String soothingMusicDescription="Immerse yourself in calming melodies, soothing music that helps reduce stress, improve focus, and bring peace. Let the soft tunes surround you, creating a calm space for deep rest and a clear mind. 🎶✨";
-  static const String binuralBeatsDescription="Experience the power of sound therapy with binaural beats designed to enhance focus, meditation, and deep sleep. Sync your brainwaves to promote relaxation, creativity, and overall mental well-being. 🎧🌿";
-
+  static const String binauralBeatsDescription="Experience the power of sound therapy with binaural beats designed to enhance focus, meditation, and deep sleep. Sync your brainwaves to promote relaxation, creativity, and overall mental well-being. 🎧🌿";
+  static const String faqDescription="Clear your doubts about sound therapy! Explore over 120 questions about binaural beats and soothing music. 🎶🧘‍♂️✨";
   //All apps titles:
   static const String brainBooster='Brain Booster: Focus & Relax';
   static const String classicWingedBird='Classic Winged Bird';

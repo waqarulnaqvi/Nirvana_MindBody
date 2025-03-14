@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nirvanafit/core/constants/static_assets.dart';
 import 'package:nirvanafit/core/theme/app_gradients.dart';
+import 'package:nirvanafit/shared/view/widgets/containers/reusable_stylish_container2.dart';
 import 'package:nirvanafit/shared/view/widgets/global_widgets.dart';
 import 'package:nirvanafit/shared/view/widgets/reusable_app_bar.dart';
 import 'package:nirvanafit/shared/view/widgets/reusable_heading.dart';
@@ -40,13 +41,20 @@ class SoundsTherapyPage extends StatelessWidget {
                 ReusableStylishContainer(
                   w: w,
                   colors: AppGradients.skyBlueMyAppGradient,
-                  description: Constants.binuralBeatsDescription,
+                  description: Constants.binauralBeatsDescription,
                   image: StaticAssets.meditationsBackground,
                   isCarousel: false,
                   buttonText: 'Get Started',
                   h: 300,
                   onTap: () {},
                 ),
+                spacerH(),
+                ReusableStylishContainer2(
+                    title: "DOUBT ABOUT SOUND THERAPY?",
+                    colors: AppGradients.skyBlueMyAppGradient,
+                    image: StaticAssets.faqBackground,
+                    onTap: () {},
+                    description: Constants.faqDescription),
                 spacerH(120),
               ],
             ),
