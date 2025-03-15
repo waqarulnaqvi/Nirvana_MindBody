@@ -22,11 +22,12 @@ class ReusableStylishContainer2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double w = MediaQuery.of(context).size.width;
+    final double w = MediaQuery.of(context).size.width;
+    final theme = Theme.of(context).colorScheme;
     return Stack(
       children: [
         Padding(
-          padding: const EdgeInsets.only( top: 40),
+          padding: const EdgeInsets.only( top: 65),
           child: Card(
             elevation: 4,
             shape: RoundedRectangleBorder(
@@ -35,7 +36,7 @@ class ReusableStylishContainer2 extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(15),
               width: w,
-              height: 300,
+              height: 250,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 gradient: LinearGradient(
@@ -53,9 +54,9 @@ class ReusableStylishContainer2 extends StatelessWidget {
                         style: AppStyles.headingPrimary(
                             context: context, color: Colors.white)),
                   ),
-                  spacerH(15),
+                  Spacer(),
                   SizedBox(
-                    width: w * 0.5,
+                    width: w ,
                     child: Text(
                       description,
                       style: AppStyles.descriptionPrimary(
@@ -95,10 +96,14 @@ class ReusableStylishContainer2 extends StatelessWidget {
             ),
           ),
         ),
-        Align(
-          alignment: Alignment.topRight,
-          child: staticImage(assetName: image,height: 230),
+        Positioned(
+          top: 5,
+          right: 0,
+          child: staticImage(assetName: image,  width: 130,),
         ),
+        Positioned(left: 0,top: 20,
+        child: Text("FAQ" ,style: AppStyles.headingPrimary(context: context,color: theme.onSurface),),)
+        
       ],
     );
   }
