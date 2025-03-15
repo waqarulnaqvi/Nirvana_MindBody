@@ -12,6 +12,7 @@ class ReusableStylishContainer extends StatelessWidget {
   final String image;
   final String buttonText;
   final bool isCarousel;
+  final bool isShowHeading;
   final VoidCallback onTap;
 
   const ReusableStylishContainer(
@@ -22,7 +23,7 @@ class ReusableStylishContainer extends StatelessWidget {
       this.title,
       required this.description,
       required this.image,
-      this.buttonText = "DOWNLOAD NOW", this.isCarousel=true, required this.onTap});
+      this.buttonText = "DOWNLOAD NOW", this.isCarousel=true, required this.onTap, this.isShowHeading=true});
 
   @override
   Widget build(BuildContext context) {
@@ -53,12 +54,12 @@ class ReusableStylishContainer extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   spacerH(60),
-                  if(isCarousel)
+                  if(isShowHeading)
                   Text(title??"",
                       style: AppStyles.headingPrimary(context: context,color: Colors.white),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis),
-                 if(isCarousel)
+                 if(isShowHeading)
                   spacerH(5),
                   Text(description,
                       style: AppStyles.descriptionPrimary(context: context,color: Colors.white,fontSize: 15),

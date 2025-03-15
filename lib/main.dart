@@ -5,14 +5,39 @@ import 'package:nirvanafit/core/routes/app_routes.dart';
 import 'package:nirvanafit/core/theme/app_theme.dart';
 import 'package:nirvanafit/core/utils/util.dart';
 import 'core/routes/paths.dart';
+import 'features/profile/viewmodel/providers/more_apps_provider.dart';
+import 'package:provider/provider.dart';
 
-void main() {
+import 'features/sounds_theraphy/viewmodel/providers/faq_provider.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await _loadFonts();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     statusBarIconBrightness: Brightness.dark,
     statusBarBrightness: Brightness.dark,
   ));
-  runApp(const MyApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_) => MoreAppsProvider()),
+    ChangeNotifierProvider(create: (_) => FaqProvider()),
+  ], child: const MyApp()));
+}
+
+Future<void> _loadFonts() async {
+  // Load Poppins font
+  final fontLoaderPoppins = FontLoader('Poppins')
+    ..addFont(rootBundle.load('assets/fonts/Poppins-Regular.ttf'));
+
+  // Load Montserrat font
+  final fontLoaderMontserrat = FontLoader('Montserrat')
+    ..addFont(rootBundle.load('assets/fonts/Montserrat-Regular.ttf'));
+
+  // Load both fonts
+  await Future.wait([
+    fontLoaderPoppins.load(),
+    fontLoaderMontserrat.load(),
+  ]);
 }
 
 class MyApp extends StatelessWidget {
@@ -25,11 +50,11 @@ class MyApp extends StatelessWidget {
       "Noto Music",
       "Noto Sans Display",
     );
-   MaterialTheme theme = MaterialTheme(textTheme);
+    MaterialTheme theme = MaterialTheme(textTheme);
 
     return MaterialApp(
       title: Constants.appTitle,
-      theme:theme.light(),
+      theme: theme.light(),
       darkTheme: theme.dark(),
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.system,

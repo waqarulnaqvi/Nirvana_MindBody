@@ -23,4 +23,7 @@ class AppColors{
   static const Color lightTextColor =  Color(0xFF403930);
   static const Color darkBackgroundColor =  Color(0xFF2B2B2B);
   static const Color darkTextColor = Color(0xFFF3F2FF);
+
+  static const Color redOrange = Color(0xffffab91);
+  static const Color babyBlue = Color(0xff81deea);
 }
