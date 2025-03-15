@@ -2,26 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:nirvanafit/shared/view/widgets/global_widgets.dart';
 import 'package:nirvanafit/shared/view/widgets/reusable_app_bar.dart';
 import '../../../../core/theme/app_styles.dart';
+import '../widgets/drawer/custom_drawer.dart';
 import '../widgets/more_apps_carousel.dart';
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  ProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
+    double h = MediaQuery.of(context).size.height;
     return Scaffold(
+      key: _scaffoldKey,
+      endDrawer: CustomDrawer(h: h, w: w * 0.7),
       appBar: ReusableAppBar(
         text: 'Profile',
         isCenterText: false,
         isMenu: true,
-        onPressed: () {},
+        onPressed: () {
+          _scaffoldKey.currentState!.openEndDrawer();
+        },
       ),
       body: SingleChildScrollView(
           child: Column(
-        children: [
-          moreAppsCarousel(w: w, context: context)
-        ],
+        children: [moreAppsCarousel(w: w, context: context)],
       )),
     );
   }

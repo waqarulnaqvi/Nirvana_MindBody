@@ -7,13 +7,14 @@ class ReusableAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String text;
   final VoidCallback? onPressed;
   final bool isMenu;
+  final PreferredSizeWidget? bottom;
 
   const ReusableAppBar({
     super.key,
     this.isCenterText = true,
     required this.text,
     this.onPressed,
-    this.isMenu = false,
+    this.isMenu = false, this.bottom,
   });
 
   @override
@@ -38,6 +39,7 @@ class ReusableAppBar extends StatelessWidget implements PreferredSizeWidget {
             onPressed: onPressed,
           ),
       ],
+      bottom: bottom,
     );
   }
 
