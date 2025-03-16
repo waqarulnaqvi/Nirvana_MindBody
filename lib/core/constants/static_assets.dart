@@ -1,5 +1,4 @@
 class StaticAssets{
-
   //Images
   static const String soundsTherapyBackground='assets/images/sounds_therapy_background.jpg';
   static const String meditationsBackground='assets/images/meditations_background.jpg';
@@ -16,4 +15,9 @@ class StaticAssets{
   static const String hindiShayariHubIcon='assets/icons/my_app_icons/hindi_shayari_hub_icon.png';
   static const String mazedarHindiJokesIcon='assets/icons/my_app_icons/mazedar_hindi_jokes_icon.png';
   static const String noteMasterIcon='assets/icons/my_app_icons/note_master_icon.png';
+
+  //Audio (Sounds)
+  static const String soothingMusicMp3='assets/audio/acouticmusic.mp3';
+  static const String binauralBeatsMp3='assets/audio/creativityboost.mp3';
+
 }
