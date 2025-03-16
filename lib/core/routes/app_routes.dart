@@ -5,7 +5,6 @@ import 'package:nirvanafit/features/profile/view/pages/more_apps_page.dart';
 import 'package:nirvanafit/features/sounds_theraphy/view/pages/faq_page.dart';
 import 'package:nirvanafit/shared/view/widgets/bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../constants/prefs_keys.dart';
 
 class AppRoutes {
@@ -41,7 +40,7 @@ class AppRoutes {
     final prefs = await SharedPreferences.getInstance();
     final bool isBottomNav = prefs.getBool(PrefsKeys.isSeenOnBoard) ?? false;
     if (isBottomNav) {
-      return FaqPage();
+      return BottomNavBar();
     }
     return Onboarding();
   }

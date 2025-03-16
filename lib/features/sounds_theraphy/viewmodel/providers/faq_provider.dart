@@ -8,8 +8,14 @@ class FaqProvider extends ChangeNotifier {
   List<FAQContents> get filteredFaq => _filteredFaq;
 
   //Setter
-  set filteredApps(List<FAQContents> value) {
+  set filteredFaq(List<FAQContents> value) {
     _filteredFaq = value;
     notifyListeners();
+  }
+
+  void filterFaq(String text) {
+    filteredFaq = faqContentsList
+        .where((faq) => faq.question.toLowerCase().contains(text.toLowerCase()))
+        .toList();
   }
 }

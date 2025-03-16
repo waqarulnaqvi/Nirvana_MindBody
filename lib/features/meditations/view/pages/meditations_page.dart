@@ -15,7 +15,7 @@ class MeditationsPage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               children: [
-                spacerH(30),
+                spacerH(),
                 ReusableHeading(text: 'Meditations',icon: Icons.self_improvement,),
               ],
             ),

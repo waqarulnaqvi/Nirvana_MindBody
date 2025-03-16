@@ -6,6 +6,7 @@ import 'package:nirvanafit/shared/view/widgets/global_widgets.dart';
 import 'package:nirvanafit/shared/view/widgets/reusable_app_bar.dart';
 import 'package:nirvanafit/shared/view/widgets/reusable_heading.dart';
 import '../../../../core/constants/constants.dart';
+import '../../../../core/routes/paths.dart';
 import '../../../../shared/view/widgets/containers/reusable_stylish_container.dart';
 
 class SoundsTherapyPage extends StatelessWidget {
@@ -22,7 +23,7 @@ class SoundsTherapyPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                spacerH(30),
+                spacerH(),
                 ReusableHeading(text: 'Soothing Music'),
                 spacerH(),
                 ReusableStylishContainer(
@@ -36,7 +37,7 @@ class SoundsTherapyPage extends StatelessWidget {
                   h: 300,
                   onTap: () {},
                 ),
-                spacerH(40),
+                spacerH(30),
                 ReusableHeading(text: 'Binaural Beats'),
                 spacerH(),
                 ReusableStylishContainer(
@@ -50,12 +51,14 @@ class SoundsTherapyPage extends StatelessWidget {
                   h: 300,
                   onTap: () {},
                 ),
-                spacerH(),
+                spacerH(30),
                 ReusableStylishContainer2(
                     title: "DOUBT ABOUT SOUND THERAPY?",
                     colors: AppGradients.skyBlueMyAppGradient,
                     image: StaticAssets.faqBackground,
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(context, Paths.faqPage);
+                    },
                     description: Constants.faqDescription),
                 spacerH(120),
               ],

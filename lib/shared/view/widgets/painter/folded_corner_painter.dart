@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class FoldedCornerClipper extends CustomPainter {
+class FoldedCornerPainter extends CustomPainter {
   final Color color;
   final double foldSize;
   final double borderRadius;
 
-  FoldedCornerClipper({
+  FoldedCornerPainter({
     required this.color,
-    this.foldSize = 20,
+    this.foldSize = 25,
     this.borderRadius = 10, // Control the circular edges
   });
 
@@ -38,7 +38,7 @@ class FoldedCornerClipper extends CustomPainter {
       ..close();
 
     final foldPaint = Paint()
-      ..color = _lightenColor(color, 0.2);
+      ..color = _lightenColor(color, 0.1);
 
     canvas.drawPath(foldPath, foldPaint);
   }
