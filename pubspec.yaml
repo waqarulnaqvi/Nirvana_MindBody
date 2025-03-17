@@ -44,6 +44,7 @@ flutter:
     - assets/images/
     - assets/images/soothing_music/
     - assets/images/binaural_beats/
+    - assets/images/exercises_challenges/
 
   fonts:
     - family: Poppins

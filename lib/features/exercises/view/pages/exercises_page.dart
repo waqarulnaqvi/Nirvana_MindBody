@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:nirvanafit/features/exercises/view/pages/men_exercises_page.dart';
+import 'package:nirvanafit/features/exercises/view/pages/women_exercises_page.dart';
 import 'package:nirvanafit/shared/view/widgets/reusable_app_bar.dart';
 
 import '../../../../core/theme/app_styles.dart';
@@ -30,8 +32,8 @@ class ExercisesPage extends StatelessWidget {
             Expanded(
               child: const TabBarView(
                 children: [
-                  Center(child: Text('Men')),
-                  Center(child: Text('Women')),
+                  MenExercisesPage(),
+                  WomenExercisesPage()
                 ],
               ),
             ),
