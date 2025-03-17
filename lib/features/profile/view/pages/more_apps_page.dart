@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nirvanafit/features/profile/model/more_apps_model.dart';
 import 'package:nirvanafit/shared/view/widgets/global_widgets.dart';
 import 'package:nirvanafit/shared/view/widgets/reusable_app_bar.dart';
 import 'package:nirvanafit/shared/view/widgets/text_view/reusable_text_field.dart';
@@ -6,7 +7,6 @@ import 'package:provider/provider.dart';
 import '../../../../core/theme/app_styles.dart';
 import '../../../../shared/view/widgets/containers/reusable_stylish_container.dart';
 import '../../viewmodel/providers/more_apps_provider.dart';
-import '../data/more_apps_contents.dart';
 
 class MoreAppsPage extends StatefulWidget {
   const MoreAppsPage({super.key});
@@ -50,7 +50,7 @@ class _MoreAppsPageState extends State<MoreAppsPage> {
     final double w = MediaQuery.of(context).size.width;
     final double h = MediaQuery.of(context).size.height;
     final uProvider = context.read<MoreAppsProvider>();
-    final List<MoreAppsContents> filteredApps = context.watch<MoreAppsProvider>().filteredApps;
+    final List<MoreAppsModel> filteredApps = context.watch<MoreAppsProvider>().filteredApps;
     final theme = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: ReusableAppBar(text: 'More Apps', isCenterText: false,),

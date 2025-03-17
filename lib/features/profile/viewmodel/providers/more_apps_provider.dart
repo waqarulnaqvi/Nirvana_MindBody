@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import '../../view/data/more_apps_contents.dart';
+import '../../model/more_apps_model.dart';
+import '../../data/more_apps_contents.dart';
 
 class MoreAppsProvider extends ChangeNotifier{
-  List<MoreAppsContents> _filteredApps = moreAppsContentsList;
+  List<MoreAppsModel> _filteredApps = moreAppsContentsList;
 
   //Getter
-  List<MoreAppsContents> get filteredApps => _filteredApps;
+  List<MoreAppsModel> get filteredApps => _filteredApps;
 
   //Setter
-  set filteredApps(List<MoreAppsContents> value) {
+  set filteredApps(List<MoreAppsModel> value) {
     _filteredApps = value;
     notifyListeners();
   }

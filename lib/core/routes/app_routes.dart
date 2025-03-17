@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:nirvanafit/core/routes/paths.dart';
-import 'package:nirvanafit/features/onboarding/view/pages/onboarding.dart';
+import 'package:nirvanafit/features/onboarding/view/pages/onboarding_page.dart';
 import 'package:nirvanafit/features/profile/view/pages/more_apps_page.dart';
 import 'package:nirvanafit/features/sounds_theraphy/view/pages/faq_page.dart';
 import 'package:nirvanafit/shared/view/widgets/bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../features/sounds_theraphy/view/pages/binaural_beats_page.dart';
+import '../../features/sounds_theraphy/view/pages/soothing_music_page.dart';
 import '../constants/prefs_keys.dart';
 
 class AppRoutes {
@@ -18,6 +20,18 @@ class AppRoutes {
 
       case Paths.faqPage:
         return MaterialPageRoute(builder: (context) => FaqPage());
+
+      case Paths.onboardingPage:
+        return MaterialPageRoute(builder: (context) => OnboardingPage());
+
+      case Paths.bottomNavBar:
+        return MaterialPageRoute(builder: (context) => BottomNavBar());
+
+      case Paths.soothingMusicPage:
+        return MaterialPageRoute(builder: (context) => SoothingMusicPage());
+
+      case Paths.binauralBeatsPage:
+        return MaterialPageRoute(builder: (context) => BinauralBeatsPage());
 
       default:
         return MaterialPageRoute(builder: (context) => BottomNavBar());
@@ -42,6 +56,6 @@ class AppRoutes {
     if (isBottomNav) {
       return BottomNavBar();
     }
-    return Onboarding();
+    return OnboardingPage();
   }
 }

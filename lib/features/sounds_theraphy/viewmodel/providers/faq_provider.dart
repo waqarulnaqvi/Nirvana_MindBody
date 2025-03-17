@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import '../../model/faq_contents.dart';
+import '../../data/faq_contents.dart';
+import '../../model/faq_model.dart';
 
 class FaqProvider extends ChangeNotifier {
-  List<FAQContents> _filteredFaq = faqContentsList;
+  List<FAQModel> _filteredFaq = faqContentsList;
 
   //Getter
-  List<FAQContents> get filteredFaq => _filteredFaq;
+  List<FAQModel> get filteredFaq => _filteredFaq;
 
   //Setter
-  set filteredFaq(List<FAQContents> value) {
+  set filteredFaq(List<FAQModel> value) {
     _filteredFaq = value;
     notifyListeners();
   }

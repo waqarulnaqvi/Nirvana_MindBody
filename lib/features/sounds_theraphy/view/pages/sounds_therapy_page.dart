@@ -35,7 +35,9 @@ class SoundsTherapyPage extends StatelessWidget {
                   isShowHeading: false,
                   buttonText: 'Get Started',
                   h: 300,
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamed(context, Paths.soothingMusicPage);
+                  },
                 ),
                 spacerH(30),
                 ReusableHeading(text: 'Binaural Beats'),
@@ -49,7 +51,9 @@ class SoundsTherapyPage extends StatelessWidget {
                   isShowHeading: false,
                   buttonText: 'Get Started',
                   h: 300,
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamed(context, Paths.binauralBeatsPage);
+                  },
                 ),
                 spacerH(30),
                 ReusableStylishContainer2(

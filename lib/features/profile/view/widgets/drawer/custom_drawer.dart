@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nirvanafit/core/theme/app_gradients.dart';
-import 'package:nirvanafit/features/profile/view/data/drawer_contents.dart';
 import 'package:nirvanafit/shared/view/widgets/global_widgets.dart';
 import '../../../../../core/constants/static_assets.dart';
+import '../../../data/drawer_contents.dart';
 import 'drawer_tile.dart';
 
 class CustomDrawer extends StatelessWidget {

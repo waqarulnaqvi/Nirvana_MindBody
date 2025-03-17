@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:nirvanafit/core/theme/app_styles.dart';
-import 'package:nirvanafit/features/sounds_theraphy/model/faq_contents.dart';
 import 'package:nirvanafit/features/sounds_theraphy/viewmodel/providers/faq_provider.dart';
 import 'package:nirvanafit/shared/view/widgets/containers/reusable_folded_corner_container.dart';
 import 'package:nirvanafit/shared/view/widgets/reusable_app_bar.dart';
 import 'package:provider/provider.dart';
 import '../../../../shared/view/widgets/global_widgets.dart';
 import '../../../../shared/view/widgets/text_view/reusable_text_field.dart';
+import '../../model/faq_model.dart';
 
 class FaqPage extends StatefulWidget {
   const FaqPage({super.key});
@@ -23,7 +23,7 @@ class _FaqPageState extends State<FaqPage> {
     final double w = MediaQuery.of(context).size.width;
     final double h = MediaQuery.of(context).size.height;
     final uProvider = context.read<FaqProvider>();
-    final List<FAQContents> filteredFAQ =
+    final List<FAQModel> filteredFAQ =
         context.watch<FaqProvider>().filteredFaq;
     final theme = Theme.of(context).colorScheme;
     return Scaffold(

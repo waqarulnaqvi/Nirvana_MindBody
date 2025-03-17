@@ -2,7 +2,7 @@ import "package:flutter/material.dart";
 import "package:flutter_carousel_widget/flutter_carousel_widget.dart";
 import "package:nirvanafit/shared/view/widgets/containers/reusable_stylish_container.dart";
 import "package:nirvanafit/shared/view/widgets/global_widgets.dart";
-import "../data/more_apps_contents.dart";
+import "../../data/more_apps_contents.dart";
 
 class ReusableMoreAppsCarousel extends StatelessWidget {
   final Axis scrollDirection;

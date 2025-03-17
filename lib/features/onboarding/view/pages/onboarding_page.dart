@@ -6,16 +6,16 @@ import 'package:nirvanafit/shared/view/widgets/reusable_circular_image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/foundation.dart';
 import 'package:introduction_screen/introduction_screen.dart';
-import '../resources/page_view_model_list.dart';
+import '../../data/page_view_model_contents.dart';
 
-class Onboarding extends StatefulWidget {
-  const Onboarding({super.key});
+class OnboardingPage extends StatefulWidget {
+  const OnboardingPage({super.key});
 
   @override
-  OnboardingState createState() => OnboardingState();
+  State<OnboardingPage> createState() => _OnboardingPageState();
 }
 
-class OnboardingState extends State<Onboarding> {
+class _OnboardingPageState extends State<OnboardingPage> {
   final introKey = GlobalKey<IntroductionScreenState>();
   int currentPage = 0;
 
