@@ -16,7 +16,7 @@ class MenExercisesPage extends StatelessWidget {
                 title: "FULL BODY 7X4 CHALLENGE",
                 gradientColors: AppGradients.skyBlueMyAppGradient,
                 image: "assets/images/exercises_challenges/full_body_workout_men.png"),
-          )
+          ),
         ],
       ),
     );

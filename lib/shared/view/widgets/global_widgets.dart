@@ -28,8 +28,9 @@ Image staticImage(
         {required String assetName,
         double? width,
         double? height,
+          Color? color,
         BoxFit fit = BoxFit.cover}) =>
-    Image.asset(assetName, width: width, height: height, fit: fit);
+    Image.asset(assetName, width: width, height: height, fit: fit,color: color,);
 
 SizedBox spacerH([double height = 20]) => SizedBox(height: height);
 

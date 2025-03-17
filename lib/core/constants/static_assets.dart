@@ -5,6 +5,20 @@ class StaticAssets{
   static const String exercisesBackground='assets/images/exercises_background.png';
   static const String faqBackground='assets/images/faq_background.png';
 
+  //Audio Player Icons
+  static const String playIconAudioPlayer='assets/icons/audio_player_icons/play_icon.png';
+  static const String previousIconAudioPlayer='assets/icons/audio_player_icons/previous_icon.png';
+  static const String pauseIconAudioPlayer='assets/icons/audio_player_icons/pause_icon.png';
+  static const String forwardIconAudioPlayer='assets/icons/audio_player_icons/forward_icon.png';
+  static const String repeatOnceIconAudioPlayer='assets/icons/audio_player_icons/repeat_once.png';
+  static const String repeatAllIconAudioPlayer='assets/icons/audio_player_icons/repeat_all.png';
+  static const String repeatFalseIconAudioPlayer='assets/icons/audio_player_icons/repeat_false.png';
+  static const String speedometerIconAudioPlayer='assets/icons/audio_player_icons/speedometer_icon.png';
+
+  //Audio Player Images
+  static const String circularDiskAudioPlayer='assets/images/vinyl_disk_background.png';
+
+
   // Icons
   static const String appIcon = 'assets/icons/my_app_icons/nirvana_mind_body_icon.png';
   static const String soothingMusicIcon = 'assets/icons/soothing_music_icon.png';
@@ -111,5 +125,4 @@ class StaticAssets{
   //Audio (Sounds)
   static const String soothingMusicMp3='assets/audio/acouticmusic.mp3';
   static const String binauralBeatsMp3='assets/audio/creativityboost.mp3';
-
 }

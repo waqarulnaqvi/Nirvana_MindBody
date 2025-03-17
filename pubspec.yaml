@@ -41,6 +41,7 @@ flutter:
     - assets/fonts/
     - assets/icons/
     - assets/icons/my_app_icons/
+    - assets/icons/audio_player_icons/
     - assets/images/
     - assets/images/soothing_music/
     - assets/images/binaural_beats/
