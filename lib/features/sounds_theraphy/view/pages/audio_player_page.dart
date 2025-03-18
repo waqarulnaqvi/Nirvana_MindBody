@@ -134,6 +134,10 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
                     position.dx, position.dy + size.height, position.dx + size.width, 0),
                 items: provider.speedOptions
                     .map((speed) => PopupMenuItem<double>(
+                  onTap: () {
+                    provider.playbackSpeed = speed;
+                    _player.setSpeed(speed);
+                  },
                   value: speed,
                   child: Text(speed == 1.0
                       ? "${speed}x  (Normal)"
@@ -141,7 +145,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
                     "${speed}x",
                     style: AppStyles.descriptionPrimary(
                         context: context,
-                        color:speed==1.0? theme.primary:color,
+                        color:speed==provider.playbackSpeed? theme.primary:color,
                         fontWeight: FontWeight.bold),
                   ),
                 ))
@@ -172,6 +176,8 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
                 provider.isPlaying
                     ? provider.isPlaying = false
                     : provider.isPlaying = true;
+
+                provider.isPlaying ? _player.play() : _player.pause();
               },
               child: staticImage(
                   assetName: provider.isPlaying
@@ -195,6 +201,12 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
                         : provider.repeatMode == RepeatMode.repeatAll
                             ? RepeatMode.repeatOnce
                             : RepeatMode.repeatFalse;
+
+                _player.setLoopMode(provider.repeatMode == RepeatMode.repeatFalse
+                    ? LoopMode.off
+                    : provider.repeatMode == RepeatMode.repeatAll
+                        ? LoopMode.all
+                        : LoopMode.one);
               },
               child: staticImage(
                   assetName: provider.repeatMode == RepeatMode.repeatFalse

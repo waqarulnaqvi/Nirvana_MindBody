@@ -7,7 +7,7 @@ class AudioPlayerProvider extends ChangeNotifier{
   Duration _position = Duration.zero;
   Duration _duration = Duration.zero;
   double _playbackSpeed = 1.0;
-  final List<double> _speedOptions = [ 0.5, 1.0,  1.5, 1.75, 2.0];
+  final List<double> _speedOptions = [0.25, 0.5, 1.0,  1.5, 1.75, 2.0];
   // Getter:
   bool get isPlaying => _isPlaying;
   RepeatMode get repeatMode => _repeatMode;
