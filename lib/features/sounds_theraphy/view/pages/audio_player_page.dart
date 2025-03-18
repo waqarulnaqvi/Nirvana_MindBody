@@ -23,8 +23,8 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
   @override
   void initState() {
     super.initState();
-    // _player.setUrl(StaticAssets.soothingMusicMp3);
-    _player.setAsset(StaticAssets.soothingMusicMp3);
+    _player.setUrl('https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/soothing%20music%2Flofihiphopmusic.mp3?alt=media&token=abe32a93-68d8-4ae1-8f83-ff28bd6f7ceb');
+    // _player.setAsset(StaticAssets.soothingMusicMp3);
   }
 
   @override
@@ -94,7 +94,10 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
                             color: theme.primary,
                             fontSize: 15,
                             fontWeight: FontWeight.bold)),
-                    Text('5:00',
+                    Text(_player.duration?.toString().split('.')[0] ?? '00:00:00',
+                        // "${_player.duration?.inMinutes.toString().padLeft(2, '0') ?? "00"}:"
+                        //     "${_player.duration?.inSeconds.toString()?? "00"}",
+
                         style: AppStyles.descriptionPrimary(
                             context: context,
                             color: theme.primary,
