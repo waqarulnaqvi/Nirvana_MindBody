@@ -4,6 +4,7 @@ import 'package:nirvanafit/core/constants/constants.dart';
 import 'package:nirvanafit/core/routes/app_routes.dart';
 import 'package:nirvanafit/core/theme/app_theme.dart';
 import 'package:nirvanafit/core/utils/util.dart';
+import 'package:nirvanafit/features/sounds_theraphy/viewmodel/providers/audio_player_provider.dart';
 import 'core/routes/paths.dart';
 import 'features/profile/viewmodel/providers/more_apps_provider.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +22,7 @@ void main() async {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => MoreAppsProvider()),
     ChangeNotifierProvider(create: (_) => FaqProvider()),
+    ChangeNotifierProvider(create: (_) => AudioPlayerProvider()),
   ], child: const MyApp()));
 }
 
