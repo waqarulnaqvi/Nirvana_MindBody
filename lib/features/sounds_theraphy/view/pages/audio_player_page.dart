@@ -82,8 +82,18 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
                 ),
               ),
               spacerH(40),
-              Slider(min: 0, max: 100, value: 12, onChanged: (value) {}),
-              Padding(
+            Slider(
+              min: 0,
+              max: (_player.duration?.inSeconds ?? 1).toDouble(),
+              value: provider.position.inSeconds
+                  .clamp(0, (_player.duration?.inSeconds ?? 0))
+                  .toDouble(),
+              onChanged: (value) async {
+                _player.seek(Duration(seconds: value.toInt()));
+              },
+            ),
+
+            Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -94,7 +104,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
                             color: theme.primary,
                             fontSize: 15,
                             fontWeight: FontWeight.bold)),
-                    Text(_player.duration?.toString().split('.')[0] ?? '00:00:00',
+                    Text(_player.duration?.toString().split('.')[0] ?? '0:00:00',
                         // "${_player.duration?.inMinutes.toString().padLeft(2, '0') ?? "00"}:"
                         //     "${_player.duration?.inSeconds.toString()?? "00"}",
 
