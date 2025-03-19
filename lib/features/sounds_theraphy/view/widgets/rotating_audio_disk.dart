@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nirvanafit/core/theme/app_gradients.dart';
 import 'package:provider/provider.dart';
-
 import '../../../../core/constants/static_assets.dart';
 import '../../../../shared/view/widgets/global_widgets.dart';
 import '../../viewmodel/providers/audio_player_provider.dart';
