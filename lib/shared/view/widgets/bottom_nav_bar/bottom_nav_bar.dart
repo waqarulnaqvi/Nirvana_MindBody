@@ -18,10 +18,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   int _currentIndex = 0;
   final List<Widget> bottomBarPages = [
-    AudioPlayerPage(),
+    // AudioPlayerPage(),
     // SoothingMusicPage(),
     SoundsTherapyPage(),
-    // MeditationsPage(),
+    MeditationsPage(),
     ExercisesPage(),
     ProfilePage(),
   ];

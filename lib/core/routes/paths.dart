@@ -6,4 +6,5 @@ class Paths {
   static const String faqPage = '/faq_page';
   static const String soothingMusicPage = '/soothing_music_page';
   static const String binauralBeatsPage = '/binaural_beats_page';
+  static const String audioPlayerPage = '/audio_player_page';
 }

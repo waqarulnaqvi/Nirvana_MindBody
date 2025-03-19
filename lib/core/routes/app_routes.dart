@@ -5,6 +5,7 @@ import 'package:nirvanafit/features/profile/view/pages/more_apps_page.dart';
 import 'package:nirvanafit/features/sounds_theraphy/view/pages/faq_page.dart';
 import 'package:nirvanafit/shared/view/widgets/bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../features/sounds_theraphy/view/pages/audio_player_page.dart';
 import '../../features/sounds_theraphy/view/pages/binaural_beats_page.dart';
 import '../../features/sounds_theraphy/view/pages/soothing_music_page.dart';
 import '../constants/prefs_keys.dart';
@@ -32,6 +33,14 @@ class AppRoutes {
 
       case Paths.binauralBeatsPage:
         return MaterialPageRoute(builder: (context) => BinauralBeatsPage());
+
+      case Paths.audioPlayerPage:
+        return MaterialPageRoute(builder: (context) {
+          final index=settings.arguments as int?;
+          return AudioPlayerPage(
+            index: index ?? 0,
+          );
+        });
 
       default:
         return MaterialPageRoute(builder: (context) => BottomNavBar());

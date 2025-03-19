@@ -3,13 +3,13 @@ import 'package:nirvanafit/shared/view/widgets/global_widgets.dart';
 import '../../../../../core/theme/app_styles.dart';
 
 class ReusableImageContainer extends StatelessWidget {
-  final String image;
+  final String imageUrl;
   final String title;
   final String time;
 
   const ReusableImageContainer(
       {super.key,
-      required this.image,
+      required this.imageUrl,
       required this.title,
       required this.time});
 
@@ -23,7 +23,7 @@ class ReusableImageContainer extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         image: DecorationImage(
-          image: AssetImage(image),
+          image: AssetImage(imageUrl),
           fit: BoxFit.cover,
           // colorFilter: ColorFilter.mode(Colors.black.withValues(alpha: 0.15), BlendMode.darken),
         ),
