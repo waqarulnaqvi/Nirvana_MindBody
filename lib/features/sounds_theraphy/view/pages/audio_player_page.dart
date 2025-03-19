@@ -11,14 +11,14 @@ import '../widgets/rotating_audio_disk.dart';
 
 class AudioPlayerPage extends StatefulWidget {
   final int index;
-  const AudioPlayerPage({super.key,this.index=0});
+
+  const AudioPlayerPage({super.key, this.index = 0});
 
   @override
   State<AudioPlayerPage> createState() => _AudioPlayerPageState();
 }
 
 class _AudioPlayerPageState extends State<AudioPlayerPage> {
-
   @override
   void initState() {
     super.initState();
@@ -26,16 +26,13 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
     // _player.setAsset(StaticAssets.soothingMusicMp3);
   }
 
-
-void providerInitialize() {
-  final provider = Provider.of<AudioPlayerProvider>(context, listen: false);
-  provider.playerPosition();
-  provider.initAudio(widget.index);
-  provider.currentIndex = widget.index;
-  provider.pageController=PageController(initialPage: widget.index);
-}
-
-
+  void providerInitialize() {
+    final provider = Provider.of<AudioPlayerProvider>(context, listen: false);
+    provider.playerPosition();
+    provider.initAudio(widget.index);
+    provider.currentIndex = widget.index;
+    provider.pageController = PageController(initialPage: widget.index);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,9 +78,8 @@ void providerInitialize() {
                     provider.currentIndex = index;
                     provider.playerPosition();
                     provider.newAudio(index);
-
                   },
-                  itemBuilder: (_,index){
+                  itemBuilder: (_, index) {
                     return Padding(
                       padding: const EdgeInsets.only(right: 10),
                       child: RotatingAudioDisk(
@@ -93,7 +89,6 @@ void providerInitialize() {
                   },
                 ),
               ),
-
 
               // SizedBox(
               //   height: w * 0.7,
@@ -112,22 +107,22 @@ void providerInitialize() {
               //   ),
               // ),
               spacerH(40),
-            Slider(
-              min: 0,
-              max: (player.duration?.inSeconds ?? 1).toDouble(),
-              value: player.position.inSeconds.toDouble(),
-              onChanged: (value) async {
-                player.seek(Duration(seconds: value.toInt()));
-                provider.position = Duration(seconds: value.toInt());
-              },
-            ),
+              Slider(
+                min: 0,
+                max: (player.duration?.inSeconds ?? 1).toDouble(),
+                value: player.position.inSeconds.toDouble(),
+                onChanged: (value) async {
+                  player.seek(Duration(seconds: value.toInt()));
+                  provider.position = Duration(seconds: value.toInt());
+                },
+              ),
 
-            Padding(
+              Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(player.position.toString().split('.')[0] ,
+                    Text(player.position.toString().split('.')[0],
                         style: AppStyles.descriptionPrimary(
                             context: context,
                             color: theme.primary,
@@ -145,7 +140,7 @@ void providerInitialize() {
                   ],
                 ),
               ),
-              audioController( provider),
+              audioController(provider),
             ],
           ),
         );
@@ -153,7 +148,7 @@ void providerInitialize() {
     );
   }
 
-  Widget audioController( AudioPlayerProvider provider) {
+  Widget audioController(AudioPlayerProvider provider) {
     final theme = Theme.of(context).colorScheme;
     final color = theme.onSurface;
     final player = provider.player;
@@ -167,39 +162,39 @@ void providerInitialize() {
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10), topRight: Radius.circular(10)),
             onTap: () {
-              final RenderBox renderBox =
-              context.findRenderObject() as RenderBox; // Get button position
+              final RenderBox renderBox = context.findRenderObject()
+                  as RenderBox; // Get button position
               final Offset position = renderBox.localToGlobal(Offset.zero);
               final Size size = renderBox.size;
 
               showMenu<double>(
                 context: context,
-                position: RelativeRect.fromLTRB(
-                    position.dx, position.dy + size.height, position.dx + size.width, 0),
+                position: RelativeRect.fromLTRB(position.dx,
+                    position.dy + size.height, position.dx + size.width, 0),
                 items: provider.speedOptions
                     .map((speed) => PopupMenuItem<double>(
-                  onTap: () {
-                    provider.playbackSpeed = speed;
-                    player.setSpeed(speed);
-                  },
-                  value: speed,
-                  child: Text(speed == 1.0
-                      ? "${speed}x  (Normal)"
-                      :
-                    "${speed}x",
-                    style: AppStyles.descriptionPrimary(
-                        context: context,
-                        color:speed==provider.playbackSpeed? theme.primary:color,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ))
+                          onTap: () {
+                            provider.playbackSpeed = speed;
+                            player.setSpeed(speed);
+                          },
+                          value: speed,
+                          child: Text(
+                            speed == 1.0 ? "${speed}x  (Normal)" : "${speed}x",
+                            style: AppStyles.descriptionPrimary(
+                                context: context,
+                                color: speed == provider.playbackSpeed
+                                    ? theme.primary
+                                    : color,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ))
                     .toList(),
               );
-                  // .then((speed) {
-                // if (speed != null) {
-                //   Handle speed selection
-                  // print("Selected speed: $speed");
-                // }
+              // .then((speed) {
+              // if (speed != null) {
+              //   Handle speed selection
+              // print("Selected speed: $speed");
+              // }
               // });
             },
             child: staticImage(
@@ -207,17 +202,19 @@ void providerInitialize() {
                 color: color,
                 width: 30),
           ),
-
           spacerW(15),
           TextButton(
-              onPressed:provider.currentIndex != 0 ? () {
-                provider.currentIndex = (provider.currentIndex - 1).clamp(0, provider.playlist.length - 1);
-                pageController.jumpToPage(provider.currentIndex);
-                provider.newAudio(provider.currentIndex);
-              } :null,
+              onPressed: provider.currentIndex != 0
+                  ? () {
+                      provider.currentIndex = (provider.currentIndex - 1)
+                          .clamp(0, provider.playlist.length - 1);
+                      pageController.jumpToPage(provider.currentIndex);
+                      provider.newAudio(provider.currentIndex);
+                    }
+                  : null,
               child: staticImage(
                   assetName: StaticAssets.previousIconAudioPlayer,
-                  color: provider.currentIndex==0? Colors.grey : color,
+                  color: provider.currentIndex == 0 ? Colors.grey : color,
                   width: 30)),
           spacerW(5),
           TextButton(
@@ -227,6 +224,9 @@ void providerInitialize() {
                     : provider.isPlaying = true;
 
                 provider.isPlaying ? player.play() : player.pause();
+                if (!provider.isRunBackground) {
+                  provider.isRunBackground = true;
+                }
               },
               child: staticImage(
                   assetName: provider.isPlaying
@@ -236,14 +236,19 @@ void providerInitialize() {
                   width: 70)),
           spacerW(5),
           TextButton(
-              onPressed: provider.currentIndex != provider.playlist.length-1 ? () {
-                provider.currentIndex = (provider.currentIndex + 1).clamp(0, provider.playlist.length - 1);
-                pageController.jumpToPage(provider.currentIndex);
-                provider.newAudio(provider.currentIndex);
-              } : null,
+              onPressed: provider.currentIndex != provider.playlist.length - 1
+                  ? () {
+                      provider.currentIndex = (provider.currentIndex + 1)
+                          .clamp(0, provider.playlist.length - 1);
+                      pageController.jumpToPage(provider.currentIndex);
+                      provider.newAudio(provider.currentIndex);
+                    }
+                  : null,
               child: staticImage(
                   assetName: StaticAssets.forwardIconAudioPlayer,
-                  color: provider.currentIndex == provider.playlist.length-1 ? Colors.grey : color,
+                  color: provider.currentIndex == provider.playlist.length - 1
+                      ? Colors.grey
+                      : color,
                   width: 30)),
           spacerW(15),
           InkWell(

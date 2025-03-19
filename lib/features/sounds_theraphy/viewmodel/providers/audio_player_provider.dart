@@ -6,6 +6,7 @@ import '../../data/audio_player_contents.dart';
 class AudioPlayerProvider extends ChangeNotifier {
   final AudioPlayer _player = AudioPlayer();
   bool _isPlaying = false;
+  bool _isRunBackground = false;
   RepeatMode _repeatMode = RepeatMode.repeatFalse;
   Duration _position = Duration.zero;
   double _playbackSpeed = 1.0;
@@ -17,6 +18,8 @@ class AudioPlayerProvider extends ChangeNotifier {
 
   // Getter:
   int get currentIndex => _currentIndex;
+
+  bool get isRunBackground => _isRunBackground;
 
   AudioPlayer get player => _player;
 
@@ -35,6 +38,11 @@ class AudioPlayerProvider extends ChangeNotifier {
   PageController get pageController => _pageController;
 
   // Setter:
+  set isRunBackground(bool value) {
+    _isRunBackground = value;
+    notifyListeners();
+  }
+
   set isPlaying(bool value) {
     _isPlaying = value;
     notifyListeners();
@@ -80,10 +88,12 @@ class AudioPlayerProvider extends ChangeNotifier {
 
 
 
-  void newAudio(int index) async {
+  void newAudio(int index)  {
     if (_isPlaying) {
-      await _player.stop();
+      _isPlaying = false;
+      _player.stop();
     }
+    _isPlaying = true;
     initAudio(index);
     _position = Duration.zero;
     _player.play();
