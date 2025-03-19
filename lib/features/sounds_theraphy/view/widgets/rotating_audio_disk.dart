@@ -79,6 +79,14 @@ class _RotatingAudioDiskState extends State<RotatingAudioDisk>
                         AssetImage(widget.image),
                     fit: BoxFit.cover),
               ),
+            ),
+            Container(
+              width: 12,
+              height: 12,
+              decoration: BoxDecoration(
+                color: theme.surface,
+                shape: BoxShape.circle,
+              ),
             )
           ],
         ),

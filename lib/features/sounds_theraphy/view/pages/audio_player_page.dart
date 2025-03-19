@@ -79,10 +79,6 @@ void providerInitialize() {
                   itemCount: provider.playlist.length,
                   onPageChanged: (index) {
                     provider.currentIndex = index;
-                    // if(index==provider.playlist.length){
-                    //     pageController.jumpToPage(0);
-                    // }
-                    // provider.player.setUrl(provider.playlist[index].audioUrl);
                     provider.playerPosition();
                     provider.newAudio(index);
 
@@ -214,14 +210,14 @@ void providerInitialize() {
 
           spacerW(15),
           TextButton(
-              onPressed: () {
+              onPressed:provider.currentIndex != 0 ? () {
                 provider.currentIndex = (provider.currentIndex - 1).clamp(0, provider.playlist.length - 1);
                 pageController.jumpToPage(provider.currentIndex);
                 provider.newAudio(provider.currentIndex);
-              },
+              } :null,
               child: staticImage(
                   assetName: StaticAssets.previousIconAudioPlayer,
-                  color: color,
+                  color: provider.currentIndex==0? Colors.grey : color,
                   width: 30)),
           spacerW(5),
           TextButton(
@@ -240,14 +236,14 @@ void providerInitialize() {
                   width: 70)),
           spacerW(5),
           TextButton(
-              onPressed: () {
+              onPressed: provider.currentIndex != provider.playlist.length-1 ? () {
                 provider.currentIndex = (provider.currentIndex + 1).clamp(0, provider.playlist.length - 1);
                 pageController.jumpToPage(provider.currentIndex);
                 provider.newAudio(provider.currentIndex);
-              },
+              } : null,
               child: staticImage(
                   assetName: StaticAssets.forwardIconAudioPlayer,
-                  color: color,
+                  color: provider.currentIndex == provider.playlist.length-1 ? Colors.grey : color,
                   width: 30)),
           spacerW(15),
           InkWell(
@@ -302,3 +298,8 @@ void providerInitialize() {
 //   _player.dispose();
 //   super.dispose();
 // }
+
+// if(index==provider.playlist.length){
+//     pageController.jumpToPage(0);
+// }
+// provider.player.setUrl(provider.playlist[index].audioUrl);

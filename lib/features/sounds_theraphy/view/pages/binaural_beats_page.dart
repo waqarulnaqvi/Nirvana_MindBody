@@ -40,6 +40,7 @@ class _BinauralBeatsPageState extends State<BinauralBeatsPage> {
         resizeToAvoidBottomInset: false,
       appBar: ReusableAppBar(text: "Binaural Beats",isCenterText: false,),
         body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             spacerH(),
             Padding(
@@ -55,11 +56,12 @@ class _BinauralBeatsPageState extends State<BinauralBeatsPage> {
             Visibility(
               visible: searchController.text.isNotEmpty,
               child: Padding(
-                padding: const EdgeInsets.only(left: 30, right: 35, top: 15),
+                padding: const EdgeInsets.only(left: 25, right: 35, top: 15),
                 child: Text(
                   'Search Results (${filterBBList.length})',
-                  style: AppStyles.descriptionPrimary(
+                  style: AppStyles.headingPrimary(
                       context: context,
+                      fontSize: 18,
                       color: theme.primary,
                       fontWeight: FontWeight.bold),
                   textAlign: TextAlign.start,
