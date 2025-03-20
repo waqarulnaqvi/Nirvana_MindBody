@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
-
+import 'package:audio_service/audio_service.dart';
 import '../../data/audio_player_contents.dart';
 
 class AudioPlayerProvider extends ChangeNotifier {
@@ -14,7 +14,25 @@ class AudioPlayerProvider extends ChangeNotifier {
   final List<double> _speedOptions = [0.25, 0.5, 1.0, 1.5, 1.75, 2.0];
   final List _playlist = audioPlayerList;
   int _currentIndex = 0;
+  late MyAudioHandler _audioHandler;
   PageController _pageController = PageController();
+
+  //
+  // AudioPlayerProvider() {
+  //   _init();
+  // }
+  //
+  // Future<void> _init() async {
+  //   _audioHandler = await AudioService.init(
+  //     builder: () => MyAudioHandler(),
+  //     config: const AudioServiceConfig(
+  //       androidNotificationChannelId: 'com.example.audio',
+  //       androidNotificationChannelName: 'Audio Playback',
+  //       androidNotificationOngoing: true,
+  //     ),
+  //   );
+  // }
+
 
   @override
   void dispose() {
@@ -91,6 +109,7 @@ class AudioPlayerProvider extends ChangeNotifier {
 
   void initAudio([int index= 0]) async {
     try {
+      await _audioHandler.setAudio(_playlist[index].audioUrl);
       await _player.setUrl(_playlist[index].audioUrl);
     }
     catch (e) {
@@ -101,6 +120,13 @@ class AudioPlayerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void skipForward([Duration duration= const Duration(seconds: 10)]) {
+    _player.seek(_position + duration);
+  }
+
+  void skipBackward([Duration duration= const Duration(seconds: 10)]) {
+    _player.seek(_position - duration);
+  }
 
 
   void newAudio(int index)  {
@@ -126,8 +152,10 @@ class AudioPlayerProvider extends ChangeNotifier {
     if (_isPlaying) {
       _player.pause();
       _isPlaying = false;
+      // _audioHandler.play();
     } else {
       _player.play();
+      // _audioHandler.pause();
       _isPlaying = true;
     }
     notifyListeners();
@@ -189,3 +217,46 @@ class AudioPlayerProvider extends ChangeNotifier {
 
 //Enum
 enum RepeatMode { repeatFalse, repeatAll, repeatOnce }
+
+
+
+
+
+class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
+  final AudioPlayer _player = AudioPlayer();
+
+  MyAudioHandler() {
+    _player.playbackEventStream.listen((event) {
+      // playbackState.add(_player.playbackState);
+    });
+  }
+
+  @override
+  Future<void> play() async {
+    _player.play();
+  }
+
+  @override
+  Future<void> pause() async {
+    _player.pause();
+  }
+
+  @override
+  Future<void> stop() async {
+    _player.stop();
+  }
+
+  @override
+  Future<void> seek(Duration position) async {
+    _player.seek(position);
+  }
+
+  @override
+  Future<void> addQueueItem(MediaItem mediaItem) async {
+    queue.value = [...queue.value, mediaItem];
+  }
+
+  Future<void> setAudio(String url) async {
+    await _player.setUrl(url);
+  }
+}

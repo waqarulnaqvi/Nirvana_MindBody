@@ -5,6 +5,7 @@ import 'package:nirvanafit/features/sounds_theraphy/viewmodel/providers/audio_pl
 import 'package:nirvanafit/shared/view/widgets/global_widgets.dart';
 import 'package:nirvanafit/shared/view/widgets/reusable_app_bar.dart';
 import 'package:provider/provider.dart';
+import '../../../../shared/view/widgets/buttons/reusable_image_button.dart';
 import '../widgets/rotating_audio_disk.dart';
 
 class AudioPlayerPage extends StatefulWidget {
@@ -38,13 +39,8 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme
-        .of(context)
-        .colorScheme;
-    final double w = MediaQuery
-        .of(context)
-        .size
-        .width;
+    final theme = Theme.of(context).colorScheme;
+    final double w = MediaQuery.of(context).size.width;
     final provider = Provider.of<AudioPlayerProvider>(context);
     final player = provider.player;
     final currentIndex = provider.currentIndex;
@@ -84,7 +80,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
                   onPageChanged: (index) {
                     provider.currentIndex = index;
                     provider.playerPosition();
-                    provider.newAudio(index);
+                    provider.initAudio(index);
                   },
                   itemBuilder: (_, index) {
                     return Padding(
@@ -156,21 +152,18 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
   }
 
   Widget audioController(AudioPlayerProvider provider) {
-    final theme = Theme
-        .of(context)
-        .colorScheme;
+    final theme = Theme.of(context).colorScheme;
     final color = theme.onSurface;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          InkWell(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+          // Speedometer Icon
+          ReusableImageButton(
             onTap: () {
               final RenderBox renderBox = context.findRenderObject()
-              as RenderBox; // Get button position
+                  as RenderBox; // Get button position
               final Offset position = renderBox.localToGlobal(Offset.zero);
               final Size size = renderBox.size;
 
@@ -179,93 +172,80 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
                 position: RelativeRect.fromLTRB(position.dx,
                     position.dy + size.height, position.dx + size.width, 0),
                 items: provider.speedOptions
-                    .map((speed) =>
-                    PopupMenuItem<double>(
-                      onTap: () {
-                        provider.changeSpeed(speed);
-                      },
-                      value: speed,
-                      child: Text(
-                        speed == 1.0 ? "${speed}x  (Normal)" : "${speed}x",
-                        style: AppStyles.descriptionPrimary(
-                            context: context,
-                            color: speed == provider.playbackSpeed
-                                ? theme.primary
-                                : color,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ))
+                    .map((speed) => PopupMenuItem<double>(
+                          onTap: () {
+                            provider.changeSpeed(speed);
+                          },
+                          value: speed,
+                          child: Text(
+                            speed == 1.0 ? "${speed}x  (Normal)" : "${speed}x",
+                            style: AppStyles.descriptionPrimary(
+                                context: context,
+                                color: speed == provider.playbackSpeed
+                                    ? theme.primary
+                                    : color,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ))
                     .toList(),
               );
-              // .then((speed) {
-              // if (speed != null) {
-              //   Handle speed selection
-              // print("Selected speed: $speed");
-              // }
-              // });
             },
-            child: staticImage(
-                assetName: StaticAssets.speedometerIconAudioPlayer,
-                color: color,
-                width: 30),
+            url: StaticAssets.speedometerIconAudioPlayer,
           ),
           spacerW(10),
-          InkWell(
-              onTap: () {},
-              child: staticImage(
-                  assetName: StaticAssets.skipBackwardIconAudioPlayer,
-                  color: color,
-                  width: 35)),
-
+          
+          ReusableImageButton(
+              onTap: provider.skipBackward,
+              url: StaticAssets.skipBackwardIconAudioPlayer,
+              width: 35),
           spacerW(15),
-          // Previous Audio Icon
-          ReusableTappableImage(onTap: provider.previousAudio, url: StaticAssets.previousIconAudioPlayer,
-              color: provider.currentIndex == 0 ? Colors.grey : color,
-              width: 30),
 
-          spacerW(10),
-          TextButton(
-              onPressed: () {
-                provider.togglePlay();
-                if (!provider.isRunBackground) {
-                  provider.isRunBackground = true;
-                }
-              },
-              child: staticImage(
-                  assetName: provider.isPlaying
-                      ? StaticAssets.pauseIconAudioPlayer
-                      : StaticAssets.playIconAudioPlayer,
-                  color: color,
-                  width: 70)),
-          spacerW(10),
+          // Previous Audio Icon
+          ReusableImageButton(
+              onTap: provider.previousAudio,
+              url: StaticAssets.previousIconAudioPlayer,
+              color: provider.currentIndex == 0 ? Colors.grey : color,),
+          spacerW(15),
+
+          // Play Audio Icon
+          ReusableImageButton(
+            onTap: () {
+              provider.togglePlay();
+              if (!provider.isRunBackground) {
+                provider.isRunBackground = true;
+              }
+            },
+            url: provider.isPlaying
+                ? StaticAssets.pauseIconAudioPlayer
+                : StaticAssets.playIconAudioPlayer,
+            width: 70,
+          ),
+          spacerW(15),
 
           // Forward Audio Icon
-          ReusableTappableImage(onTap: provider.nextAudio,
+          ReusableImageButton(
+              onTap: provider.nextAudio,
               url: StaticAssets.forwardIconAudioPlayer,
-              width: 30,
               color: provider.currentIndex == provider.playlist.length - 1
                   ? Colors.grey
-                  : color
-          ),
-
+                  : color),
           spacerW(15),
 
           // Skip Forward
-          ReusableTappableImage(
-              onTap: () {},
+          ReusableImageButton(
+              onTap: provider.skipForward,
               url: StaticAssets.skipForwardIconAudioPlayer,
               width: 35),
-
           spacerW(10),
 
           // Repeat Mode
-          ReusableTappableImage(
+          ReusableImageButton(
             onTap: provider.currentRepeatMode,
             url: provider.repeatMode == RepeatMode.repeatFalse
                 ? StaticAssets.repeatFalseIconAudioPlayer
                 : provider.repeatMode == RepeatMode.repeatAll
-                ? StaticAssets.repeatAllIconAudioPlayer
-                : StaticAssets.repeatOnceIconAudioPlayer,
+                    ? StaticAssets.repeatAllIconAudioPlayer
+                    : StaticAssets.repeatOnceIconAudioPlayer,
             width: 25,
           )
         ],
@@ -283,29 +263,7 @@ class ReusableIconButton extends StatelessWidget {
   }
 }
 
-class ReusableTappableImage extends StatelessWidget {
-  final Color? color;
-  final VoidCallback onTap;
-  final String url;
-  final double width;
 
-  const ReusableTappableImage({super.key,
-    this.color,
-    required this.onTap,
-    required this.url,
-    required this.width});
-
-  @override
-  Widget build(BuildContext context) {
-    var theme = Theme
-        .of(context)
-        .colorScheme;
-    return InkWell(
-        onTap: onTap,
-        child: staticImage(
-            assetName: url, color: color ?? theme.onSurface, width: width));
-  }
-}
 
 // StreamBuilder<PlayerState>(
 //   stream: _player.playerStateStream,
@@ -335,3 +293,10 @@ class ReusableTappableImage extends StatelessWidget {
 //     pageController.jumpToPage(0);
 // }
 // provider.player.setUrl(provider.playlist[index].audioUrl);
+
+// .then((speed) {
+// if (speed != null) {
+//   Handle speed selection
+// print("Selected speed: $speed");
+// }
+// });

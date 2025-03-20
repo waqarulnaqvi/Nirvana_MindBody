@@ -1,5 +1,7 @@
+import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:just_audio_background/just_audio_background.dart';
 import 'package:nirvanafit/core/constants/constants.dart';
 import 'package:nirvanafit/core/routes/app_routes.dart';
 import 'package:nirvanafit/core/theme/app_theme.dart';
@@ -14,6 +16,13 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await _loadFonts();
+  // Initialize JustAudioBackground for audio playback in the background
+  // await JustAudioBackground.init(
+  //   androidNotificationChannelId: 'com.mysteriouscoder.nirvanamindbody.audio',
+  //   androidNotificationChannelName: 'Audio Playback',
+  //   androidNotificationOngoing: true,
+  // );
+
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     statusBarIconBrightness: Brightness.dark,

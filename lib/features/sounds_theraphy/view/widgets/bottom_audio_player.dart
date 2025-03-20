@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nirvanafit/features/sounds_theraphy/view/widgets/rotating_audio_disk.dart';
+import 'package:nirvanafit/shared/view/widgets/buttons/reusable_image_button.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/constants/static_assets.dart';
 import '../../../../shared/view/widgets/global_widgets.dart';
@@ -79,24 +80,25 @@ class BottomAudioPlayer extends StatelessWidget {
                       ),
                     ),
                     spacerW(10),
-                    InkWell(
+                    //Play Button
+                    ReusableImageButton(
                         onTap: p.togglePlay,
-                        child: staticImage(
-                            assetName: p.isPlaying
-                                ? StaticAssets.pauseIconAudioPlayer
-                                : StaticAssets.playIconAudioPlayer,
-                            color: theme.onSurface,
-                            width: 30)),
+                        url: p.isPlaying
+                            ? StaticAssets.pauseIconAudioPlayer
+                            : StaticAssets.playIconAudioPlayer),
                     spacerW(10),
-                    InkWell(
-                        onTap: p.nextAudio,
-                        child: staticImage(
-                            assetName: StaticAssets.forwardIconAudioPlayer,
-                            color: p.currentIndex == p.playlist.length - 1
-                                ? Colors.grey
-                                : theme.onSurface,
-                            width: 20)),
+                    //Next Button
+                    ReusableImageButton(
+                      onTap: p.nextAudio,
+                      url: StaticAssets.forwardIconAudioPlayer,
+                      color: p.currentIndex == p.playlist.length - 1
+                          ? Colors.grey
+                          : theme.onSurface,
+                      width: 20,
+                    ),
                     spacerW(10),
+
+                    //Close Button
                     InkWell(
                       onTap: p.backgroundPlayer,
                       child: Icon(
