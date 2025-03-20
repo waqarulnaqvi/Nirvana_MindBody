@@ -4,6 +4,7 @@ import 'package:nirvanafit/features/exercises/view/pages/women_exercises_page.da
 import 'package:nirvanafit/shared/view/widgets/reusable_app_bar.dart';
 
 import '../../../../core/theme/app_styles.dart';
+import '../../../sounds_theraphy/view/widgets/bottom_audio_player.dart';
 
 class ExercisesPage extends StatelessWidget {
   const ExercisesPage({super.key});
@@ -15,28 +16,32 @@ class ExercisesPage extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: const ReusableAppBar(text: 'Exercises'),
-        body: Column(
+        body: Stack(
           children: [
-            TabBar(
-              labelStyle: AppStyles.headingPrimary(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  context: context,
-                  color: theme.primary),
-              indicatorSize: TabBarIndicatorSize.tab,
-              tabs: [
-                Tab(text: 'Men'),
-                Tab(text: 'Women'),
-              ],
-            ),
-            Expanded(
-              child: const TabBarView(
+            Positioned.fill(
+              child: Column(
                 children: [
-                  MenExercisesPage(),
-                  WomenExercisesPage()
+                  TabBar(
+                    labelStyle: AppStyles.headingPrimary(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        context: context,
+                        color: theme.primary),
+                    indicatorSize: TabBarIndicatorSize.tab,
+                    tabs: [
+                      Tab(text: 'Men'),
+                      Tab(text: 'Women'),
+                    ],
+                  ),
+                  Expanded(
+                    child: const TabBarView(
+                      children: [MenExercisesPage(), WomenExercisesPage()],
+                    ),
+                  ),
                 ],
               ),
             ),
+            Positioned(bottom: 0, child: BottomAudioPlayer())
           ],
         ),
       ),

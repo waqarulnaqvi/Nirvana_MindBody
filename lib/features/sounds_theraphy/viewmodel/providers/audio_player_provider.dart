@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 
@@ -14,6 +15,13 @@ class AudioPlayerProvider extends ChangeNotifier {
   final List _playlist = audioPlayerList;
   int _currentIndex = 0;
   PageController _pageController = PageController();
+
+  @override
+  void dispose() {
+    _player.dispose(); // Dispose of the audio player
+    _pageController.dispose(); // Dispose of the PageController
+    super.dispose();
+  }
 
 
   // Getter:
@@ -82,23 +90,99 @@ class AudioPlayerProvider extends ChangeNotifier {
   }
 
   void initAudio([int index= 0]) async {
-    await _player.setUrl(_playlist[index].audioUrl);
+    try {
+      await _player.setUrl(_playlist[index].audioUrl);
+    }
+    catch (e) {
+      if(kDebugMode) {
+        print("Error: $e");
+      }
+    }
     notifyListeners();
   }
 
 
 
   void newAudio(int index)  {
+    print("New Audio Index: $index");
     if (_isPlaying) {
       _isPlaying = false;
       _player.stop();
+      notifyListeners();
+      Future.delayed(Duration(milliseconds: 500), () {
+        _isPlaying = true;
+        notifyListeners();
+      });
     }
-    _isPlaying = true;
     initAudio(index);
     _position = Duration.zero;
     _player.play();
     _currentIndex = index;
-    _isPlaying = true;
+    // _isPlaying = true;
+    notifyListeners();
+  }
+
+  void togglePlay() {
+    if (_isPlaying) {
+      _player.pause();
+      _isPlaying = false;
+    } else {
+      _player.play();
+      _isPlaying = true;
+    }
+    notifyListeners();
+  }
+
+  void backgroundPlayer(){
+    {
+      _isRunBackground=false;
+      _isPlaying=false;
+      _player.stop();
+      // _player.dispose();
+      notifyListeners();
+    }
+  }
+
+  void previousAudio(){
+    if(_currentIndex != 0){
+      _currentIndex = (_currentIndex - 1).clamp(0, _playlist.length - 1);
+      pageController.jumpToPage(_currentIndex);
+      newAudio(currentIndex);
+      notifyListeners();
+    }
+  }
+
+  void nextAudio() {
+    if(_currentIndex != _playlist.length - 1) {
+      _currentIndex = (_currentIndex + 1).clamp(0, _playlist.length - 1);
+      pageController.jumpToPage(_currentIndex);
+      print("Next Audio Index: $currentIndex");
+      newAudio(currentIndex);
+      notifyListeners();
+    }
+  }
+
+  void currentRepeatMode() {
+    switch (_repeatMode) {
+      case RepeatMode.repeatFalse:
+        _repeatMode = RepeatMode.repeatAll;
+        _player.setLoopMode(LoopMode.all);
+        break;
+      case RepeatMode.repeatAll:
+        _repeatMode = RepeatMode.repeatOnce;
+        _player.setLoopMode(LoopMode.one);
+        break;
+      case RepeatMode.repeatOnce:
+        _repeatMode = RepeatMode.repeatFalse;
+        _player.setLoopMode(LoopMode.off);
+        break;
+    }
+    notifyListeners();
+  }
+
+  void changeSpeed(double speed) {
+    _playbackSpeed = speed;
+    _player.setSpeed(speed);
     notifyListeners();
   }
 }

@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:nirvanafit/core/theme/app_gradients.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +17,7 @@ class RotatingAudioDisk extends StatefulWidget {
 class _RotatingAudioDiskState extends State<RotatingAudioDisk>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-
+  bool isInternet = true;
   @override
   void initState() {
     super.initState();
@@ -24,8 +25,29 @@ class _RotatingAudioDiskState extends State<RotatingAudioDisk>
       vsync: this,
       duration: const Duration(seconds: 4),
     ); //..repeat();
+   // isInternetConnected();
     // isPlaying();
   }
+
+  // Future<void> isInternetConnected() async{
+  //   var result=await Connectivity().checkConnectivity();
+  //   if(result==ConnectivityResult.mobile || result==ConnectivityResult.wifi){
+  //    isInternet=true;
+  //   }
+  //   else{
+  //     isInternet=false;
+  //   }
+  // }
+
+
+  // Future<bool> isInternetConnected() async {
+  //   var connectivityResult = await Connectivity().checkConnectivity();
+  //   if (connectivityResult == ConnectivityResult.mobile ||
+  //       connectivityResult == ConnectivityResult.wifi) {
+  //     return true; // Connected
+  //   }
+  //   return false; // No Internet
+  // }
 
   // void isPlaying(){
   //   Provider.of<AudioPlayerProvider>(context, listen: false).isPlaying
@@ -86,7 +108,15 @@ class _RotatingAudioDiskState extends State<RotatingAudioDisk>
                 color: theme.surface,
                 shape: BoxShape.circle,
               ),
-            )
+
+            ),
+            // if(!isInternet)
+            //   SizedBox(
+            //   height: 20,
+            //     width: 20,
+            //     child: CircularProgressIndicator(
+            //     ),
+            //   )
           ],
         ),
       );

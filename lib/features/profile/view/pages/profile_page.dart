@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nirvanafit/shared/view/widgets/global_widgets.dart';
 import 'package:nirvanafit/shared/view/widgets/reusable_app_bar.dart';
 import '../../../../core/theme/app_styles.dart';
+import '../../../sounds_theraphy/view/widgets/bottom_audio_player.dart';
 import '../widgets/drawer/custom_drawer.dart';
 import '../widgets/more_apps_carousel.dart';
 
@@ -24,10 +25,19 @@ class ProfilePage extends StatelessWidget {
           _scaffoldKey.currentState!.openEndDrawer();
         },
       ),
-      body: SingleChildScrollView(
-          child: Column(
-        children: [moreAppsCarousel(w: w, context: context)],
-      )),
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: SingleChildScrollView(
+                child: Column(
+              children: [moreAppsCarousel(w: w, context: context)],
+            )),
+          ),
+          Positioned(
+              bottom: 0,
+              child: BottomAudioPlayer())
+        ],
+      ),
     );
   }
 

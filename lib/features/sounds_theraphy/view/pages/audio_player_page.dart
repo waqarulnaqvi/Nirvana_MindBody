@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:nirvanafit/core/constants/static_assets.dart';
 import 'package:nirvanafit/core/theme/app_styles.dart';
 import 'package:nirvanafit/features/sounds_theraphy/viewmodel/providers/audio_player_provider.dart';
 import 'package:nirvanafit/shared/view/widgets/global_widgets.dart';
 import 'package:nirvanafit/shared/view/widgets/reusable_app_bar.dart';
 import 'package:provider/provider.dart';
-
 import '../widgets/rotating_audio_disk.dart';
 
 class AudioPlayerPage extends StatefulWidget {
@@ -28,16 +26,25 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
 
   void providerInitialize() {
     final provider = Provider.of<AudioPlayerProvider>(context, listen: false);
-    provider.playerPosition();
-    provider.initAudio(widget.index);
-    provider.currentIndex = widget.index;
-    provider.pageController = PageController(initialPage: widget.index);
+    if (widget.index != provider.currentIndex) {
+      provider.playerPosition();
+      provider.initAudio(widget.index);
+      provider.currentIndex = widget.index;
+      provider.pageController = PageController(initialPage: widget.index);
+    } else {
+      provider.pageController = PageController(initialPage: widget.index);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context).colorScheme;
-    final double w = MediaQuery.of(context).size.width;
+    final theme = Theme
+        .of(context)
+        .colorScheme;
+    final double w = MediaQuery
+        .of(context)
+        .size
+        .width;
     final provider = Provider.of<AudioPlayerProvider>(context);
     final player = provider.player;
     final currentIndex = provider.currentIndex;
@@ -149,10 +156,10 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
   }
 
   Widget audioController(AudioPlayerProvider provider) {
-    final theme = Theme.of(context).colorScheme;
+    final theme = Theme
+        .of(context)
+        .colorScheme;
     final color = theme.onSurface;
-    final player = provider.player;
-    final pageController = provider.pageController;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
       child: Row(
@@ -163,7 +170,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
                 topLeft: Radius.circular(10), topRight: Radius.circular(10)),
             onTap: () {
               final RenderBox renderBox = context.findRenderObject()
-                  as RenderBox; // Get button position
+              as RenderBox; // Get button position
               final Offset position = renderBox.localToGlobal(Offset.zero);
               final Size size = renderBox.size;
 
@@ -172,22 +179,22 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
                 position: RelativeRect.fromLTRB(position.dx,
                     position.dy + size.height, position.dx + size.width, 0),
                 items: provider.speedOptions
-                    .map((speed) => PopupMenuItem<double>(
-                          onTap: () {
-                            provider.playbackSpeed = speed;
-                            player.setSpeed(speed);
-                          },
-                          value: speed,
-                          child: Text(
-                            speed == 1.0 ? "${speed}x  (Normal)" : "${speed}x",
-                            style: AppStyles.descriptionPrimary(
-                                context: context,
-                                color: speed == provider.playbackSpeed
-                                    ? theme.primary
-                                    : color,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ))
+                    .map((speed) =>
+                    PopupMenuItem<double>(
+                      onTap: () {
+                        provider.changeSpeed(speed);
+                      },
+                      value: speed,
+                      child: Text(
+                        speed == 1.0 ? "${speed}x  (Normal)" : "${speed}x",
+                        style: AppStyles.descriptionPrimary(
+                            context: context,
+                            color: speed == provider.playbackSpeed
+                                ? theme.primary
+                                : color,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ))
                     .toList(),
               );
               // .then((speed) {
@@ -202,28 +209,24 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
                 color: color,
                 width: 30),
           ),
-          spacerW(15),
-          TextButton(
-              onPressed: provider.currentIndex != 0
-                  ? () {
-                      provider.currentIndex = (provider.currentIndex - 1)
-                          .clamp(0, provider.playlist.length - 1);
-                      pageController.jumpToPage(provider.currentIndex);
-                      provider.newAudio(provider.currentIndex);
-                    }
-                  : null,
+          spacerW(10),
+          InkWell(
+              onTap: () {},
               child: staticImage(
-                  assetName: StaticAssets.previousIconAudioPlayer,
-                  color: provider.currentIndex == 0 ? Colors.grey : color,
-                  width: 30)),
-          spacerW(5),
+                  assetName: StaticAssets.skipBackwardIconAudioPlayer,
+                  color: color,
+                  width: 35)),
+
+          spacerW(15),
+          // Previous Audio Icon
+          ReusableTappableImage(onTap: provider.previousAudio, url: StaticAssets.previousIconAudioPlayer,
+              color: provider.currentIndex == 0 ? Colors.grey : color,
+              width: 30),
+
+          spacerW(10),
           TextButton(
               onPressed: () {
-                provider.isPlaying
-                    ? provider.isPlaying = false
-                    : provider.isPlaying = true;
-
-                provider.isPlaying ? player.play() : player.pause();
+                provider.togglePlay();
                 if (!provider.isRunBackground) {
                   provider.isRunBackground = true;
                 }
@@ -234,49 +237,73 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
                       : StaticAssets.playIconAudioPlayer,
                   color: color,
                   width: 70)),
-          spacerW(5),
-          TextButton(
-              onPressed: provider.currentIndex != provider.playlist.length - 1
-                  ? () {
-                      provider.currentIndex = (provider.currentIndex + 1)
-                          .clamp(0, provider.playlist.length - 1);
-                      pageController.jumpToPage(provider.currentIndex);
-                      provider.newAudio(provider.currentIndex);
-                    }
-                  : null,
-              child: staticImage(
-                  assetName: StaticAssets.forwardIconAudioPlayer,
-                  color: provider.currentIndex == provider.playlist.length - 1
-                      ? Colors.grey
-                      : color,
-                  width: 30)),
-          spacerW(15),
-          InkWell(
-              onTap: () {
-                provider.repeatMode =
-                    provider.repeatMode == RepeatMode.repeatFalse
-                        ? RepeatMode.repeatAll
-                        : provider.repeatMode == RepeatMode.repeatAll
-                            ? RepeatMode.repeatOnce
-                            : RepeatMode.repeatFalse;
+          spacerW(10),
 
-                player.setLoopMode(provider.repeatMode == RepeatMode.repeatFalse
-                    ? LoopMode.off
-                    : provider.repeatMode == RepeatMode.repeatAll
-                        ? LoopMode.all
-                        : LoopMode.one);
-              },
-              child: staticImage(
-                  assetName: provider.repeatMode == RepeatMode.repeatFalse
-                      ? StaticAssets.repeatFalseIconAudioPlayer
-                      : provider.repeatMode == RepeatMode.repeatAll
-                          ? StaticAssets.repeatAllIconAudioPlayer
-                          : StaticAssets.repeatOnceIconAudioPlayer,
-                  color: color,
-                  width: 25)),
+          // Forward Audio Icon
+          ReusableTappableImage(onTap: provider.nextAudio,
+              url: StaticAssets.forwardIconAudioPlayer,
+              width: 30,
+              color: provider.currentIndex == provider.playlist.length - 1
+                  ? Colors.grey
+                  : color
+          ),
+
+          spacerW(15),
+
+          // Skip Forward
+          ReusableTappableImage(
+              onTap: () {},
+              url: StaticAssets.skipForwardIconAudioPlayer,
+              width: 35),
+
+          spacerW(10),
+
+          // Repeat Mode
+          ReusableTappableImage(
+            onTap: provider.currentRepeatMode,
+            url: provider.repeatMode == RepeatMode.repeatFalse
+                ? StaticAssets.repeatFalseIconAudioPlayer
+                : provider.repeatMode == RepeatMode.repeatAll
+                ? StaticAssets.repeatAllIconAudioPlayer
+                : StaticAssets.repeatOnceIconAudioPlayer,
+            width: 25,
+          )
         ],
       ),
     );
+  }
+}
+
+class ReusableIconButton extends StatelessWidget {
+  const ReusableIconButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}
+
+class ReusableTappableImage extends StatelessWidget {
+  final Color? color;
+  final VoidCallback onTap;
+  final String url;
+  final double width;
+
+  const ReusableTappableImage({super.key,
+    this.color,
+    required this.onTap,
+    required this.url,
+    required this.width});
+
+  @override
+  Widget build(BuildContext context) {
+    var theme = Theme
+        .of(context)
+        .colorScheme;
+    return InkWell(
+        onTap: onTap,
+        child: staticImage(
+            assetName: url, color: color ?? theme.onSurface, width: width));
   }
 }
 

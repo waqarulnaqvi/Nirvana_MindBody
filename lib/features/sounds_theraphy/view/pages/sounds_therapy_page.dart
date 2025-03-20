@@ -24,66 +24,65 @@ class SoundsTherapyPage extends StatelessWidget {
       appBar: ReusableAppBar(text: 'Sounds Therapy'),
       body: Stack(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+          Positioned.fill(
             child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  spacerH(),
-                  ReusableHeading(text: 'Soothing Music'),
-                  spacerH(),
-                  ReusableStylishContainer(
-                    w: w,
-                    colors: AppGradients.skyBlueMyAppGradient,
-                    description: Constants.soothingMusicDescription,
-                    image: StaticAssets.soundsTherapyBackground,
-                    isCarousel: false,
-                    isShowHeading: false,
-                    buttonText: 'Get Started',
-                    h: 300,
-                    onTap: () {
-                      Navigator.pushNamed(context, Paths.soothingMusicPage);
-                    },
-                  ),
-                  spacerH(30),
-                  ReusableHeading(text: 'Binaural Beats'),
-                  spacerH(),
-                  ReusableStylishContainer(
-                    w: w,
-                    colors: AppGradients.skyBlueMyAppGradient,
-                    description: Constants.binauralBeatsDescription,
-                    image: StaticAssets.meditationsBackground,
-                    isCarousel: false,
-                    isShowHeading: false,
-                    buttonText: 'Get Started',
-                    h: 300,
-                    onTap: () {
-                      Navigator.pushNamed(context, Paths.binauralBeatsPage);
-                    },
-                  ),
-                  spacerH(30),
-                  ReusableStylishContainer2(
-                      title: "DOUBT ABOUT SOUND THERAPY?",
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    spacerH(),
+                    ReusableHeading(text: 'Soothing Music'),
+                    spacerH(),
+                    ReusableStylishContainer(
+                      w: w,
                       colors: AppGradients.skyBlueMyAppGradient,
-                      image: StaticAssets.faqBackground,
+                      description: Constants.soothingMusicDescription,
+                      image: StaticAssets.soundsTherapyBackground,
+                      isCarousel: false,
+                      isShowHeading: false,
+                      buttonText: 'Get Started',
+                      h: 300,
                       onTap: () {
-                        Navigator.pushNamed(context, Paths.faqPage);
+                        Navigator.pushNamed(context, Paths.soothingMusicPage);
                       },
-                      description: Constants.faqDescription),
-
-                  //Spacing for bottom audio player
-                  provider.isRunBackground ? spacerH(200) : spacerH(120)
-                ],
+                    ),
+                    spacerH(30),
+                    ReusableHeading(text: 'Binaural Beats'),
+                    spacerH(),
+                    ReusableStylishContainer(
+                      w: w,
+                      colors: AppGradients.skyBlueMyAppGradient,
+                      description: Constants.binauralBeatsDescription,
+                      image: StaticAssets.meditationsBackground,
+                      isCarousel: false,
+                      isShowHeading: false,
+                      buttonText: 'Get Started',
+                      h: 300,
+                      onTap: () {
+                        Navigator.pushNamed(context, Paths.binauralBeatsPage);
+                      },
+                    ),
+                    spacerH(30),
+                    ReusableStylishContainer2(
+                        title: "DOUBT ABOUT SOUND THERAPY?",
+                        colors: AppGradients.skyBlueMyAppGradient,
+                        image: StaticAssets.faqBackground,
+                        onTap: () {
+                          Navigator.pushNamed(context, Paths.faqPage);
+                        },
+                        description: Constants.faqDescription),
+            
+                    //Spacing for bottom audio player
+                    provider.isRunBackground ? spacerH(200) : spacerH(120)
+                  ],
+                ),
               ),
             ),
           ),
           Positioned(
               bottom: 0,
-              child: BottomAudioPlayer(
-                bottomPadding: 80,
-                height: 160,
-              ))
+              child: BottomAudioPlayer())
         ],
       ),
     );
