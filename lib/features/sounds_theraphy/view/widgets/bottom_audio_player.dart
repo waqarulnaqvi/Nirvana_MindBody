@@ -42,15 +42,15 @@ class BottomAudioPlayer extends StatelessWidget {
                   children: [
                     spacerW(),
                     SizedBox(
-                      height: 60,
-                      width: 60,
+                      height: 50,
+                      width: 50,
                       child: RotatingAudioDisk(
                         image: p.playlist[p.currentIndex].imageUrl,
                       ),
                     ),
-                    spacerW(),
+                    spacerW(15),
                     SizedBox(
-                      width: 160,
+                      width: w*0.4,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,

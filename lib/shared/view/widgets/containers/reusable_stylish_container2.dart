@@ -36,7 +36,7 @@ class ReusableStylishContainer2 extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(15),
               width: w,
-              height: 250,
+              height: 300,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 gradient: LinearGradient(
@@ -54,7 +54,7 @@ class ReusableStylishContainer2 extends StatelessWidget {
                         style: AppStyles.headingPrimary(
                             context: context, color: Colors.white)),
                   ),
-                  Spacer(),
+                  spacerH(15),
                   SizedBox(
                     width: w ,
                     child: Text(
@@ -63,7 +63,7 @@ class ReusableStylishContainer2 extends StatelessWidget {
                           context: context, color: Colors.white, fontSize: 15),
                     ),
                   ),
-                  spacerH(15),
+                  Spacer(),
                   Container(
                     width: w ,
 
