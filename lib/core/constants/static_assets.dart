@@ -93,7 +93,4 @@ class StaticAssets{
   //******************//
   static const String unlockHiddenGeniusBB='assets/images/binaural_beats/unlock_hidden_genius.jpeg';
 
-  //Audio (Sounds)
-  static const String soothingMusicMp3='assets/audio/acouticmusic.mp3';
-  static const String binauralBeatsMp3='assets/audio/creativityboost.mp3';
 }

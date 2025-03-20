@@ -41,7 +41,6 @@ flutter:
   assets:
     - assets/animations/
     - assets/animations/gifs/
-    - assets/audio/
     - assets/fonts/
     - assets/icons/
     - assets/icons/my_app_icons/

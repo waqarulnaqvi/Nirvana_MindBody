@@ -23,7 +23,7 @@ class _RotatingAudioDiskState extends State<RotatingAudioDisk>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 4),
+      duration: const Duration(seconds: 3),
     ); //..repeat();
    // isInternetConnected();
     // isPlaying();
@@ -67,7 +67,8 @@ class _RotatingAudioDiskState extends State<RotatingAudioDisk>
     final theme = Theme.of(context).colorScheme;
     return Consumer<AudioPlayerProvider>(
         builder: (context, audioProvider, child) {
-      if (audioProvider.isPlaying) {
+      if (audioProvider.isPlaying && audioProvider.player.duration != null) {
+        _controller.duration=  Duration(seconds: 3~/audioProvider.playbackSpeed);
         _controller.repeat();
       } else {
         _controller.stop();
@@ -110,13 +111,14 @@ class _RotatingAudioDiskState extends State<RotatingAudioDisk>
               ),
 
             ),
-            // if(!isInternet)
-            //   SizedBox(
-            //   height: 20,
-            //     width: 20,
-            //     child: CircularProgressIndicator(
-            //     ),
-            //   )
+            if((audioProvider.isPlaying && audioProvider.player.duration == null))
+              SizedBox(
+              height: 20,
+                width: 20,
+                child: CircularProgressIndicator(
+                  color: theme.primary,
+                ),
+              )
           ],
         ),
       );

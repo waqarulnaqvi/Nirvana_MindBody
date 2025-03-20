@@ -79,7 +79,7 @@ class BottomAudioPlayer extends StatelessWidget {
                         ],
                       ),
                     ),
-                    spacerW(10),
+                    Spacer(),
                     //Play Button
                     ReusableImageButton(
                         onTap: p.togglePlay,
@@ -97,7 +97,6 @@ class BottomAudioPlayer extends StatelessWidget {
                       width: 20,
                     ),
                     spacerW(10),
-
                     //Close Button
                     InkWell(
                       onTap: p.backgroundPlayer,
@@ -107,7 +106,7 @@ class BottomAudioPlayer extends StatelessWidget {
                         size: 30,
                       ),
                     ),
-                    spacerW(5),
+                    spacerW(10),
                   ],
                 ),
               ),
