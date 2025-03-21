@@ -29,8 +29,9 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
     final provider = Provider.of<AudioPlayerProvider>(context, listen: false);
     if (widget.index != provider.currentIndex) {
       provider.playerPosition();
-      provider.initAudio(widget.index);
+      provider.newAudio(widget.index);
       provider.currentIndex = widget.index;
+      provider.isAnimateController =false;
       provider.pageController = PageController(initialPage: widget.index);
     } else {
       provider.pageController = PageController(initialPage: widget.index);
@@ -78,9 +79,10 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
                   controller: provider.pageController,
                   itemCount: provider.playlist.length,
                   onPageChanged: (index) {
+                    provider.ignoreController = true;
                     provider.currentIndex = index;
                     provider.playerPosition();
-                    provider.initAudio(index);
+                    provider.newAudio(index);
                   },
                   itemBuilder: (_, index) {
                     return Padding(
@@ -155,7 +157,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
     final theme = Theme.of(context).colorScheme;
     final color = theme.onSurface;
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+      padding: const EdgeInsets.fromLTRB(20, 30, 20, 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -240,7 +242,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
 
           // Repeat Mode
           ReusableImageButton(
-            onTap: provider.currentRepeatMode,
+            onTap: () => provider.currentRepeatMode(context),
             url: provider.repeatMode == RepeatMode.repeatFalse
                 ? StaticAssets.repeatFalseIconAudioPlayer
                 : provider.repeatMode == RepeatMode.repeatAll

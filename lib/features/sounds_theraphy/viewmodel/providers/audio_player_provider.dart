@@ -1,37 +1,68 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icon_snackbar/flutter_icon_snackbar.dart';
 import 'package:just_audio/just_audio.dart';
-// import 'package:audio_service/audio_service.dart';
 import '../../data/audio_player_contents.dart';
 
 class AudioPlayerProvider extends ChangeNotifier {
   final AudioPlayer _player = AudioPlayer();
+  bool _isAnimateController = true;
   bool _isPlaying = false;
   bool _isRunBackground = false;
+  bool _ignoreController = false;
   RepeatMode _repeatMode = RepeatMode.repeatFalse;
   Duration _position = Duration.zero;
   double _playbackSpeed = 1.0;
   final List<double> _speedOptions = [0.25, 0.5, 1.0, 1.5, 1.75, 2.0];
   final List _playlist = audioPlayerList;
   int _currentIndex = 0;
+
   PageController _pageController = PageController();
+  late final ConcatenatingAudioSource _allAudio;
 
   //
-  // AudioPlayerProvider() {
-  //   _init();
-  // }
-  //
-  // Future<void> _init() async {
-  //   _audioHandler = await AudioService.init(
-  //     builder: () => MyAudioHandler(),
-  //     config: const AudioServiceConfig(
-  //       androidNotificationChannelId: 'com.example.audio',
-  //       androidNotificationChannelName: 'Audio Playback',
-  //       androidNotificationOngoing: true,
-  //     ),
-  //   );
-  // }
+  AudioPlayerProvider() {
+    _init();
+  }
 
+  Future<void> _init() async {
+    _allAudio = ConcatenatingAudioSource(
+      children: audioPlayerList
+          .map((e) => AudioSource.uri(Uri.parse(e.audioUrl)))
+          .toList(),
+    );
+
+    await _player.setAudioSource(_allAudio);
+    _player.setLoopMode(LoopMode.off);
+    _player.setSpeed(_playbackSpeed);
+    playerPosition();
+
+    // Listen for changes in the current playing index
+
+    // Ensure we listen only when required
+
+    _player.sequenceStateStream.listen((sequenceState) {
+      if (sequenceState?.currentIndex != null ) {
+      // if (sequenceState?.currentIndex != null && !_ignoreController) {
+        _currentIndex = sequenceState!.currentIndex;
+
+        if (_pageController.hasClients) {
+          // if (_isAnimateController) {
+            _pageController.animateToPage(_currentIndex,
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.easeIn);
+          // }
+          // else {
+          //   _pageController.jumpToPage(_currentIndex);
+          // }
+        }
+        // if (!_ignoreController) {
+        //   _ignoreController = true; // Prevent multiple subscriptions
+        // }
+      }
+    });
+
+    notifyListeners();
+  }
 
   @override
   void dispose() {
@@ -40,8 +71,11 @@ class AudioPlayerProvider extends ChangeNotifier {
     super.dispose();
   }
 
-
   // Getter:
+  bool get isAnimateController => _isAnimateController;
+
+  bool get ignoreController => _ignoreController;
+
   int get currentIndex => _currentIndex;
 
   bool get isRunBackground => _isRunBackground;
@@ -65,6 +99,16 @@ class AudioPlayerProvider extends ChangeNotifier {
   // Setter:
   set isRunBackground(bool value) {
     _isRunBackground = value;
+    notifyListeners();
+  }
+
+  set ignoreController(bool value) {
+    _ignoreController = value;
+    notifyListeners();
+  }
+
+  set isAnimateController(bool value) {
+    _isAnimateController = value;
     notifyListeners();
   }
 
@@ -106,23 +150,28 @@ class AudioPlayerProvider extends ChangeNotifier {
     });
   }
 
-  void initAudio([int index= 0]) async {
-    try {
-      // await _audioHandler.setAudio(_playlist[index].audioUrl);
-      await _player.setUrl(_playlist[index].audioUrl);
-    }
-    catch (e) {
-      if(kDebugMode) {
-        print("Error: $e");
-      }
-    }
-    notifyListeners();
-  }
+  // void changeAudioIndex([int index= 0]) async {
+  //   try {
+  //     if(index>=0 && index<_playlist.length){
+  //       _currentIndex = index;
+  //       await _player.seek(Duration.zero, index: index);
+  //     }
+  //     // await _audioHandler.setAudio(_playlist[index].audioUrl);
+  //     // await _player.setUrl(_playlist[index].audioUrl);
+  //   }
+  //   catch (e) {
+  //     if(kDebugMode) {
+  //       print("Error: $e");
+  //     }
+  //   }
+  //   notifyListeners();
+  // }
 
   void skipForward([Duration duration = const Duration(seconds: 10)]) {
     if (_player.duration == null) return;
     final newPosition = _position + duration;
-    _player.seek(newPosition > _player.duration! ? _player.duration! : newPosition);
+    _player.seek(
+        newPosition > _player.duration! ? _player.duration! : newPosition);
   }
 
   void skipBackward([Duration duration = const Duration(seconds: 10)]) {
@@ -131,24 +180,27 @@ class AudioPlayerProvider extends ChangeNotifier {
     _player.seek(newPosition < Duration.zero ? Duration.zero : newPosition);
   }
 
+  void updateAudio(int index) {
+    _currentIndex = index;
+    _player.seek(Duration.zero, index: index); //Change the audio
+    _position = Duration.zero;
+  }
 
-
-
-  void newAudio(int index)  {
-    print("New Audio Index: $index");
+  void newAudio(int index) {
+    // print("New Audio Index: $index");
     if (_isPlaying) {
       _isPlaying = false;
       _player.stop();
       notifyListeners();
       Future.delayed(Duration(milliseconds: 500), () {
         _isPlaying = true;
+        updateAudio(index);
+        _player.play();
         notifyListeners();
       });
+    } else {
+      updateAudio(index);
     }
-    initAudio(index);
-    _position = Duration.zero;
-    _player.play();
-    _currentIndex = index;
     // _isPlaying = true;
     notifyListeners();
   }
@@ -166,48 +218,55 @@ class AudioPlayerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void backgroundPlayer(){
+  void backgroundPlayer() {
     {
-      _isRunBackground=false;
-      _isPlaying=false;
+      _isRunBackground = false;
+      _isPlaying = false;
       _player.stop();
       // _player.dispose();
       notifyListeners();
     }
   }
 
-  void previousAudio(){
-    if(_currentIndex != 0){
+  void previousAudio() {
+    if (_currentIndex != 0) {
       _currentIndex = (_currentIndex - 1).clamp(0, _playlist.length - 1);
-      pageController.jumpToPage(_currentIndex);
       newAudio(currentIndex);
       notifyListeners();
     }
   }
 
   void nextAudio() {
-    if(_currentIndex != _playlist.length - 1) {
+    if (_currentIndex != _playlist.length - 1) {
       _currentIndex = (_currentIndex + 1).clamp(0, _playlist.length - 1);
-      pageController.jumpToPage(_currentIndex);
-      print("Next Audio Index: $currentIndex");
       newAudio(currentIndex);
       notifyListeners();
     }
   }
 
-  void currentRepeatMode() {
+  void currentRepeatMode(BuildContext context) {
     switch (_repeatMode) {
       case RepeatMode.repeatFalse:
         _repeatMode = RepeatMode.repeatAll;
         _player.setLoopMode(LoopMode.all);
+        IconSnackBar.show(context,
+            label: "Repeat all mode is enabled!",
+            snackBarType: SnackBarType.success);
         break;
       case RepeatMode.repeatAll:
         _repeatMode = RepeatMode.repeatOnce;
         _player.setLoopMode(LoopMode.one);
+        IconSnackBar.show(context,
+            label: "Repeat one mode is enabled!",
+            snackBarType: SnackBarType.success);
+
         break;
       case RepeatMode.repeatOnce:
         _repeatMode = RepeatMode.repeatFalse;
         _player.setLoopMode(LoopMode.off);
+        IconSnackBar.show(context,
+            label: "Repeat mode is off!", snackBarType: SnackBarType.success);
+
         break;
     }
     notifyListeners();
@@ -223,8 +282,17 @@ class AudioPlayerProvider extends ChangeNotifier {
 //Enum
 enum RepeatMode { repeatFalse, repeatAll, repeatOnce }
 
-
-
+//
+// Future<void> _init() async {
+//   _audioHandler = await AudioService.init(
+//     builder: () => MyAudioHandler(),
+//     config: const AudioServiceConfig(
+//       androidNotificationChannelId: 'com.example.audio',
+//       androidNotificationChannelName: 'Audio Playback',
+//       androidNotificationOngoing: true,
+//     ),
+//   );
+// }
 
 //
 // class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
