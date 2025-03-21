@@ -41,19 +41,18 @@ class AudioPlayerProvider extends ChangeNotifier {
     // Ensure we listen only when required
 
     _player.sequenceStateStream.listen((sequenceState) {
-      if (sequenceState?.currentIndex != null ) {
-      // if (sequenceState?.currentIndex != null && !_ignoreController) {
+      if (sequenceState?.currentIndex != null && !_ignoreController) {
         _currentIndex = sequenceState!.currentIndex;
 
         if (_pageController.hasClients) {
-          // if (_isAnimateController) {
-            _pageController.animateToPage(_currentIndex,
-                duration: const Duration(milliseconds: 500),
-                curve: Curves.easeIn);
-          // }
-          // else {
-          //   _pageController.jumpToPage(_currentIndex);
-          // }
+          if (_isAnimateController) {
+          _pageController.animateToPage(_currentIndex,
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.easeIn);
+          }
+          else {
+            _pageController.jumpToPage(_currentIndex);
+          }
         }
         // if (!_ignoreController) {
         //   _ignoreController = true; // Prevent multiple subscriptions
@@ -229,6 +228,13 @@ class AudioPlayerProvider extends ChangeNotifier {
   }
 
   void previousAudio() {
+    if (_ignoreController ) {
+      _ignoreController = false;
+    }
+    if(!_isAnimateController){
+      _isAnimateController = true;
+    }
+
     if (_currentIndex != 0) {
       _currentIndex = (_currentIndex - 1).clamp(0, _playlist.length - 1);
       newAudio(currentIndex);
@@ -237,6 +243,12 @@ class AudioPlayerProvider extends ChangeNotifier {
   }
 
   void nextAudio() {
+    if (_ignoreController ) {
+      _ignoreController = false;
+    }
+    if(!_isAnimateController){
+      _isAnimateController = true;
+    }
     if (_currentIndex != _playlist.length - 1) {
       _currentIndex = (_currentIndex + 1).clamp(0, _playlist.length - 1);
       newAudio(currentIndex);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nirvanafit/core/constants/static_assets.dart';
 import 'package:nirvanafit/core/theme/app_styles.dart';
+import 'package:nirvanafit/features/sounds_theraphy/view/widgets/animated_text.dart';
 import 'package:nirvanafit/features/sounds_theraphy/viewmodel/providers/audio_player_provider.dart';
 import 'package:nirvanafit/shared/view/widgets/global_widgets.dart';
 import 'package:nirvanafit/shared/view/widgets/reusable_app_bar.dart';
@@ -31,7 +32,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
       provider.playerPosition();
       provider.newAudio(widget.index);
       provider.currentIndex = widget.index;
-      provider.isAnimateController =false;
+      provider.isAnimateController = false;
       provider.pageController = PageController(initialPage: widget.index);
     } else {
       provider.pageController = PageController(initialPage: widget.index);
@@ -55,23 +56,25 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
           child: Column(
             children: [
               spacerH(30),
-              Text(
-                provider.playlist[currentIndex].title,
-                style: AppStyles.descriptionPrimary(
+              AnimatedText(
+                text: "${provider.playlist[currentIndex].title}",
+                  style: AppStyles.descriptionPrimary(
                     context: context,
                     color: theme.primary,
                     fontWeight: FontWeight.bold,
-                    fontSize: 22),
-              ),
+                    fontSize: 22,
+                  ), oldFontSize: 20, newFontSize: 22,),
               spacerH(5),
-              Text(
-                provider.playlist[currentIndex].subtitle,
+
+              AnimatedText(
+                text: "${provider.playlist[currentIndex].subtitle}",
                 style: AppStyles.headingPrimary(
                     context: context,
                     color: theme.primary,
                     fontSize: 18,
-                    fontWeight: FontWeight.bold),
+                    fontWeight: FontWeight.bold), oldFontSize: 18, newFontSize: 20,
               ),
+
               spacerH(40),
               SizedBox(
                 height: w * 0.7,
@@ -195,7 +198,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
             url: StaticAssets.speedometerIconAudioPlayer,
           ),
           spacerW(10),
-          
+
           ReusableImageButton(
               onTap: provider.skipBackward,
               url: StaticAssets.skipBackwardIconAudioPlayer,
@@ -204,9 +207,10 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
 
           // Previous Audio Icon
           ReusableImageButton(
-              onTap: provider.previousAudio,
-              url: StaticAssets.previousIconAudioPlayer,
-              color: provider.currentIndex == 0 ? Colors.grey : color,),
+            onTap: provider.previousAudio,
+            url: StaticAssets.previousIconAudioPlayer,
+            color: provider.currentIndex == 0 ? Colors.grey : color,
+          ),
           spacerW(15),
 
           // Play Audio Icon
@@ -256,14 +260,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
   }
 }
 
-class ReusableIconButton extends StatelessWidget {
-  const ReusableIconButton({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
-}
 
 
 
