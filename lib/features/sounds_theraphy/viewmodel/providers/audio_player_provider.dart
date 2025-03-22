@@ -1,6 +1,9 @@
+import 'dart:nativewrappers/_internal/vm/lib/async_patch.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_icon_snackbar/flutter_icon_snackbar.dart';
 import 'package:just_audio/just_audio.dart';
+import '../../../../core/local/db_helper.dart';
 import '../../data/audio_player_contents.dart';
 
 class AudioPlayerProvider extends ChangeNotifier {
@@ -15,14 +18,20 @@ class AudioPlayerProvider extends ChangeNotifier {
   final List<double> _speedOptions = [0.25, 0.5, 1.0, 1.5, 1.75, 2.0];
   final List _playlist = audioPlayerList;
   int _currentIndex = 0;
+  DBHelper? dbHelper;
+  Timer? _timer;
+  int _totalTimeSpent = 0; // Total meditation time in seconds
 
   PageController _pageController = PageController();
   late final ConcatenatingAudioSource _allAudio;
 
   //
   AudioPlayerProvider() {
+    dbHelper = DBHelper();
     _init();
   }
+
+
 
   Future<void> _init() async {
     _allAudio = ConcatenatingAudioSource(
@@ -206,11 +215,13 @@ class AudioPlayerProvider extends ChangeNotifier {
 
   void togglePlay() {
     if (_isPlaying) {
+      dbHelper!.addAudio(title: audioPlayerList[currentIndex].title , time: _position.toString());
       _player.pause();
       _isPlaying = false;
       // _audioHandler.play();
     } else {
       _player.play();
+
       // _audioHandler.pause();
       _isPlaying = true;
     }

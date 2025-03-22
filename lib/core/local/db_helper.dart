@@ -1,3 +1,75 @@
+
+import 'dart:io';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:sqflite/sqflite.dart';
+
+class DBHelper{
+  static const String audioTableName = "audio";
+  static String columnAudioTitle = "a_title";
+  static String columnAudioTime = "a_time";
+  static String columnAudioId = "a_id";
+
+  /// Singleton instance
+  static final DBHelper _instance = DBHelper._internal();
+
+  /// Private constructor
+  DBHelper._internal();
+
+  /// Factory constructor to return the same instance
+  factory DBHelper() => _instance;
+
+  Database? _myDB;
+
+  Future<Database> getDB() async {
+      return _myDB??= await openDB();
+    }
+
+  Future<Database> openDB() async{
+    Directory myDir = await getApplicationDocumentsDirectory();
+    String dbPath = join(myDir.path, "myAudio.db");
+    return await openDatabase(dbPath,version: 1,onCreate: (db,version){
+      ///where we will create all our tables
+      db.execute("create table $audioTableName ( $columnAudioId integer primary key autoincrement, $columnAudioTitle text, $columnAudioTime text )");
+    });
+  }
+
+  Future<bool> addAudio({required String title,required String time} ) async{
+    Database mDB = await getDB();
+
+    List<Map<String, dynamic>> titles = await mDB.query(
+      audioTableName,
+      columns: [columnAudioTitle], // Fetch only the title column
+    );
+
+    int rowsEffected = 0;
+
+    List<String> allTitles = titles.map((row) => row[columnAudioTitle] as String).toList();
+
+    if(allTitles.contains(title)){
+          rowsEffected = await mDB.update(audioTableName, {
+            columnAudioTitle : title,
+            columnAudioTime : time
+          });
+    }
+    else{
+      rowsEffected =await mDB.insert(audioTableName, {
+        columnAudioTitle : title,
+        columnAudioTime : time
+      });
+    }
+
+    return rowsEffected>0;
+  }
+
+  Future<List<Map<String,dynamic>>> fetchAudio() async{
+    Database mDB =await getDB();
+    return await mDB.query(audioTableName);
+  }
+}
+
+
+
 // import 'dart:io';
 // import 'package:path/path.dart';
 // import 'package:path_provider/path_provider.dart';
