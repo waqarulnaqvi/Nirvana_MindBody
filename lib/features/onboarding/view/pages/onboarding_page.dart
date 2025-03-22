@@ -6,6 +6,7 @@ import 'package:nirvanafit/shared/view/widgets/reusable_circular_image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/foundation.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import '../../../../core/local/prefs_helper.dart';
 import '../../data/page_view_model_contents.dart';
 
 class OnboardingPage extends StatefulWidget {
@@ -20,8 +21,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
   int currentPage = 0;
 
   Future<void> _completeOnboarding() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(PrefsKeys.isSeenOnBoard, true);
+    PrefsHelper prefs=PrefsHelper();
+    prefs.setBoolValue(PrefsKeys.isSeenOnBoard, true);
     if (mounted) {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomNavBar()));
     }

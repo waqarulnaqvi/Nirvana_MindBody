@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nirvanafit/core/local/prefs_helper.dart';
 import 'package:nirvanafit/core/routes/paths.dart';
 import 'package:nirvanafit/features/onboarding/view/pages/onboarding_page.dart';
 import 'package:nirvanafit/features/profile/view/pages/more_apps_page.dart';
@@ -60,11 +61,14 @@ class AppRoutes {
   }
 
   static Future<Widget> _getInitialRouteWidget() async {
-    final prefs = await SharedPreferences.getInstance();
-    final bool isBottomNav = prefs.getBool(PrefsKeys.isSeenOnBoard) ?? false;
+    PrefsHelper prefs=PrefsHelper();
+    final bool isBottomNav=await prefs.getBoolValue(PrefsKeys.isSeenOnBoard);
     if (isBottomNav) {
       return BottomNavBar();
     }
     return OnboardingPage();
   }
 }
+
+// final prefs = await SharedPreferences.getInstance();
+// final bool isBottomNav = prefs.getBool(PrefsKeys.isSeenOnBoard) ?? false;

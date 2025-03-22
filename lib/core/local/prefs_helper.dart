@@ -1,27 +1,30 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-class PrefsHelper{
-  // Private constructor
-  PrefsHelper._internal();
+class PrefsHelper {
+
   // Singleton instance
   static final PrefsHelper _instance = PrefsHelper._internal();
-  // Factory constructor to return the same instance
   factory PrefsHelper() => _instance;
+  PrefsHelper._internal();
 
   static SharedPreferences? _prefs;
 
-  // Initialize SharedPreferences (call this before using prefs)
-
+  // Initialize SharedPreferences
   Future<void> init() async {
-    _prefs = await SharedPreferences.getInstance();
+    _prefs ??= await SharedPreferences.getInstance();
   }
 
-  // Getter for prefs (ensure it's initialized first)
-  static SharedPreferences get prefs {
-    if (_prefs == null) {
-      throw Exception("PrefsHelper.init() must be called before accessing prefs.");
-    }
-    return _prefs!;
+  // Retrieve a boolean value
+  Future<bool> getBoolValue(String key) async
+  {
+    await init();
+    return _prefs?.getBool(key) ?? false;
+  }
+
+  // Save a boolean value
+  Future<void> setBoolValue(String key, bool value) async {
+    await init();
+    await _prefs?.setBool(key, value);
   }
 
 }

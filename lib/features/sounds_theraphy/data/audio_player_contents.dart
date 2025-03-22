@@ -115,105 +115,105 @@ final List<AudioPlayerModel> audioPlayerList = [
     title: "Deep Sleep",
     subtitle: '(Headphones Recommended)',
     audioUrl:
-        "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/soothing%20music%2Findianclassicalmusic.mp3?alt=media&token=90b53ccd-09b1-4197-b1ef-c993f3a87580",
+        "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%2Fdeepsleep.mp3?alt=media&token=2314bc5e-4ca0-47b2-8216-f4ed1a645ee2",
     imageUrl: StaticAssets.deepSleepBB,
   ),
   AudioPlayerModel(
     title: "Creativity Boost",
     subtitle: '(Headphones Recommended)',
     audioUrl:
-        "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/soothing%20music%2Findianclassicalmusic.mp3?alt=media&token=90b53ccd-09b1-4197-b1ef-c993f3a87580",
+        "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%2Fcreativityboost.mp3?alt=media&token=96aa373c-67a9-445b-9831-a726b8670691",
     imageUrl: StaticAssets.creativityBoostBB,
   ),
   AudioPlayerModel(
     title: "Memory Boost",
     subtitle: '(Headphones Recommended)',
     audioUrl:
-        "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/soothing%20music%2Findianclassicalmusic.mp3?alt=media&token=90b53ccd-09b1-4197-b1ef-c993f3a87580",
+        "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%2Fmemoryboost.mp3?alt=media&token=fb42211a-7182-43fe-b0ff-5afcc909235b",
     imageUrl: StaticAssets.memoryBoostBB,
   ),
   AudioPlayerModel(
     title: "Unlock Hidden Genius",
     subtitle: '(Headphones Recommended)',
     audioUrl:
-        "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/soothing%20music%2Findianclassicalmusic.mp3?alt=media&token=90b53ccd-09b1-4197-b1ef-c993f3a87580",
+        "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%2Funlockhiddengenius.mp3?alt=media&token=5f15782d-aa93-4689-b898-dbd2c66031b0",
     imageUrl: StaticAssets.unlockHiddenGeniusBB,
   ),
   AudioPlayerModel(
     title: "Nirvana Meditation Aid",
     subtitle: '(Headphones Recommended)',
     audioUrl:
-        "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/soothing%20music%2Findianclassicalmusic.mp3?alt=media&token=90b53ccd-09b1-4197-b1ef-c993f3a87580",
+        "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%2Fnirvanameditationaid.mp3?alt=media&token=af524dc5-d68e-4dbe-bb39-b2175fcd47ad",
     imageUrl: StaticAssets.nirvanaMeditationAidBB,
   ),
   AudioPlayerModel(
     title: "Enhanced Focus",
     subtitle: '(Headphones Recommended)',
     audioUrl:
-        "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/soothing%20music%2Findianclassicalmusic.mp3?alt=media&token=90b53ccd-09b1-4197-b1ef-c993f3a87580",
+        "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%2Fenhancedfocus.mp3?alt=media&token=7b1066d3-d6e5-4ccb-bd44-3f7ad8308cd5",
     imageUrl: StaticAssets.enhancedFocusBB,
   ),
   AudioPlayerModel(
     title: "Mood Enhancement",
     subtitle: '(Headphones Recommended)',
     audioUrl:
-        "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/soothing%20music%2Findianclassicalmusic.mp3?alt=media&token=90b53ccd-09b1-4197-b1ef-c993f3a87580",
+        "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%2Fmoodenhancement.mp3?alt=media&token=b629ebe7-ab75-4929-a3a4-89a5fa33d5c6",
     imageUrl: StaticAssets.moodEnhancementBB,
   ),
   AudioPlayerModel(
     title: "Relaxation & Stress Relief",
     subtitle: '(Headphones Recommended)',
     audioUrl:
-        "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/soothing%20music%2Findianclassicalmusic.mp3?alt=media&token=90b53ccd-09b1-4197-b1ef-c993f3a87580",
+        "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%2Frelaxationandstressrelief.mp3?alt=media&token=cf2ba8ed-4d3b-4c61-859b-9b67c0e88ecc",
     imageUrl: StaticAssets.relaxationAndStressReliefBB,
   ),
   AudioPlayerModel(
     title: "Improved Brain Sync",
     subtitle: '(Headphones Recommended)',
     audioUrl:
-        "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/soothing%20music%2Findianclassicalmusic.mp3?alt=media&token=90b53ccd-09b1-4197-b1ef-c993f3a87580",
+        "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%2Fimprovedbrainsync.mp3?alt=media&token=449ac909-6b88-44c0-bcab-2ba7f6503ad2",
     imageUrl: StaticAssets.improvedBrainSyncBB,
   ),
   AudioPlayerModel(
     title: "Deep Concentration (Gamma)",
     subtitle: '(Headphones Recommended)',
     audioUrl:
-        "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/soothing%20music%2Findianclassicalmusic.mp3?alt=media&token=90b53ccd-09b1-4197-b1ef-c993f3a87580",
+        "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%2Fdeepconcentrationgamma.mp3?alt=media&token=cd14cdcd-a343-419c-92f3-35aaa62bdef6",
     imageUrl: StaticAssets.deepConcentrationGammaBB,
   ),
   AudioPlayerModel(
     title: "Alertness & Energy (Beta)",
     subtitle: '(Headphones Recommended)',
     audioUrl:
-        "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/soothing%20music%2Findianclassicalmusic.mp3?alt=media&token=90b53ccd-09b1-4197-b1ef-c993f3a87580",
+        "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%2Falertnessandenergybeta.mp3?alt=media&token=c00b40bf-aa06-4997-a9ab-c5f679a24571",
     imageUrl: StaticAssets.alertnessAndEnergyBetaBB,
   ),
   AudioPlayerModel(
     title: "Relaxed & Awake (Alpha)",
     subtitle: '(Headphones Recommended)',
     audioUrl:
-        "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/soothing%20music%2Findianclassicalmusic.mp3?alt=media&token=90b53ccd-09b1-4197-b1ef-c993f3a87580",
+        "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%2Frelaxedandawakealpha.mp3?alt=media&token=c47455de-4c5b-4205-96e9-6c1f9ab02cdb",
     imageUrl: StaticAssets.relaxedAndAwakeAlphaBB,
   ),
   AudioPlayerModel(
     title: "Deep Relaxation (Theta)",
     subtitle: '(Headphones Recommended)',
     audioUrl:
-        "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/soothing%20music%2Findianclassicalmusic.mp3?alt=media&token=90b53ccd-09b1-4197-b1ef-c993f3a87580",
+        "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%2Fdeeprelaxationtheta.mp3?alt=media&token=923a54cf-e230-4cb1-8164-d17da21421a7",
     imageUrl: StaticAssets.deepRelaxationThetaBB,
   ),
   AudioPlayerModel(
     title: "Lucid Dreaming (Alpha & Theta)",
     subtitle: '(Headphones Recommended)',
     audioUrl:
-        "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/soothing%20music%2Findianclassicalmusic.mp3?alt=media&token=90b53ccd-09b1-4197-b1ef-c993f3a87580",
+        "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%2Fluciddreamingalphaandtheta.mp3?alt=media&token=4ff3e202-2cc7-47a3-9989-6a852abd7608",
     imageUrl: StaticAssets.lucidDreamingAlphaAndThetaBB,
   ),
   AudioPlayerModel(
     title: "Astral Projection (Delta)",
     subtitle: '(Headphones Recommended)',
     audioUrl:
-        "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/soothing%20music%2Findianclassicalmusic.mp3?alt=media&token=90b53ccd-09b1-4197-b1ef-c993f3a87580",
+        "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%2Fastralprojectiondelta.mp3?alt=media&token=92d07cab-a460-476a-a2a3-453f8490b991",
     imageUrl: StaticAssets.astralProjectionDeltaBB,
   ),
 ];
