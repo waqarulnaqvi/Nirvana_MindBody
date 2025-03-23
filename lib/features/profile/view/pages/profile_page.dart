@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:nirvanafit/core/constants/static_assets.dart';
 import 'package:nirvanafit/core/local/db_helper.dart';
 import 'package:nirvanafit/shared/view/widgets/global_widgets.dart';
 import 'package:nirvanafit/shared/view/widgets/reusable_app_bar.dart';
@@ -54,6 +56,7 @@ class _ProfilePageState extends State<ProfilePage> {
               itemCount: userAudioReport.length,
               itemBuilder: (context, index) {
                 return ListTile(
+                  leading: staticImage(assetName: userAudioReport[index][DBHelper.columnAudioImageUrl],width: 50,height: 50),
                   title: Text(userAudioReport[index][DBHelper.columnAudioTitle]),
                   subtitle: Text(userAudioReport[index][DBHelper.columnAudioTime]),
                 );
@@ -77,7 +80,7 @@ class _ProfilePageState extends State<ProfilePage> {
         padding: const EdgeInsets.only(bottom: 120.0),
         child: FloatingActionButton(
           onPressed: () async {
-            bool check = await dbHelper!.addAudio(title: "bbbeats", time: "12:16:13");
+            bool check = await dbHelper!.addAudio(title: "bbbeats", time: "2:16:13", imageUrl: StaticAssets.minimalismMusicSM);
             if (check) {
               fetchUserAudioReport();
             }

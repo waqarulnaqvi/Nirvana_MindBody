@@ -8,7 +8,7 @@ class DBHelper{
   static const String audioTableName = "audio";
   static String columnAudioTitle = "a_title";
   static String columnAudioTime = "a_time";
-  static String columnAudioId = "a_id";
+  static String columnAudioImageUrl = "a_url";
 
   /// Singleton instance
   static final DBHelper _instance = DBHelper._internal();
@@ -30,35 +30,33 @@ class DBHelper{
     String dbPath = join(myDir.path, "myAudio.db");
     return await openDatabase(dbPath,version: 1,onCreate: (db,version){
       ///where we will create all our tables
-      db.execute("create table $audioTableName ( $columnAudioId integer primary key autoincrement, $columnAudioTitle text, $columnAudioTime text )");
+      db.execute("create table $audioTableName ( $columnAudioTitle text primary key,$columnAudioImageUrl text,$columnAudioTime text )");
     });
+
+    //$columnAudioId integer primary key autoincrement,
   }
 
-  Future<bool> addAudio({required String title,required String time} ) async{
+  Future<bool> addAudio({required String title,required String time,required String imageUrl} ) async{
     Database mDB = await getDB();
-
-    List<Map<String, dynamic>> titles = await mDB.query(
-      audioTableName,
-      columns: [columnAudioTitle], // Fetch only the title column
-    );
-
+    List<Map<String,dynamic>> exitingAudio = await mDB.query(audioTableName,columns: [columnAudioTitle],where: "$columnAudioTitle = ?",whereArgs: [title]);
     int rowsEffected = 0;
+    if(exitingAudio.isNotEmpty){
+      // Update the record using parameterized query
+      rowsEffected = await mDB.update(audioTableName, {
+        columnAudioTime: time
+      },
+        where: '$columnAudioTitle = $title',
+      );
 
-    List<String> allTitles = titles.map((row) => row[columnAudioTitle] as String).toList();
-
-    if(allTitles.contains(title)){
-          rowsEffected = await mDB.update(audioTableName, {
-            columnAudioTitle : title,
-            columnAudioTime : time
-          });
     }
-    else{
-      rowsEffected =await mDB.insert(audioTableName, {
-        columnAudioTitle : title,
-        columnAudioTime : time
+    else {
+      // Insert a new record
+      rowsEffected = await mDB.insert(audioTableName, {
+        columnAudioTitle: title,
+        columnAudioImageUrl: imageUrl,
+        columnAudioTime: time
       });
     }
-
     return rowsEffected>0;
   }
 
@@ -68,7 +66,33 @@ class DBHelper{
   }
 }
 
-
+// Future<bool> addAudio({required String title,required String time} ) async{
+//   Database mDB = await getDB();
+//
+//   List<Map<String, dynamic>> titles = await mDB.query(
+//     audioTableName,
+//     columns: [columnAudioTitle], // Fetch only the title column
+//   );
+//
+//   int rowsEffected = 0;
+//
+//   List<String> allTitles = titles.map((row) => row[columnAudioTitle] as String).toList();
+//
+//   if(allTitles.contains(title)){
+//         rowsEffected = await mDB.update(audioTableName, {
+//           columnAudioTitle : title,
+//           columnAudioTime : time
+//         });
+//   }
+//   else{
+//     rowsEffected =await mDB.insert(audioTableName, {
+//       columnAudioTitle : title,
+//       columnAudioTime : time
+//     });
+//   }
+//
+//   return rowsEffected>0;
+// }
 
 // import 'dart:io';
 // import 'package:path/path.dart';

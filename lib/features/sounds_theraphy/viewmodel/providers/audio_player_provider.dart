@@ -1,4 +1,4 @@
-import 'dart:nativewrappers/_internal/vm/lib/async_patch.dart';
+// import 'dart:nativewrappers/_internal/vm/lib/async_patch.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_icon_snackbar/flutter_icon_snackbar.dart';
@@ -19,8 +19,8 @@ class AudioPlayerProvider extends ChangeNotifier {
   final List _playlist = audioPlayerList;
   int _currentIndex = 0;
   DBHelper? dbHelper;
-  Timer? _timer;
-  int _totalTimeSpent = 0; // Total meditation time in seconds
+  // Timer? _timer;
+  // int _totalTimeSpent = 0; // Total meditation time in seconds
 
   PageController _pageController = PageController();
   late final ConcatenatingAudioSource _allAudio;
@@ -215,7 +215,7 @@ class AudioPlayerProvider extends ChangeNotifier {
 
   void togglePlay() {
     if (_isPlaying) {
-      dbHelper!.addAudio(title: audioPlayerList[currentIndex].title , time: _position.toString());
+      dbHelper!.addAudio(title: audioPlayerList[currentIndex].title , time: _position.toString(), imageUrl: audioPlayerList[currentIndex].imageUrl);
       _player.pause();
       _isPlaying = false;
       // _audioHandler.play();
