@@ -4,8 +4,10 @@ import 'package:nirvanafit/core/constants/static_assets.dart';
 import 'package:nirvanafit/core/local/db_helper.dart';
 import 'package:nirvanafit/shared/view/widgets/global_widgets.dart';
 import 'package:nirvanafit/shared/view/widgets/reusable_app_bar.dart';
+import 'package:provider/provider.dart';
 import '../../../../core/theme/app_styles.dart';
 import '../../../sounds_theraphy/view/widgets/bottom_audio_player.dart';
+import '../../../sounds_theraphy/viewmodel/providers/audio_player_provider.dart';
 import '../widgets/drawer/custom_drawer.dart';
 import '../widgets/more_apps_carousel.dart';
 
@@ -19,20 +21,20 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  DBHelper? dbHelper;
-  List<Map<String,dynamic>> userAudioReport = [];
-  int time=0;
+  // DBHelper? dbHelper;
+  // List<Map<String,dynamic>> provider.userAudioReport = [];
+  // int time=0;
   @override
   void initState() {
-    dbHelper = DBHelper();
-    fetchUserAudioReport();
+    // dbHelper = DBHelper();
+    // fetchprovider.userAudioReport();
     super.initState();
   }
 
-  void fetchUserAudioReport() async {
-    userAudioReport =await dbHelper!.fetchAudio();
-    setState(() {});
-  }
+  // void fetchprovider.userAudioReport() async {
+  //   provider.userAudioReport =await dbHelper!.fetchAudio();
+  //   setState(() {});
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +45,8 @@ class _ProfilePageState extends State<ProfilePage> {
       key: _scaffoldKey,
       endDrawer: CustomDrawer(h: h, w: w * 0.7),
       appBar: ReusableAppBar(
-        text: 'Profile',
+        text: 'Mindfulness Insights',
+        // text: 'Profile',
         isCenterText: false,
         isMenu: true,
         onPressed: () {
@@ -53,28 +56,47 @@ class _ProfilePageState extends State<ProfilePage> {
       body: Stack(
         children: [
           Positioned.fill(
-            child: userAudioReport.isEmpty?
-                Center(
-                  child: Text("No Audio Report",style: AppStyles.headingPrimary(context: context,color: theme.onSurface ,fontSize: 18),),
-                )
-                :ListView.builder(
-              itemCount: userAudioReport.length,
-              itemBuilder: (context, index) {
-                List time = userAudioReport[index][DBHelper.columnAudioTime].split(":");
+            child: Consumer(
+      builder: (context, AudioPlayerProvider provider, child) {
+        return provider.userAudioReport.isEmpty ?
+        Center(
+          child: Text("No Mindfulness Report Available",
+            style: AppStyles.headingPrimary(
+                context: context, color: theme.onSurface, fontSize: 18),),
+        )
+            : ListView.builder(
+          padding: EdgeInsets.only(top: 20, bottom: 100),
+          itemCount: provider.userAudioReport.length,
+          itemBuilder: (context, index) {
+            List time = provider.userAudioReport[index][DBHelper
+                .columnAudioTime].split(":");
 
-                if(time.length<3){
-                  time = [time[0],time[0],time[0]];
-                }
+            if (time.length < 3) {
+              time = [time[0], time[0], time[0]];
+            }
 
-                return ListTile(
-                  leading: ClipOval(
-                    child: staticImage(assetName: userAudioReport[index][DBHelper.columnAudioImageUrl],width: 60,height: 60),
-                  ),
-                  title: Text(userAudioReport[index][DBHelper.columnAudioTitle],style: AppStyles.headingPrimary(context: context,color: theme.onSurface ,fontSize: 18),),
-                  subtitle: Text("Spend time : ${time[0]=="0" ? "": "${time[0]} h :"} ${time[1]=="00" ? "": "${time[1]} m :"} ${time[2].toString().split(".")[0]} s",style: AppStyles.descriptionPrimary(context: context,color: theme.onSurface),),
-                );
-              },
+            return ListTile(
+              leading: ClipOval(
+                child: staticImage(
+                    assetName: provider.userAudioReport[index][DBHelper
+                        .columnAudioImageUrl], width: 60, height: 60),
+              ),
+              title: Text(provider.userAudioReport[index][DBHelper
+                  .columnAudioTitle], style: AppStyles.headingPrimary(
+                  context: context, color: theme.onSurface, fontSize: 18),),
+              subtitle: Text("Spend time : ${time[0] == "0"
+                  ? ""
+                  : "${time[0]} h :"} ${time[1] == "00"
+                  ? ""
+                  : "${time[1]} m :"} ${time[2].toString().split(".")[0]} s",
+                style: AppStyles.descriptionPrimary(
+                    context: context, color: theme.onSurface),),
+            );
+          },
+        );
+      }
             ),
+
             // child: SingleChildScrollView(
             //     child: Column(
             //   children: [
@@ -93,11 +115,11 @@ class _ProfilePageState extends State<ProfilePage> {
         padding: const EdgeInsets.only(bottom: 120.0),
         child: FloatingActionButton(
           onPressed: () async {
-            bool check = await dbHelper!.addAudio(title: "bbbeats", time: time.toString(), imageUrl: StaticAssets.minimalismMusicSM);
-            time++;
-            if (check) {
-              fetchUserAudioReport();
-            }
+          //   bool check = await dbHelper!.addAudio(title: "bbbeats", time: time.toString(), imageUrl: StaticAssets.minimalismMusicSM);
+          //   time++;
+          //   if (check) {
+          //     fetchprovider.userAudioReport();
+          //   }
           },
           child: Icon(Icons.add),
         ),

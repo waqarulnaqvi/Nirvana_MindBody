@@ -1,5 +1,3 @@
-// import 'dart:nativewrappers/_internal/vm/lib/async_patch.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_icon_snackbar/flutter_icon_snackbar.dart';
 import 'package:just_audio/just_audio.dart';
@@ -19,6 +17,7 @@ class AudioPlayerProvider extends ChangeNotifier {
   final List _playlist = audioPlayerList;
   int _currentIndex = 0;
   DBHelper? dbHelper;
+  late final List<Map<String,dynamic>> _userAudioReport;
   // Timer? _timer;
   // int _totalTimeSpent = 0; // Total meditation time in seconds
 
@@ -28,10 +27,16 @@ class AudioPlayerProvider extends ChangeNotifier {
   //
   AudioPlayerProvider() {
     dbHelper = DBHelper();
+    _fetchAudioReport();
     _init();
+
   }
 
 
+  Future<void> _fetchAudioReport() async {
+    _userAudioReport =await dbHelper!.fetchAudio();
+    notifyListeners();
+  }
 
   Future<void> _init() async {
     _allAudio = ConcatenatingAudioSource(
@@ -83,6 +88,8 @@ class AudioPlayerProvider extends ChangeNotifier {
   bool get isAnimateController => _isAnimateController;
 
   bool get ignoreController => _ignoreController;
+
+  List<Map<String,dynamic>> get userAudioReport => _userAudioReport;
 
   int get currentIndex => _currentIndex;
 
