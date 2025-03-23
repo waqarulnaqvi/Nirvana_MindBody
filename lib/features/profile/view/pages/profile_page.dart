@@ -38,6 +38,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
+    final theme=Theme.of(context).colorScheme;
     return Scaffold(
       key: _scaffoldKey,
       endDrawer: CustomDrawer(h: h, w: w * 0.7),
@@ -52,13 +53,25 @@ class _ProfilePageState extends State<ProfilePage> {
       body: Stack(
         children: [
           Positioned.fill(
-            child:   ListView.builder(
+            child: userAudioReport.isEmpty?
+                Center(
+                  child: Text("No Audio Report",style: AppStyles.headingPrimary(context: context,color: theme.onSurface ,fontSize: 18),),
+                )
+                :ListView.builder(
               itemCount: userAudioReport.length,
               itemBuilder: (context, index) {
+                List time = userAudioReport[index][DBHelper.columnAudioTime].split(":");
+
+                if(time.length<3){
+                  time = [time[0],time[0],time[0]];
+                }
+
                 return ListTile(
-                  leading: staticImage(assetName: userAudioReport[index][DBHelper.columnAudioImageUrl],width: 50,height: 50),
-                  title: Text(userAudioReport[index][DBHelper.columnAudioTitle]),
-                  subtitle: Text(userAudioReport[index][DBHelper.columnAudioTime]),
+                  leading: ClipOval(
+                    child: staticImage(assetName: userAudioReport[index][DBHelper.columnAudioImageUrl],width: 60,height: 60),
+                  ),
+                  title: Text(userAudioReport[index][DBHelper.columnAudioTitle],style: AppStyles.headingPrimary(context: context,color: theme.onSurface ,fontSize: 18),),
+                  subtitle: Text("Spend time : ${time[0]=="0" ? "": "${time[0]} h :"} ${time[1]=="00" ? "": "${time[1]} m :"} ${time[2].toString().split(".")[0]} s",style: AppStyles.descriptionPrimary(context: context,color: theme.onSurface),),
                 );
               },
             ),

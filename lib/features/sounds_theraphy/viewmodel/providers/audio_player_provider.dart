@@ -215,7 +215,7 @@ class AudioPlayerProvider extends ChangeNotifier {
 
   void togglePlay() {
     if (_isPlaying) {
-      dbHelper!.addAudio(title: audioPlayerList[currentIndex].title , time: _position.toString(), imageUrl: audioPlayerList[currentIndex].imageUrl);
+      dbHelper!.addAudio(title: audioPlayerList[currentIndex].title , time: _position.toString().split(".")[0], imageUrl: audioPlayerList[currentIndex].imageUrl);
       _player.pause();
       _isPlaying = false;
       // _audioHandler.play();

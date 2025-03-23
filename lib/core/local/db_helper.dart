@@ -1,10 +1,9 @@
-
 import 'dart:io';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
-class DBHelper{
+class DBHelper {
   static const String audioTableName = "audio";
   static String columnAudioTitle = "a_title";
   static String columnAudioTime = "a_time";
@@ -22,25 +21,32 @@ class DBHelper{
   Database? _myDB;
 
   Future<Database> getDB() async {
-      return _myDB??= await openDB();
-    }
+    return _myDB ??= await openDB();
+  }
 
-  Future<Database> openDB() async{
+  Future<Database> openDB() async {
     Directory myDir = await getApplicationDocumentsDirectory();
     String dbPath = join(myDir.path, "myAudio.db");
-    return await openDatabase(dbPath,version: 1,onCreate: (db,version){
+    return await openDatabase(dbPath, version: 1, onCreate: (db, version) {
       ///where we will create all our tables
-      db.execute("create table $audioTableName ( $columnAudioTitle text primary key,$columnAudioImageUrl text,$columnAudioTime text )");
+      db.execute(
+          "create table $audioTableName ( $columnAudioTitle text primary key,$columnAudioImageUrl text,$columnAudioTime text )");
     });
 
     //$columnAudioId integer primary key autoincrement,
   }
 
-  Future<bool> addAudio({required String title,required String time,required String imageUrl} ) async{
+  Future<bool> addAudio(
+      {required String title,
+      required String time,
+      required String imageUrl}) async {
     Database mDB = await getDB();
-    List<Map<String,dynamic>> exitingAudio = await mDB.query(audioTableName,columns: [columnAudioTitle],where: "$columnAudioTitle = ?",whereArgs: [title]);
+    List<Map<String, dynamic>> exitingAudio = await mDB.query(audioTableName,
+        columns: [columnAudioTitle],
+        where: "$columnAudioTitle = ?",
+        whereArgs: [title]);
     int rowsEffected = 0;
-    if(exitingAudio.isNotEmpty){
+    if (exitingAudio.isNotEmpty) {
       // Update the record using parameterized query
       // rowsEffected = await mDB.update(audioTableName, {
       //   columnAudioTime: time
@@ -49,14 +55,11 @@ class DBHelper{
       // );
       rowsEffected = await mDB.update(
         audioTableName,
-        { columnAudioTime: time },
+        {columnAudioTime: time},
         where: '$columnAudioTitle = ?',
         whereArgs: [title],
       );
-
-
-    }
-    else {
+    } else {
       // Insert a new record
       rowsEffected = await mDB.insert(audioTableName, {
         columnAudioTitle: title,
@@ -64,11 +67,11 @@ class DBHelper{
         columnAudioTime: time
       });
     }
-    return rowsEffected>0;
+    return rowsEffected > 0;
   }
 
-  Future<List<Map<String,dynamic>>> fetchAudio() async{
-    Database mDB =await getDB();
+  Future<List<Map<String, dynamic>>> fetchAudio() async {
+    Database mDB = await getDB();
     return await mDB.query(audioTableName);
   }
 }
