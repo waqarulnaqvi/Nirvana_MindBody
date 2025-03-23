@@ -21,7 +21,7 @@ class _ProfilePageState extends State<ProfilePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   DBHelper? dbHelper;
   List<Map<String,dynamic>> userAudioReport = [];
-
+  int time=0;
   @override
   void initState() {
     dbHelper = DBHelper();
@@ -80,7 +80,8 @@ class _ProfilePageState extends State<ProfilePage> {
         padding: const EdgeInsets.only(bottom: 120.0),
         child: FloatingActionButton(
           onPressed: () async {
-            bool check = await dbHelper!.addAudio(title: "bbbeats", time: "2:16:13", imageUrl: StaticAssets.minimalismMusicSM);
+            bool check = await dbHelper!.addAudio(title: "bbbeats", time: time.toString(), imageUrl: StaticAssets.minimalismMusicSM);
+            time++;
             if (check) {
               fetchUserAudioReport();
             }

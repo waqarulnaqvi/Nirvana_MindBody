@@ -42,11 +42,18 @@ class DBHelper{
     int rowsEffected = 0;
     if(exitingAudio.isNotEmpty){
       // Update the record using parameterized query
-      rowsEffected = await mDB.update(audioTableName, {
-        columnAudioTime: time
-      },
-        where: '$columnAudioTitle = $title',
+      // rowsEffected = await mDB.update(audioTableName, {
+      //   columnAudioTime: time
+      // },
+      //   where: '$columnAudioTitle = $title',
+      // );
+      rowsEffected = await mDB.update(
+        audioTableName,
+        { columnAudioTime: time },
+        where: '$columnAudioTitle = ?',
+        whereArgs: [title],
       );
+
 
     }
     else {
