@@ -1,3 +1,4 @@
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:nirvanafit/core/constants/static_assets.dart';
 import 'package:nirvanafit/core/theme/app_styles.dart';
@@ -5,6 +6,7 @@ import 'package:nirvanafit/features/sounds_theraphy/view/widgets/animated_text.d
 import 'package:nirvanafit/features/sounds_theraphy/viewmodel/providers/audio_player_provider.dart';
 import 'package:nirvanafit/shared/view/widgets/global_widgets.dart';
 import 'package:nirvanafit/shared/view/widgets/reusable_app_bar.dart';
+import 'package:nirvanafit/shared/view/widgets/reusable_heading.dart';
 import 'package:provider/provider.dart';
 import '../../../../shared/view/widgets/buttons/reusable_image_button.dart';
 import '../widgets/rotating_audio_disk.dart';
@@ -38,6 +40,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
       provider.pageController = PageController(initialPage: widget.index);
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +151,11 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
                   ],
                 ),
               ),
-              audioController(provider),
+              _audioController(provider),
+              spacerH(),
+              _internetConnectivity(w: w, theme: theme,provider: provider),
+              spacerH(),
+              
             ],
           ),
         );
@@ -156,7 +163,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
     );
   }
 
-  Widget audioController(AudioPlayerProvider provider) {
+  Widget _audioController(AudioPlayerProvider provider) {
     final theme = Theme.of(context).colorScheme;
     final color = theme.onSurface;
     return Padding(
@@ -255,6 +262,33 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
             width: 25,
           )
         ],
+      ),
+    );
+  }
+  
+  Widget _internetConnectivity({required double w,required ColorScheme theme,required AudioPlayerProvider provider}) {
+    return  provider.isInternetConnected ? Container() :
+        Card(
+      elevation: 4,
+      margin: EdgeInsets.symmetric(horizontal: 20),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15)),
+      child: Container(
+        width: w,
+        padding: EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: theme.surface,
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+          border: Border.all(color: theme.primary, width: 2),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ReusableHeading(text: "No Internet Connection", icon: Icons.wifi_off,color: theme.primary, fontSize: 18),
+            spacerH(4),
+            Text("It looks like you're offline",style: AppStyles.descriptionPrimary(context: context,color: theme.primary),),
+          ],
+        ),
       ),
     );
   }

@@ -5,7 +5,9 @@ import '../../../core/theme/app_styles.dart';
 class ReusableHeading extends StatelessWidget {
   final String text;
   final IconData icon;
-  const ReusableHeading({super.key, required this.text, this.icon=FontAwesomeIcons.music});
+  final Color? color;
+  final double? fontSize;
+  const ReusableHeading({super.key, required this.text, this.icon=FontAwesomeIcons.music, this.color, this.fontSize});
 
   @override
   Widget build(BuildContext context) {
@@ -13,8 +15,8 @@ class ReusableHeading extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(text,style: AppStyles.headingPrimary(context: context,color: theme.onSurface,fontWeight: FontWeight.bold),),
-        Icon(icon,color: theme.onSurface,)
+        Text(text,style: AppStyles.headingPrimary(context: context,color:color?? theme.onSurface,fontWeight: FontWeight.bold,fontSize: fontSize),),
+        Icon(icon,color: color?? theme.onSurface,)
       ],
     );
   }

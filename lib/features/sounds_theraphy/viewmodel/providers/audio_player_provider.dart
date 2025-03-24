@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icon_snackbar/flutter_icon_snackbar.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:nirvanafit/core/constants/prefs_keys.dart';
 import 'package:nirvanafit/core/local/prefs_helper.dart';
@@ -27,7 +28,8 @@ class AudioPlayerProvider extends ChangeNotifier {
   Duration _totalTimeSpend = Duration.zero;
   late List<Map<String,dynamic>> _userAudioReport;
   Timer? _timer;
-
+  bool _isInternetConnected = true;
+  final internetChecker = InternetConnectionChecker.createInstance();
   PageController _pageController = PageController();
   late final ConcatenatingAudioSource _allAudio;
 
@@ -35,11 +37,20 @@ class AudioPlayerProvider extends ChangeNotifier {
   AudioPlayerProvider() {
     dbHelper = DBHelper();
     prefsHelper = PrefsHelper();
-    fetchAudioReport();
+    _fetchAudioReport();
     _init();
     _initializeTotalTimeSpend();
-
+    _monitorInternetConnection();
   }
+
+  // Check internet connection
+  void _monitorInternetConnection() {
+   internetChecker.onStatusChange.listen((status){
+     _isInternetConnected =status==InternetConnectionStatus.connected;
+   });
+  }
+
+
 
   Future<void> _initializeTotalTimeSpend() async {
     final storedTime = await prefsHelper?.getStringValue(PrefsKeys.totalTimeSpend);
@@ -115,7 +126,7 @@ class AudioPlayerProvider extends ChangeNotifier {
     _timeSpend = Duration.zero;
   }
 
-  Future<void> fetchAudioReport() async {
+  Future<void> _fetchAudioReport() async {
     _userAudioReport =await dbHelper!.fetchAudio();
     notifyListeners();
   }
@@ -123,6 +134,8 @@ class AudioPlayerProvider extends ChangeNotifier {
 
 
   // Getter:
+  bool get isInternetConnected => _isInternetConnected;
+
   bool get isAnimateController => _isAnimateController;
 
   Duration get totalAudioTime => _totalTimeSpend;
@@ -154,6 +167,11 @@ class AudioPlayerProvider extends ChangeNotifier {
   // Setter:
   set isRunBackground(bool value) {
     _isRunBackground = value;
+    notifyListeners();
+  }
+
+  set isInternetConnected(bool value) {
+    _isInternetConnected = value;
     notifyListeners();
   }
 
@@ -252,7 +270,7 @@ class AudioPlayerProvider extends ChangeNotifier {
         updateAudio(index);
         _player.play();
         addAudioToLocalDB();
-        fetchAudioReport();
+        _fetchAudioReport();
         notifyListeners();
       });
     } else {
@@ -280,7 +298,7 @@ class AudioPlayerProvider extends ChangeNotifier {
     }
     try {
       addAudioToLocalDB();
-      fetchAudioReport();
+      _fetchAudioReport();
       // print("Fetched audio report: $_userAudioReport");
     } catch (e) {
       if (kDebugMode) {
@@ -295,7 +313,7 @@ class AudioPlayerProvider extends ChangeNotifier {
       _isRunBackground = false;
       _isPlaying = false;
       _player.stop();
-      fetchAudioReport();
+      _fetchAudioReport();
       // _player.dispose();
       notifyListeners();
     }
@@ -303,7 +321,7 @@ class AudioPlayerProvider extends ChangeNotifier {
 
   void previousAudio() {
     addAudioToLocalDB();
-    fetchAudioReport();
+    _fetchAudioReport();
     if (_ignoreController ) {
       _ignoreController = false;
     }
@@ -320,7 +338,7 @@ class AudioPlayerProvider extends ChangeNotifier {
 
   void nextAudio() {
     addAudioToLocalDB();
-    fetchAudioReport();
+    _fetchAudioReport();
     if (_ignoreController ) {
       _ignoreController = false;
     }

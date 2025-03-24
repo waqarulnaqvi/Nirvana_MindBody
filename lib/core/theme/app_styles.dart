@@ -3,10 +3,10 @@ import 'package:nirvanafit/core/theme/app_colors.dart';
 
 class AppStyles {
   // Text Styles
-  static TextStyle headingPrimary({double fontSize = 20, FontWeight fontWeight = FontWeight.w600, required BuildContext context,Color? color}) {
+  static TextStyle headingPrimary({double? fontSize , FontWeight fontWeight = FontWeight.w600, required BuildContext context,Color? color}) {
     return TextStyle(
       fontWeight: fontWeight,
-      fontSize: fontSize,
+      fontSize:fontSize?? 20,
       fontFamily: "Montserrat",
       color: color ?? Theme.of(context).colorScheme.surface,
     );
