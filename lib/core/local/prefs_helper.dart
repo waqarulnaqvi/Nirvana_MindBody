@@ -1,10 +1,11 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PrefsHelper {
-
   // Singleton instance
   static final PrefsHelper _instance = PrefsHelper._internal();
+
   factory PrefsHelper() => _instance;
+
   PrefsHelper._internal();
 
   static SharedPreferences? _prefs;
@@ -15,8 +16,7 @@ class PrefsHelper {
   }
 
   // Retrieve a boolean value
-  Future<bool> getBoolValue(String key) async
-  {
+  Future<bool> getBoolValue(String key) async {
     await init();
     return _prefs?.getBool(key) ?? false;
   }
@@ -27,4 +27,13 @@ class PrefsHelper {
     await _prefs?.setBool(key, value);
   }
 
+  Future<String> getStringValue(String key) async {
+    await init();
+    return _prefs?.getString(key) ?? '';
+  }
+
+  Future<void> setStringValue(String key, String value) async {
+    await init();
+    await _prefs?.setString(key, value);
+  }
 }

@@ -1,6 +1,11 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icon_snackbar/flutter_icon_snackbar.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:nirvanafit/core/constants/prefs_keys.dart';
+import 'package:nirvanafit/core/local/prefs_helper.dart';
 import '../../../../core/local/db_helper.dart';
 import '../../data/audio_player_contents.dart';
 
@@ -17,9 +22,11 @@ class AudioPlayerProvider extends ChangeNotifier {
   final List _playlist = audioPlayerList;
   int _currentIndex = 0;
   DBHelper? dbHelper;
-  late final List<Map<String,dynamic>> _userAudioReport;
-  // Timer? _timer;
-  // int _totalTimeSpent = 0; // Total meditation time in seconds
+  PrefsHelper? prefsHelper;
+  Duration _timeSpend = Duration.zero;
+  Duration _totalTimeSpend = Duration.zero;
+  late List<Map<String,dynamic>> _userAudioReport;
+  Timer? _timer;
 
   PageController _pageController = PageController();
   late final ConcatenatingAudioSource _allAudio;
@@ -27,14 +34,28 @@ class AudioPlayerProvider extends ChangeNotifier {
   //
   AudioPlayerProvider() {
     dbHelper = DBHelper();
-    _fetchAudioReport();
+    prefsHelper = PrefsHelper();
+    fetchAudioReport();
     _init();
+    _initializeTotalTimeSpend();
 
   }
 
+  Future<void> _initializeTotalTimeSpend() async {
+    final storedTime = await prefsHelper?.getStringValue(PrefsKeys.totalTimeSpend);
 
-  Future<void> _fetchAudioReport() async {
-    _userAudioReport =await dbHelper!.fetchAudio();
+    if (storedTime != null && storedTime.isNotEmpty) {
+      final parts = storedTime.split(':').map(int.tryParse).toList();
+
+      if (parts.length == 3 && parts.every((e) => e != null)) {
+        _totalTimeSpend = Duration(hours: parts[0]!, minutes: parts[1]!, seconds: parts[2]!);
+      }
+      else{
+        _totalTimeSpend = Duration.zero;
+      }
+
+    }
+
     notifyListeners();
   }
 
@@ -60,9 +81,9 @@ class AudioPlayerProvider extends ChangeNotifier {
 
         if (_pageController.hasClients) {
           if (_isAnimateController) {
-          _pageController.animateToPage(_currentIndex,
-              duration: const Duration(milliseconds: 500),
-              curve: Curves.easeIn);
+            _pageController.animateToPage(_currentIndex,
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.easeIn);
           }
           else {
             _pageController.jumpToPage(_currentIndex);
@@ -79,13 +100,32 @@ class AudioPlayerProvider extends ChangeNotifier {
 
   @override
   void dispose() {
+    _timer?.cancel();
+    _player.stop(); // Stop the audio player
     _player.dispose(); // Dispose of the audio player
     _pageController.dispose(); // Dispose of the PageController
     super.dispose();
   }
 
+  //Local DB SqFLite
+  void addAudioToLocalDB()
+  {
+    dbHelper!.addAudio(title: audioPlayerList[currentIndex].title , time: _timeSpend, imageUrl: audioPlayerList[currentIndex].imageUrl);
+    prefsHelper!.setStringValue(PrefsKeys.totalTimeSpend, _totalTimeSpend.toString().split(".")[0]);
+    _timeSpend = Duration.zero;
+  }
+
+  Future<void> fetchAudioReport() async {
+    _userAudioReport =await dbHelper!.fetchAudio();
+    notifyListeners();
+  }
+
+
+
   // Getter:
   bool get isAnimateController => _isAnimateController;
+
+  Duration get totalAudioTime => _totalTimeSpend;
 
   bool get ignoreController => _ignoreController;
 
@@ -211,6 +251,8 @@ class AudioPlayerProvider extends ChangeNotifier {
         _isPlaying = true;
         updateAudio(index);
         _player.play();
+        addAudioToLocalDB();
+        fetchAudioReport();
         notifyListeners();
       });
     } else {
@@ -220,32 +262,48 @@ class AudioPlayerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+
   void togglePlay() {
     if (_isPlaying) {
-      dbHelper!.addAudio(title: audioPlayerList[currentIndex].title , time: _position.toString().split(".")[0], imageUrl: audioPlayerList[currentIndex].imageUrl);
+      _timer?.cancel();
       _player.pause();
       _isPlaying = false;
       // _audioHandler.play();
     } else {
       _player.play();
-
       // _audioHandler.pause();
       _isPlaying = true;
+      _timer =Timer.periodic(Duration(seconds: 1), (timer) {
+        _timeSpend += Duration(seconds: 1);
+        _totalTimeSpend += Duration(seconds: 1);
+      });
+    }
+    try {
+      addAudioToLocalDB();
+      fetchAudioReport();
+      // print("Fetched audio report: $_userAudioReport");
+    } catch (e) {
+      if (kDebugMode) {
+        print("Error fetching audio: $e");
+      }
     }
     notifyListeners();
   }
 
-  void backgroundPlayer() {
+  void backgroundPlayer()  {
     {
       _isRunBackground = false;
       _isPlaying = false;
       _player.stop();
+      fetchAudioReport();
       // _player.dispose();
       notifyListeners();
     }
   }
 
   void previousAudio() {
+    addAudioToLocalDB();
+    fetchAudioReport();
     if (_ignoreController ) {
       _ignoreController = false;
     }
@@ -261,6 +319,8 @@ class AudioPlayerProvider extends ChangeNotifier {
   }
 
   void nextAudio() {
+    addAudioToLocalDB();
+    fetchAudioReport();
     if (_ignoreController ) {
       _ignoreController = false;
     }

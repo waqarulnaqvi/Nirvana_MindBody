@@ -38,7 +38,7 @@ class DBHelper {
 
   Future<bool> addAudio(
       {required String title,
-      required String time,
+      required Duration time,
       required String imageUrl}) async {
     Database mDB = await getDB();
     List<Map<String, dynamic>> exitingAudio = await mDB.query(audioTableName,
@@ -46,6 +46,7 @@ class DBHelper {
         where: "$columnAudioTitle = ?",
         whereArgs: [title]);
     int rowsEffected = 0;
+    String value;
     if (exitingAudio.isNotEmpty) {
       // Update the record using parameterized query
       // rowsEffected = await mDB.update(audioTableName, {
@@ -53,18 +54,34 @@ class DBHelper {
       // },
       //   where: '$columnAudioTitle = $title',
       // );
+      List<Map<String, dynamic>> exitingAudio = await mDB.query(audioTableName,
+          columns: [columnAudioTime],
+          where: "$columnAudioTitle = ?",
+          whereArgs: [title]);
+
+      final parts = exitingAudio[0][columnAudioTime]
+          .split(":")
+          .map(int.tryParse)
+          .toList();
+
+      value = (time +
+              Duration(hours: parts[0], minutes: parts[1], seconds: parts[2]))
+          .toString()
+          .split(".")[0];
+
       rowsEffected = await mDB.update(
         audioTableName,
-        {columnAudioTime: time},
+        {columnAudioTime: value},
         where: '$columnAudioTitle = ?',
         whereArgs: [title],
       );
     } else {
       // Insert a new record
+      value = time.toString().split(".")[0];
       rowsEffected = await mDB.insert(audioTableName, {
         columnAudioTitle: title,
         columnAudioImageUrl: imageUrl,
-        columnAudioTime: time
+        columnAudioTime: value
       });
     }
     return rowsEffected > 0;

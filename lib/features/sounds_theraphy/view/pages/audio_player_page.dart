@@ -215,7 +215,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
 
           // Play Audio Icon
           ReusableImageButton(
-            onTap: () {
+            onTap: () async {
               provider.togglePlay();
               if (!provider.isRunBackground) {
                 provider.isRunBackground = true;

@@ -14,7 +14,7 @@ class ReusableHeading extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(text,style: AppStyles.headingPrimary(context: context,color: theme.onSurface,fontWeight: FontWeight.bold),),
-        Icon(FontAwesomeIcons.music,color: theme.onSurface,)
+        Icon(icon,color: theme.onSurface,)
       ],
     );
   }

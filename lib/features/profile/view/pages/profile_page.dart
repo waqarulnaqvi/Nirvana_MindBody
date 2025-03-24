@@ -6,6 +6,7 @@ import 'package:nirvanafit/shared/view/widgets/global_widgets.dart';
 import 'package:nirvanafit/shared/view/widgets/reusable_app_bar.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/theme/app_styles.dart';
+import '../../../../shared/view/widgets/reusable_heading.dart';
 import '../../../sounds_theraphy/view/widgets/bottom_audio_player.dart';
 import '../../../sounds_theraphy/viewmodel/providers/audio_player_provider.dart';
 import '../widgets/drawer/custom_drawer.dart';
@@ -21,12 +22,12 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  // DBHelper? dbHelper;
+  DBHelper? dbHelper;
   // List<Map<String,dynamic>> provider.userAudioReport = [];
-  // int time=0;
+  int time=0;
   @override
   void initState() {
-    // dbHelper = DBHelper();
+    dbHelper = DBHelper();
     // fetchprovider.userAudioReport();
     super.initState();
   }
@@ -58,42 +59,86 @@ class _ProfilePageState extends State<ProfilePage> {
           Positioned.fill(
             child: Consumer(
       builder: (context, AudioPlayerProvider provider, child) {
+
+        final List tat=provider.totalAudioTime.toString().split(".")[0].split(":");
         return provider.userAudioReport.isEmpty ?
         Center(
-          child: Text("No Mindfulness Report Available",
+          child: Text("No Report Available",
             style: AppStyles.headingPrimary(
                 context: context, color: theme.onSurface, fontSize: 18),),
         )
-            : ListView.builder(
-          padding: EdgeInsets.only(top: 20, bottom: 100),
-          itemCount: provider.userAudioReport.length,
-          itemBuilder: (context, index) {
-            List time = provider.userAudioReport[index][DBHelper
-                .columnAudioTime].split(":");
+            : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                    padding: const EdgeInsets.fromLTRB(15, 20,15,20),
+                    child: ReusableHeading(text: 'Mindfulness Report', icon: FontAwesomeIcons.chartLine)),
 
-            if (time.length < 3) {
-              time = [time[0], time[0], time[0]];
-            }
+                Expanded(
 
-            return ListTile(
-              leading: ClipOval(
-                child: staticImage(
-                    assetName: provider.userAudioReport[index][DBHelper
-                        .columnAudioImageUrl], width: 60, height: 60),
-              ),
-              title: Text(provider.userAudioReport[index][DBHelper
-                  .columnAudioTitle], style: AppStyles.headingPrimary(
-                  context: context, color: theme.onSurface, fontSize: 18),),
-              subtitle: Text("Spend time : ${time[0] == "0"
-                  ? ""
-                  : "${time[0]} h :"} ${time[1] == "00"
-                  ? ""
-                  : "${time[1]} m :"} ${time[2].toString().split(".")[0]} s",
-                style: AppStyles.descriptionPrimary(
-                    context: context, color: theme.onSurface),),
+                  child: ListView.builder(
+                            shrinkWrap: true,
+                            padding: EdgeInsets.only( bottom: 20),
+                            itemCount: provider.userAudioReport.length,
+                            itemBuilder: (context, index) {
+                  List time = provider.userAudioReport[index][DBHelper
+                      .columnAudioTime].split(":");
+
+                  if (time.length < 3) {
+                    time = [time[0], time[0], time[0]];
+                  }
+
+                  return ListTile(
+                    leading: ClipOval(
+                      child: staticImage(
+                          assetName: provider.userAudioReport[index][DBHelper
+                              .columnAudioImageUrl], width: 60, height: 60),
+                    ),
+                    title: Text(provider.userAudioReport[index][DBHelper
+                        .columnAudioTitle], style: AppStyles.headingPrimary(
+                        context: context, color: theme.onSurface, fontSize: 18),),
+                    subtitle: Text("Spend time : ${time[0] == "0"
+                        ? ""
+                        : "${time[0]} h :"} ${time[1] == "00"
+                        ? ""
+                        : "${time[1]} m :"} ${time[2].toString().split(".")[0]} s",
+                      style: AppStyles.descriptionPrimary(
+                          context: context, color: theme.onSurface),),
+                  );
+                            },
+                          ),
+                ),
+
+                spacerH(8),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  child: Divider(
+                    color: theme.onSurface,
+                    thickness: 0.4,
+                  ),
+                ),
+                spacerH(8),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Total Time", style: AppStyles.headingPrimary(
+                          context: context, color: theme.onSurface, fontSize: 18),),
+                      Text("${tat[0] == "0"
+                      ? ""
+                          : "${tat[0]} h :"} ${tat[1] == "00"
+                      ? ""
+                          : "${tat[1]} m :"} ${tat[2].toString().split(".")[0]} s", style: AppStyles.headingPrimary(
+                          context: context, color: theme.onSurface, fontSize: 16),),
+                    ],
+                  ),
+                ),
+
+                spacerH(110),
+
+              ],
             );
-          },
-        );
       }
             ),
 
@@ -106,24 +151,24 @@ class _ProfilePageState extends State<ProfilePage> {
             //   ],
             // )),
           ),
-          Positioned(
-              bottom: 0,
-              child: BottomAudioPlayer())
+          // Positioned(
+          //     bottom: 0,
+          //     child: BottomAudioPlayer())
         ],
       ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 120.0),
-        child: FloatingActionButton(
-          onPressed: () async {
-          //   bool check = await dbHelper!.addAudio(title: "bbbeats", time: time.toString(), imageUrl: StaticAssets.minimalismMusicSM);
-          //   time++;
-          //   if (check) {
-          //     fetchprovider.userAudioReport();
-          //   }
-          },
-          child: Icon(Icons.add),
-        ),
-      ),
+      // floatingActionButton: Padding(
+      //   padding: const EdgeInsets.only(bottom: 120.0),
+      //   child: FloatingActionButton(
+      //     onPressed: () async {
+      //       bool check = await dbHelper!.addAudio(title: "bbbeats", time: time.toString(), imageUrl: StaticAssets.minimalismMusicSM);
+      //       time++;
+      //       if (check) {
+      //         Provider.of<AudioPlayerProvider>(context, listen: false).fetchAudioReport();
+      //       }
+      //     },
+      //     child: Icon(Icons.add),
+      //   ),
+      // ),
     );
   }
 
