@@ -19,6 +19,7 @@ class AudioPlayerProvider extends ChangeNotifier {
   RepeatMode _repeatMode = RepeatMode.repeatFalse;
   Duration _position = Duration.zero;
   double _playbackSpeed = 1.0;
+  bool _isInternetGone = false;
   final List<double> _speedOptions = [0.25, 0.5, 1.0, 1.5, 1.75, 2.0];
   final List _playlist = audioPlayerList;
   int _currentIndex = 0;
@@ -26,7 +27,7 @@ class AudioPlayerProvider extends ChangeNotifier {
   PrefsHelper? prefsHelper;
   Duration _timeSpend = Duration.zero;
   Duration _totalTimeSpend = Duration.zero;
-  late List<Map<String,dynamic>> _userAudioReport;
+  late List<Map<String, dynamic>> _userAudioReport;
   Timer? _timer;
   bool _isInternetConnected = true;
   final internetChecker = InternetConnectionChecker.createInstance();
@@ -45,26 +46,39 @@ class AudioPlayerProvider extends ChangeNotifier {
 
   // Check internet connection
   void _monitorInternetConnection() {
-   internetChecker.onStatusChange.listen((status){
-     _isInternetConnected =status==InternetConnectionStatus.connected;
-   });
+    internetChecker.onStatusChange.listen((status) {
+      _isInternetConnected = status == InternetConnectionStatus.connected;
+      if (!_isInternetConnected) {
+          if(_isPlaying){
+            player.pause();
+            _isPlaying = false;
+            _isInternetGone = true;
+            notifyListeners();
+          }
+      } else {
+        if (_isInternetGone) {
+          _isInternetGone = false;
+          _isPlaying = true;
+          player.play();
+        }
+        notifyListeners();
+      }
+    });
   }
 
-
-
   Future<void> _initializeTotalTimeSpend() async {
-    final storedTime = await prefsHelper?.getStringValue(PrefsKeys.totalTimeSpend);
+    final storedTime =
+        await prefsHelper?.getStringValue(PrefsKeys.totalTimeSpend);
 
     if (storedTime != null && storedTime.isNotEmpty) {
       final parts = storedTime.split(':').map(int.tryParse).toList();
 
       if (parts.length == 3 && parts.every((e) => e != null)) {
-        _totalTimeSpend = Duration(hours: parts[0]!, minutes: parts[1]!, seconds: parts[2]!);
-      }
-      else{
+        _totalTimeSpend =
+            Duration(hours: parts[0]!, minutes: parts[1]!, seconds: parts[2]!);
+      } else {
         _totalTimeSpend = Duration.zero;
       }
-
     }
 
     notifyListeners();
@@ -82,10 +96,6 @@ class AudioPlayerProvider extends ChangeNotifier {
     _player.setSpeed(_playbackSpeed);
     playerPosition();
 
-    // Listen for changes in the current playing index
-
-    // Ensure we listen only when required
-
     _player.sequenceStateStream.listen((sequenceState) {
       if (sequenceState?.currentIndex != null && !_ignoreController) {
         _currentIndex = sequenceState!.currentIndex;
@@ -95,17 +105,29 @@ class AudioPlayerProvider extends ChangeNotifier {
             _pageController.animateToPage(_currentIndex,
                 duration: const Duration(milliseconds: 500),
                 curve: Curves.easeIn);
-          }
-          else {
+          } else {
             _pageController.jumpToPage(_currentIndex);
           }
         }
-        // if (!_ignoreController) {
-        //   _ignoreController = true; // Prevent multiple subscriptions
-        // }
       }
     });
 
+    notifyListeners();
+  }
+
+  //Local DB SqFLite
+  void _addAudioToLocalDB() {
+    dbHelper!.addAudio(
+        title: audioPlayerList[currentIndex].title,
+        time: _timeSpend,
+        imageUrl: audioPlayerList[currentIndex].imageUrl);
+    prefsHelper!.setStringValue(
+        PrefsKeys.totalTimeSpend, _totalTimeSpend.toString().split(".")[0]);
+    _timeSpend = Duration.zero;
+  }
+
+  Future<void> _fetchAudioReport() async {
+    _userAudioReport = await dbHelper!.fetchAudio();
     notifyListeners();
   }
 
@@ -115,23 +137,21 @@ class AudioPlayerProvider extends ChangeNotifier {
     _player.stop(); // Stop the audio player
     _player.dispose(); // Dispose of the audio player
     _pageController.dispose(); // Dispose of the PageController
+    _addAudioToLocalDB();
+    // Future.microtask(() async {
+    //   try {
+    //     await _fetchAudioReport();
+    //     if (kDebugMode) {
+    //       print("Fetched audio report successfully");
+    //     }
+    //   } catch (e) {
+    //     if (kDebugMode) {
+    //       print("Error fetching audio: $e");
+    //     }
+    //   }
+    // });
     super.dispose();
   }
-
-  //Local DB SqFLite
-  void addAudioToLocalDB()
-  {
-    dbHelper!.addAudio(title: audioPlayerList[currentIndex].title , time: _timeSpend, imageUrl: audioPlayerList[currentIndex].imageUrl);
-    prefsHelper!.setStringValue(PrefsKeys.totalTimeSpend, _totalTimeSpend.toString().split(".")[0]);
-    _timeSpend = Duration.zero;
-  }
-
-  Future<void> _fetchAudioReport() async {
-    _userAudioReport =await dbHelper!.fetchAudio();
-    notifyListeners();
-  }
-
-
 
   // Getter:
   bool get isInternetConnected => _isInternetConnected;
@@ -142,7 +162,7 @@ class AudioPlayerProvider extends ChangeNotifier {
 
   bool get ignoreController => _ignoreController;
 
-  List<Map<String,dynamic>> get userAudioReport => _userAudioReport;
+  List<Map<String, dynamic>> get userAudioReport => _userAudioReport;
 
   int get currentIndex => _currentIndex;
 
@@ -223,23 +243,6 @@ class AudioPlayerProvider extends ChangeNotifier {
     });
   }
 
-  // void changeAudioIndex([int index= 0]) async {
-  //   try {
-  //     if(index>=0 && index<_playlist.length){
-  //       _currentIndex = index;
-  //       await _player.seek(Duration.zero, index: index);
-  //     }
-  //     // await _audioHandler.setAudio(_playlist[index].audioUrl);
-  //     // await _player.setUrl(_playlist[index].audioUrl);
-  //   }
-  //   catch (e) {
-  //     if(kDebugMode) {
-  //       print("Error: $e");
-  //     }
-  //   }
-  //   notifyListeners();
-  // }
-
   void skipForward([Duration duration = const Duration(seconds: 10)]) {
     if (_player.duration == null) return;
     final newPosition = _position + duration;
@@ -263,14 +266,12 @@ class AudioPlayerProvider extends ChangeNotifier {
     // print("New Audio Index: $index");
     if (_isPlaying) {
       _isPlaying = false;
-      _player.stop();
+      _player.pause();
       notifyListeners();
       Future.delayed(Duration(milliseconds: 500), () {
         _isPlaying = true;
         updateAudio(index);
         _player.play();
-        addAudioToLocalDB();
-        _fetchAudioReport();
         notifyListeners();
       });
     } else {
@@ -280,8 +281,12 @@ class AudioPlayerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
-  void togglePlay() {
+  void togglePlay(BuildContext context) {
+    if (!_isInternetConnected) {
+      IconSnackBar.show(context,
+          label: "No internet connection!", snackBarType: SnackBarType.alert);
+      return;
+    }
     if (_isPlaying) {
       _timer?.cancel();
       _player.pause();
@@ -291,13 +296,13 @@ class AudioPlayerProvider extends ChangeNotifier {
       _player.play();
       // _audioHandler.pause();
       _isPlaying = true;
-      _timer =Timer.periodic(Duration(seconds: 1), (timer) {
+      _timer = Timer.periodic(Duration(seconds: 1), (timer) {
         _timeSpend += Duration(seconds: 1);
         _totalTimeSpend += Duration(seconds: 1);
       });
     }
     try {
-      addAudioToLocalDB();
+      _addAudioToLocalDB();
       _fetchAudioReport();
       // print("Fetched audio report: $_userAudioReport");
     } catch (e) {
@@ -308,25 +313,41 @@ class AudioPlayerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void backgroundPlayer()  {
+  void backgroundPlayer() {
     {
       _isRunBackground = false;
       _isPlaying = false;
       _player.stop();
-      _fetchAudioReport();
+      try {
+        _addAudioToLocalDB();
+        _fetchAudioReport();
+        // print("Fetched audio report: $_userAudioReport");
+      } catch (e) {
+        if (kDebugMode) {
+          print("Error fetching audio: $e");
+        }
+      }
       // _player.dispose();
       notifyListeners();
     }
   }
 
   void previousAudio() {
-    addAudioToLocalDB();
-    _fetchAudioReport();
-    if (_ignoreController ) {
+    if (_ignoreController) {
       _ignoreController = false;
     }
-    if(!_isAnimateController){
+
+    if (!_isAnimateController) {
       _isAnimateController = true;
+    }
+    try {
+      _addAudioToLocalDB();
+      _fetchAudioReport();
+      // print("Fetched audio report: $_userAudioReport");
+    } catch (e) {
+      if (kDebugMode) {
+        print("Error fetching audio: $e");
+      }
     }
 
     if (_currentIndex != 0) {
@@ -337,14 +358,22 @@ class AudioPlayerProvider extends ChangeNotifier {
   }
 
   void nextAudio() {
-    addAudioToLocalDB();
-    _fetchAudioReport();
-    if (_ignoreController ) {
+    if (_ignoreController) {
       _ignoreController = false;
     }
-    if(!_isAnimateController){
+    if (!_isAnimateController) {
       _isAnimateController = true;
     }
+    try {
+      _addAudioToLocalDB();
+      _fetchAudioReport();
+      // print("Fetched audio report: $_userAudioReport");
+    } catch (e) {
+      if (kDebugMode) {
+        print("Error fetching audio: $e");
+      }
+    }
+
     if (_currentIndex != _playlist.length - 1) {
       _currentIndex = (_currentIndex + 1).clamp(0, _playlist.length - 1);
       newAudio(currentIndex);
@@ -440,4 +469,21 @@ enum RepeatMode { repeatFalse, repeatAll, repeatOnce }
 //   Future<void> setAudio(String url) async {
 //     await _player.setUrl(url);
 //   }
+// }
+
+// void changeAudioIndex([int index= 0]) async {
+//   try {
+//     if(index>=0 && index<_playlist.length){
+//       _currentIndex = index;
+//       await _player.seek(Duration.zero, index: index);
+//     }
+//     // await _audioHandler.setAudio(_playlist[index].audioUrl);
+//     // await _player.setUrl(_playlist[index].audioUrl);
+//   }
+//   catch (e) {
+//     if(kDebugMode) {
+//       print("Error: $e");
+//     }
+//   }
+//   notifyListeners();
 // }

@@ -82,7 +82,7 @@ class BottomAudioPlayer extends StatelessWidget {
                     Spacer(),
                     //Play Button
                     ReusableImageButton(
-                        onTap: p.togglePlay,
+                        onTap:() => p.togglePlay(context),
                         url: p.isPlaying
                             ? StaticAssets.pauseIconAudioPlayer
                             : StaticAssets.playIconAudioPlayer),

@@ -117,7 +117,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
               //     itemCount: audioPlayerList.length,
               //   ),
               // ),
-              spacerH(40),
+              spacerH(30),
               Slider(
                 min: 0,
                 max: (player.duration?.inSeconds ?? 1).toDouble(),
@@ -152,7 +152,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
                 ),
               ),
               _audioController(provider),
-              spacerH(),
+              spacerH(10),
               _internetConnectivity(w: w, theme: theme,provider: provider),
               spacerH(),
               
@@ -223,7 +223,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
           // Play Audio Icon
           ReusableImageButton(
             onTap: () async {
-              provider.togglePlay();
+              provider.togglePlay(context);
               if (!provider.isRunBackground) {
                 provider.isRunBackground = true;
               }
