@@ -89,7 +89,7 @@ class BottomAudioPlayer extends StatelessWidget {
                     spacerW(10),
                     //Next Button
                     ReusableImageButton(
-                      onTap: p.nextAudio,
+                      onTap: ()=> p.nextAudio(context),
                       url: StaticAssets.forwardIconAudioPlayer,
                       color: p.currentIndex == p.playlist.length - 1
                           ? Colors.grey

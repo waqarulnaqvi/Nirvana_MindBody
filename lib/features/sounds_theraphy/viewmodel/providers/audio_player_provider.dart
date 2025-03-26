@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:audio_service/audio_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icon_snackbar/flutter_icon_snackbar.dart';
@@ -7,6 +7,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:nirvanafit/core/constants/prefs_keys.dart';
 import 'package:nirvanafit/core/local/prefs_helper.dart';
+import '../../../../core/data/models/audio_model.dart';
 import '../../../../core/local/db_helper.dart';
 import '../../data/audio_player_contents.dart';
 
@@ -27,7 +28,7 @@ class AudioPlayerProvider extends ChangeNotifier {
   PrefsHelper? prefsHelper;
   Duration _timeSpend = Duration.zero;
   Duration _totalTimeSpend = Duration.zero;
-  late List<Map<String, dynamic>> _userAudioReport;
+  late List<AudioModel> _userAudioReport;
   Timer? _timer;
   bool _isInternetConnected = true;
   final internetChecker = InternetConnectionChecker.createInstance();
@@ -40,21 +41,41 @@ class AudioPlayerProvider extends ChangeNotifier {
     prefsHelper = PrefsHelper();
     _fetchAudioReport();
     _init();
+    // _notificationInit();
     _initializeTotalTimeSpend();
     _monitorInternetConnection();
   }
+
+  // Future<void> _notificationInit() async {
+  //   await _player.setAudioSource(
+  //     ConcatenatingAudioSource(
+  //       children: [
+  //         AudioSource.uri(
+  //           Uri.parse('https://your-audio-file-url.mp3'),
+  //           tag: MediaItem(
+  //             id: '1',
+  //             album: "Album Name",
+  //             title: "Song Title",
+  //             artist: "Artist Name",
+  //             artUri: Uri.parse("https://your-album-art-url.jpg"),
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   // Check internet connection
   void _monitorInternetConnection() {
     internetChecker.onStatusChange.listen((status) {
       _isInternetConnected = status == InternetConnectionStatus.connected;
       if (!_isInternetConnected) {
-          if(_isPlaying){
-            player.pause();
-            _isPlaying = false;
-            _isInternetGone = true;
-            notifyListeners();
-          }
+        if (_isPlaying) {
+          player.pause();
+          _isPlaying = false;
+          _isInternetGone = true;
+          notifyListeners();
+        }
       } else {
         if (_isInternetGone) {
           _isInternetGone = false;
@@ -162,7 +183,7 @@ class AudioPlayerProvider extends ChangeNotifier {
 
   bool get ignoreController => _ignoreController;
 
-  List<Map<String, dynamic>> get userAudioReport => _userAudioReport;
+  List<AudioModel> get userAudioReport => _userAudioReport;
 
   int get currentIndex => _currentIndex;
 
@@ -243,17 +264,29 @@ class AudioPlayerProvider extends ChangeNotifier {
     });
   }
 
-  void skipForward([Duration duration = const Duration(seconds: 10)]) {
+  void skipForward(
+      {required BuildContext context,
+      Duration duration = const Duration(seconds: 10)}) {
     if (_player.duration == null) return;
-    final newPosition = _position + duration;
-    _player.seek(
-        newPosition > _player.duration! ? _player.duration! : newPosition);
+    if (_isInternetConnected) {
+      final newPosition = _position + duration;
+      _player.seek(
+          newPosition > _player.duration! ? _player.duration! : newPosition);
+    } else {
+      reusableSnackBar(context);
+    }
   }
 
-  void skipBackward([Duration duration = const Duration(seconds: 10)]) {
+  void skipBackward(
+      {required BuildContext context,
+      Duration duration = const Duration(seconds: 10)}) {
     if (_player.duration == null) return;
-    final newPosition = _position - duration;
-    _player.seek(newPosition < Duration.zero ? Duration.zero : newPosition);
+    if (_isInternetConnected) {
+      final newPosition = _position - duration;
+      _player.seek(newPosition < Duration.zero ? Duration.zero : newPosition);
+    } else {
+      reusableSnackBar(context);
+    }
   }
 
   void updateAudio(int index) {
@@ -283,8 +316,7 @@ class AudioPlayerProvider extends ChangeNotifier {
 
   void togglePlay(BuildContext context) {
     if (!_isInternetConnected) {
-      IconSnackBar.show(context,
-          label: "No internet connection!", snackBarType: SnackBarType.alert);
+      reusableSnackBar(context);
       return;
     }
     if (_isPlaying) {
@@ -332,52 +364,60 @@ class AudioPlayerProvider extends ChangeNotifier {
     }
   }
 
-  void previousAudio() {
-    if (_ignoreController) {
-      _ignoreController = false;
-    }
-
-    if (!_isAnimateController) {
-      _isAnimateController = true;
-    }
-    try {
-      _addAudioToLocalDB();
-      _fetchAudioReport();
-      // print("Fetched audio report: $_userAudioReport");
-    } catch (e) {
-      if (kDebugMode) {
-        print("Error fetching audio: $e");
+  void previousAudio(BuildContext context) {
+    if (isInternetConnected) {
+      if (_ignoreController) {
+        _ignoreController = false;
       }
-    }
 
-    if (_currentIndex != 0) {
-      _currentIndex = (_currentIndex - 1).clamp(0, _playlist.length - 1);
-      newAudio(currentIndex);
-      notifyListeners();
+      if (!_isAnimateController) {
+        _isAnimateController = true;
+      }
+      try {
+        _addAudioToLocalDB();
+        _fetchAudioReport();
+        // print("Fetched audio report: $_userAudioReport");
+      } catch (e) {
+        if (kDebugMode) {
+          print("Error fetching audio: $e");
+        }
+      }
+
+      if (_currentIndex != 0) {
+        _currentIndex = (_currentIndex - 1).clamp(0, _playlist.length - 1);
+        newAudio(currentIndex);
+        notifyListeners();
+      }
+    } else {
+      reusableSnackBar(context);
     }
   }
 
-  void nextAudio() {
-    if (_ignoreController) {
-      _ignoreController = false;
-    }
-    if (!_isAnimateController) {
-      _isAnimateController = true;
-    }
-    try {
-      _addAudioToLocalDB();
-      _fetchAudioReport();
-      // print("Fetched audio report: $_userAudioReport");
-    } catch (e) {
-      if (kDebugMode) {
-        print("Error fetching audio: $e");
+  void nextAudio(BuildContext context) {
+    if (_isInternetConnected) {
+      if (_ignoreController) {
+        _ignoreController = false;
       }
-    }
+      if (!_isAnimateController) {
+        _isAnimateController = true;
+      }
+      try {
+        _addAudioToLocalDB();
+        _fetchAudioReport();
+        // print("Fetched audio report: $_userAudioReport");
+      } catch (e) {
+        if (kDebugMode) {
+          print("Error fetching audio: $e");
+        }
+      }
 
-    if (_currentIndex != _playlist.length - 1) {
-      _currentIndex = (_currentIndex + 1).clamp(0, _playlist.length - 1);
-      newAudio(currentIndex);
-      notifyListeners();
+      if (_currentIndex != _playlist.length - 1) {
+        _currentIndex = (_currentIndex + 1).clamp(0, _playlist.length - 1);
+        newAudio(currentIndex);
+        notifyListeners();
+      }
+    } else {
+      reusableSnackBar(context);
     }
   }
 
@@ -418,6 +458,13 @@ class AudioPlayerProvider extends ChangeNotifier {
 
 //Enum
 enum RepeatMode { repeatFalse, repeatAll, repeatOnce }
+
+class AudioPlayerHandler extends BaseAudioHandler {
+  // Implement necessary methods (for now, it can be empty)
+}
+
+void reusableSnackBar(BuildContext context) => IconSnackBar.show(context,
+    label: "No internet connection!", snackBarType: SnackBarType.alert);
 
 //
 // Future<void> _init() async {

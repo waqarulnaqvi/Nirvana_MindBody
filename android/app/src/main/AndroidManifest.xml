@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Required permissions -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
@@ -28,11 +29,15 @@
             </intent-filter>
         </activity>
 <!--        &lt;!&ndash; Required for background audio playback &ndash;&gt;-->
-<!--        <service-->
-<!--            android:name="com.ryanheise.audioservice.AudioService"-->
-<!--            android:permission="android.permission.FOREGROUND_SERVICE"-->
-<!--            android:foregroundServiceType="mediaPlayback"-->
-<!--            android:exported="false"/>-->
+        <!-- Required for background audio playback -->
+        <service
+            android:name="com.ryanheise.just_audio.BackgroundAudioService"
+            android:permission="android.permission.FOREGROUND_SERVICE"
+            android:foregroundServiceType="mediaPlayback"
+            android:exported="true">
+        </service>
+
+
 
         <!-- Flutter generated plugins -->
 

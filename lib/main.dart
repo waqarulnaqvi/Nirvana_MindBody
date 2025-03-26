@@ -15,6 +15,18 @@ import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize AudioService with the correct handler
+  // final audioHandler = await AudioService.init(
+  //   builder: () => AudioPlayerHandler(),
+  //   config: const AudioServiceConfig(
+  //     androidNotificationChannelId: 'com.mysteriouscoder.nirvanamindbody.audio',
+  //     androidNotificationChannelName: 'Audio Playback',
+  //     androidNotificationOngoing: true,
+  //   ),
+  // );
+
+
   await _loadFonts();
   // Initialize JustAudioBackground for audio playback in the background
   // await JustAudioBackground.init(

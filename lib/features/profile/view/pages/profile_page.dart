@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:nirvanafit/core/constants/static_assets.dart';
 import 'package:nirvanafit/core/local/db_helper.dart';
 import 'package:nirvanafit/shared/view/widgets/global_widgets.dart';
 import 'package:nirvanafit/shared/view/widgets/reusable_app_bar.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/theme/app_styles.dart';
 import '../../../../shared/view/widgets/reusable_heading.dart';
-import '../../../sounds_theraphy/view/widgets/bottom_audio_player.dart';
 import '../../../sounds_theraphy/viewmodel/providers/audio_player_provider.dart';
 import '../widgets/drawer/custom_drawer.dart';
 import '../widgets/more_apps_carousel.dart';
@@ -81,8 +79,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             padding: EdgeInsets.only( bottom: 20),
                             itemCount: provider.userAudioReport.length,
                             itemBuilder: (context, index) {
-                  List time = provider.userAudioReport[index][DBHelper
-                      .columnAudioTime].split(":");
+                  List time = provider.userAudioReport[index].time.split(":");
 
                   if (time.length < 3) {
                     time = [time[0], time[0], time[0]];
@@ -91,11 +88,9 @@ class _ProfilePageState extends State<ProfilePage> {
                   return ListTile(
                     leading: ClipOval(
                       child: staticImage(
-                          assetName: provider.userAudioReport[index][DBHelper
-                              .columnAudioImageUrl], width: 60, height: 60),
+                          assetName: provider.userAudioReport[index].imageUrl, width: 60, height: 60),
                     ),
-                    title: Text(provider.userAudioReport[index][DBHelper
-                        .columnAudioTitle], style: AppStyles.headingPrimary(
+                    title: Text(provider.userAudioReport[index].title, style: AppStyles.headingPrimary(
                         context: context, color: theme.onSurface, fontSize: 18),),
                     subtitle: Text("Spend time : ${time[0] == "0"
                         ? ""

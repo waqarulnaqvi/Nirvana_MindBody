@@ -58,7 +58,7 @@ packages:
     source: hosted
     version: "0.1.4"
   audio_session:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: audio_session
       sha256: "2b7fff16a552486d078bfc09a8cde19f426dc6d6329262b684182597bec5b1ac"
@@ -497,7 +497,7 @@ packages:
     source: hosted
     version: "0.5.0"
   path:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path
       sha256: "087ce49c3f0dc39180befefc60fdb4acd8f8620e5682fe2476afd0b3688bb4af"

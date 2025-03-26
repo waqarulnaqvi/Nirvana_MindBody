@@ -1,4 +1,3 @@
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:nirvanafit/core/constants/static_assets.dart';
 import 'package:nirvanafit/core/theme/app_styles.dart';
@@ -101,30 +100,19 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
                 ),
               ),
 
-              // SizedBox(
-              //   height: w * 0.7,
-              //   child: ListView.builder(
-              //     padding: const EdgeInsets.symmetric(horizontal: 40),
-              //     scrollDirection: Axis.horizontal,
-              //     itemBuilder: (context, index) {
-              //       return Padding(
-              //         padding: const EdgeInsets.only(right: 10),
-              //         child: RotatingAudioDisk(
-              //           image: audioPlayerList[index].imageUrl,
-              //         ),
-              //       );
-              //     },
-              //     itemCount: audioPlayerList.length,
-              //   ),
-              // ),
               spacerH(30),
               Slider(
                 min: 0,
                 max: (player.duration?.inSeconds ?? 1).toDouble(),
                 value: player.position.inSeconds.toDouble(),
                 onChanged: (value) async {
-                  player.seek(Duration(seconds: value.toInt()));
-                  provider.position = Duration(seconds: value.toInt());
+                  if(provider.isInternetConnected) {
+                    player.seek(Duration(seconds: value.toInt()));
+                    provider.position = Duration(seconds: value.toInt());
+                  }
+                  else{
+                    reusableSnackBar(context);
+                  }
                 },
               ),
 
@@ -207,14 +195,14 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
           spacerW(10),
 
           ReusableImageButton(
-              onTap: provider.skipBackward,
+              onTap: () => provider.skipBackward(context: context),
               url: StaticAssets.skipBackwardIconAudioPlayer,
               width: 35),
           spacerW(15),
 
           // Previous Audio Icon
           ReusableImageButton(
-            onTap: provider.previousAudio,
+            onTap:() =>provider.previousAudio(context),
             url: StaticAssets.previousIconAudioPlayer,
             color: provider.currentIndex == 0 ? Colors.grey : color,
           ),
@@ -237,7 +225,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
 
           // Forward Audio Icon
           ReusableImageButton(
-              onTap: provider.nextAudio,
+              onTap: () =>provider.nextAudio(context),
               url: StaticAssets.forwardIconAudioPlayer,
               color: provider.currentIndex == provider.playlist.length - 1
                   ? Colors.grey
@@ -246,7 +234,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
 
           // Skip Forward
           ReusableImageButton(
-              onTap: provider.skipForward,
+              onTap:() => provider.skipForward(context: context),
               url: StaticAssets.skipForwardIconAudioPlayer,
               width: 35),
           spacerW(10),
@@ -293,8 +281,6 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
     );
   }
 }
-
-
 
 
 
