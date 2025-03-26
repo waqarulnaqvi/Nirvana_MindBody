@@ -54,13 +54,29 @@ class SoundsTherapyPage extends StatelessWidget {
                       w: w,
                       colors: AppGradients.skyBlueMyAppGradient,
                       description: Constants.binauralBeatsDescription,
-                      image: StaticAssets.meditationsBackground,
+                      image: StaticAssets.binauralBeatsBackground,
                       isCarousel: false,
                       isShowHeading: false,
                       buttonText: 'Get Started',
                       h: 300,
                       onTap: () {
                         Navigator.pushNamed(context, Paths.binauralBeatsPage);
+                      },
+                    ),
+                    spacerH(30),
+                    ReusableHeading(text: 'Meditation Sessions'),
+                    spacerH(),
+                    ReusableStylishContainer(
+                      w: w,
+                      colors: AppGradients.skyBlueMyAppGradient,
+                      description: Constants.meditationSessionDescription,
+                      image: StaticAssets.meditationsBackground,
+                      isCarousel: false,
+                      isShowHeading: false,
+                      buttonText: 'Get Started',
+                      h: 300,
+                      onTap: () {
+                        Navigator.pushNamed(context, Paths.meditationSessionPage);
                       },
                     ),
                     spacerH(30),

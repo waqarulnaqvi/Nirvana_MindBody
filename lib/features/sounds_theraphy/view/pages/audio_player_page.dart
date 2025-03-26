@@ -111,7 +111,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
                     provider.position = Duration(seconds: value.toInt());
                   }
                   else{
-                    reusableSnackBar(context);
+                    provider.reusableSnackBar(context);
                   }
                 },
               ),

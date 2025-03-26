@@ -1,78 +1,78 @@
 import 'package:nirvanafit/core/constants/static_assets.dart';
-import 'package:nirvanafit/features/sounds_theraphy/model/soothing_music_model.dart';
+import '../../../core/data/models/audio_model.dart';
 
-final List<SoothingMusicModel> soothingMusicContentsList = [
-  SoothingMusicModel(
+final List<AudioModel> soothingMusicContentsList = [
+  AudioModel(
     title: "Indian Classical Music",
     time: "10 min 4 sec",
     imageUrl: StaticAssets.indianClassicalMusicSM,
   ),
-  SoothingMusicModel(
+  AudioModel(
     title: "Meditative & Healing Music",
     time: "10 min",
     imageUrl: StaticAssets.meditationAndHealingMusicSM,
   ),
-  SoothingMusicModel(
+  AudioModel(
     title: "Nature Sounds",
     time: "10 min",
     imageUrl: StaticAssets.natureSoundsSM,
   ),
-  SoothingMusicModel(
+  AudioModel(
     title: "Chill out Music",
     time: "10 min",
     imageUrl: StaticAssets.chillOutMusicSM,
   ),
-  SoothingMusicModel(
+  AudioModel(
     title: "Ambient Music",
     time: "10 min",
     imageUrl: StaticAssets.ambientMusicSM,
   ),
-  SoothingMusicModel(
+  AudioModel(
     title: "New Age Music",
     time: "10 min",
     imageUrl: StaticAssets.newAgeMusicSM,
   ),
-  SoothingMusicModel(
+  AudioModel(
     title: "Instrumental Music",
     time: "10 min",
     imageUrl: StaticAssets.instrumentalMusicSM,
   ),
-  SoothingMusicModel(
+  AudioModel(
     title: "Piano Instrumentals",
     time: "10 min",
     imageUrl: StaticAssets.pianoInstrumentalsSM,
   ),
-  SoothingMusicModel(
+  AudioModel(
     title: "Minimalism Music",
     time: "4 min",
     imageUrl: StaticAssets.minimalismMusicSM,
   ),
-  SoothingMusicModel(
+  AudioModel(
     title: "Sound Baths",
     time: "10 min",
     imageUrl: StaticAssets.soundBathsSM,
   ),
-  SoothingMusicModel(
+  AudioModel(
     title: "Jazz Music",
     time: "10 min",
     imageUrl: StaticAssets.jazzMusicSM,
   ),
-  SoothingMusicModel(
+  AudioModel(
     title: "Spa Music",
     time: "10 min",
     imageUrl: StaticAssets.spaMusicSM,
   ),
-  SoothingMusicModel(
+  AudioModel(
     title: "Lo-Fi Hip Hop Music",
     time: "10 min",
     imageUrl: StaticAssets.loFIHipHopMusicSM,
   ),
-  SoothingMusicModel(
+  AudioModel(
     title: "Acoustic Music",
     time: "10 min",
     imageUrl: StaticAssets.acousticMusicSM,
   ),
-  SoothingMusicModel(
+  AudioModel(
     title: "Soundtracks & Film Scores",
     time: "10 min",
     imageUrl: StaticAssets.soundtracksAndFilmScoreSM,

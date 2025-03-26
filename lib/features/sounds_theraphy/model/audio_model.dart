@@ -1,12 +1,11 @@
-class BinauralBeatsModel {
+class AudioModel {
   final String title;
   final String time;
   final String imageUrl;
 
-  BinauralBeatsModel( {
+  AudioModel({
     required this.title,
     required this.time,
     required this.imageUrl,
   });
 }
-

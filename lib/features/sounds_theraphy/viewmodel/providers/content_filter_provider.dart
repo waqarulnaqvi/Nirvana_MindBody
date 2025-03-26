@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nirvanafit/features/sounds_theraphy/model/binaural_beats_model.dart';
-import 'package:nirvanafit/features/sounds_theraphy/model/soothing_music_model.dart';
+import 'package:nirvanafit/features/sounds_theraphy/data/meditation_session_contents.dart';
+import '../../../../core/data/models/audio_model.dart';
 import '../../data/binaural_beats_contents.dart';
 import '../../data/faq_contents.dart';
 import '../../data/soothing_music_contents.dart';
@@ -8,25 +8,39 @@ import '../../model/faq_model.dart';
 
 class ContentFilterProvider extends ChangeNotifier {
   List<FAQModel> _filteredFaq = faqContentsList;
-  List<BinauralBeatsModel> _filteredBinauralBeatsList = binauralBeatsContentsList;
-  List<SoothingMusicModel> _filteredSoothingMusicList = soothingMusicContentsList;
+  List<AudioModel> _filteredBinauralBeatsList = binauralBeatsContentsList;
+  List<AudioModel> _filteredSoothingMusicList = soothingMusicContentsList;
+  List<AudioModel> _filteredMeditationSessionList =
+      meditationSessionContentsList;
 
   //Getter
   List<FAQModel> get filteredFaq => _filteredFaq;
-  List<BinauralBeatsModel> get filteredBinauralBeatsList => _filteredBinauralBeatsList;
-  List<SoothingMusicModel> get filteredSoothingMusicList => _filteredSoothingMusicList;
+
+  List<AudioModel> get filteredBinauralBeatsList => _filteredBinauralBeatsList;
+
+  List<AudioModel> get filteredSoothingMusicList => _filteredSoothingMusicList;
+
+  List<AudioModel> get filteredMeditationSessionList =>
+      _filteredMeditationSessionList;
 
   //Setter
   set filteredFaq(List<FAQModel> value) {
     _filteredFaq = value;
     notifyListeners();
   }
-  set filteredBinauralBeatsList(List<BinauralBeatsModel> value) {
+
+  set filteredBinauralBeatsList(List<AudioModel> value) {
     _filteredBinauralBeatsList = value;
     notifyListeners();
   }
-  set filteredSoothingMusicList(List<SoothingMusicModel> value) {
+
+  set filteredSoothingMusicList(List<AudioModel> value) {
     _filteredSoothingMusicList = value;
+    notifyListeners();
+  }
+
+  set filteredMeditationSessionList(List<AudioModel> value) {
+    _filteredMeditationSessionList = value;
     notifyListeners();
   }
 
@@ -36,13 +50,22 @@ class ContentFilterProvider extends ChangeNotifier {
         .where((faq) => faq.question.toLowerCase().contains(text.toLowerCase()))
         .toList();
   }
+
   void filterBinauralBeatsList(String text) {
     filteredBinauralBeatsList = binauralBeatsContentsList
-        .where((bb)=>bb.title.toLowerCase().contains(text.toLowerCase())).toList();
-  }
-  void filterSoothingMusicList(String text) {
-    filteredSoothingMusicList = soothingMusicContentsList
-        .where((sm)=>sm.title.toLowerCase().contains(text.toLowerCase())).toList();
+        .where((bb) => bb.title.toLowerCase().contains(text.toLowerCase()))
+        .toList();
   }
 
+  void filterSoothingMusicList(String text) {
+    filteredSoothingMusicList = soothingMusicContentsList
+        .where((sm) => sm.title.toLowerCase().contains(text.toLowerCase()))
+        .toList();
+  }
+
+  void filterMeditationSessionList(String text) {
+    filteredMeditationSessionList = meditationSessionContentsList
+        .where((ms) => ms.title.toLowerCase().contains(text.toLowerCase()))
+        .toList();
+  }
 }

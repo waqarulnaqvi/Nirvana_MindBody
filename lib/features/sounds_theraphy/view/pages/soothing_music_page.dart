@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nirvanafit/features/sounds_theraphy/model/soothing_music_model.dart';
 import 'package:nirvanafit/features/sounds_theraphy/view/widgets/containers/reusable_image_container.dart';
 import 'package:nirvanafit/shared/view/widgets/reusable_app_bar.dart';
 import 'package:provider/provider.dart';
@@ -34,96 +33,100 @@ class _SoothingMusicPageState extends State<SoothingMusicPage> {
     final theme = Theme.of(context).colorScheme;
     final uProvider = context.read<ContentFilterProvider>();
     final audioPlayerProvider = context.watch<AudioPlayerProvider>();
-    final List<SoothingMusicModel> filterSMList =
-        context.watch<ContentFilterProvider>().filteredSoothingMusicList;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-        appBar: ReusableAppBar(
-          text: "Soothing Music",
-          isCenterText: false,
-        ),
-        body: Stack(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                spacerH(),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: ReusableTextField(
-                    controller: searchController,
-                    hintText: 'Search by Title',
-                    onChanged: (value) {
-                      uProvider.filterSoothingMusicList(value);
-                    },
-                  ),
-                ),
-                Visibility(
-                  visible: searchController.text.isNotEmpty,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 25, right: 35, top: 15),
-                    child: Text(
-                      'Search Results (${filterSMList.length})',
-                      style: AppStyles.headingPrimary(
-                          context: context,
-                          fontSize: 18,
-                          color: theme.primary,
-                          fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                ),
-                spacerH(10),
-
-                filterSMList.isEmpty
-                    ? SizedBox(
-                        width: w,
-                        height: h - 300,
-                        child: Center(
-                            child: Text(
-                          'No Playlist Found',
-                          style: AppStyles.descriptionPrimary(
-                              context: context, color: theme.onSurface),
-                        )))
-                    : Expanded(
-                        child: ListView.builder(
-                          padding: EdgeInsets.only(top: 5,bottom: audioPlayerProvider.isRunBackground ? 160 : 100),
-                          itemBuilder: (context, index) {
-                            final sm = filterSMList[index];
-
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 10),
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.pushNamed(
-                                      context, Paths.audioPlayerPage,
-                                      arguments: index);
-                                  // arguments:{
-                                  //    'index':index,
-                                  //  });
-                                },
-                                child: ReusableImageContainer(
-                                  imageUrl: sm.imageUrl,
-                                  title: sm.title,
-                                  time: sm.time,
-                                ),
-                              ),
-                            );
+      appBar: ReusableAppBar(
+        text: "Soothing Music",
+        isCenterText: false,
+      ),
+      body: Consumer<ContentFilterProvider>(
+          builder: (context, provider, child) => Stack(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      spacerH(),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: ReusableTextField(
+                          controller: searchController,
+                          hintText: 'Search by Title',
+                          onChanged: (value) {
+                            uProvider.filterSoothingMusicList(value);
                           },
-                          itemCount: filterSMList.length,
                         ),
                       ),
-              ],
-            ),
-            Positioned(
-              bottom: 0,
-              child: BottomAudioPlayer(bottomPadding: 0, height: 100),
-            )
-          ],
-        ),
+                      Visibility(
+                        visible: searchController.text.isNotEmpty,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 25, right: 35, top: 15),
+                          child: Text(
+                            'Search Results (${provider.filteredSoothingMusicList.length})',
+                            style: AppStyles.headingPrimary(
+                                context: context,
+                                fontSize: 18,
+                                color: theme.primary,
+                                fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.start,
+                          ),
+                        ),
+                      ),
+                      spacerH(10),
+                      provider.filteredSoothingMusicList.isEmpty
+                          ? SizedBox(
+                              width: w,
+                              height: h - 300,
+                              child: Center(
+                                  child: Text(
+                                'No Playlist Found',
+                                style: AppStyles.descriptionPrimary(
+                                    context: context, color: theme.onSurface),
+                              )))
+                          : Expanded(
+                              child: ListView.builder(
+                                padding: EdgeInsets.only(
+                                    top: 5,
+                                    bottom: audioPlayerProvider.isRunBackground
+                                        ? 160
+                                        : 100),
+                                itemBuilder: (context, index) {
+                                  final sm =
+                                      provider.filteredSoothingMusicList[index];
+
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20, vertical: 10),
+                                    child: InkWell(
+                                      onTap: () {
+                                        Navigator.pushNamed(
+                                            context, Paths.audioPlayerPage,
+                                            arguments: index);
+                                        // arguments:{
+                                        //    'index':index,
+                                        //  });
+                                      },
+                                      child: ReusableImageContainer(
+                                        imageUrl: sm.imageUrl,
+                                        title: sm.title,
+                                        time: sm.time,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                itemCount:
+                                    provider.filteredSoothingMusicList.length,
+                              ),
+                            ),
+                    ],
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    child: BottomAudioPlayer(bottomPadding: 0, height: 100),
+                  )
+                ],
+              )),
       // bottomNavigationBar: BottomAudioPlayer(bottomPadding: 0,height: 100,),
     );
-
   }
 }

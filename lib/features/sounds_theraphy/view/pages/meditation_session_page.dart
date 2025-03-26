@@ -11,14 +11,14 @@ import '../../../../shared/view/widgets/text_view/reusable_text_field.dart';
 import '../widgets/bottom_audio_player.dart';
 import '../widgets/containers/reusable_image_container.dart';
 
-class BinauralBeatsPage extends StatefulWidget {
-  const BinauralBeatsPage({super.key});
+class MeditationSessionPage extends StatefulWidget {
+  const MeditationSessionPage({super.key});
 
   @override
-  State<BinauralBeatsPage> createState() => _BinauralBeatsPageState();
+  State<MeditationSessionPage> createState() => _MeditationSessionPageState();
 }
 
-class _BinauralBeatsPageState extends State<BinauralBeatsPage> {
+class _MeditationSessionPageState extends State<MeditationSessionPage> {
   TextEditingController searchController = TextEditingController();
 
   @override
@@ -34,10 +34,12 @@ class _BinauralBeatsPageState extends State<BinauralBeatsPage> {
     final theme = Theme.of(context).colorScheme;
     final uProvider = context.read<ContentFilterProvider>();
     final audioPlayerProvider = context.watch<AudioPlayerProvider>();
+    // final List<AudioModel> filterMSList =
+    //     context.watch<ContentFilterProvider>().filteredMeditationSessionList;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: ReusableAppBar(
-        text: "Binaural Beats",
+        text: "Meditation Session",
         isCenterText: false,
       ),
       body: Consumer<ContentFilterProvider>(
@@ -53,7 +55,7 @@ class _BinauralBeatsPageState extends State<BinauralBeatsPage> {
                     controller: searchController,
                     hintText: 'Search by Title',
                     onChanged: (value) {
-                      uProvider.filterBinauralBeatsList(value);
+                      uProvider.filterMeditationSessionList(value);
                     },
                   ),
                 ),
@@ -63,7 +65,7 @@ class _BinauralBeatsPageState extends State<BinauralBeatsPage> {
                     padding:
                         const EdgeInsets.only(left: 25, right: 35, top: 15),
                     child: Text(
-                      'Search Results (${provider.filteredBinauralBeatsList.length})',
+                      'Search Results (${provider.filteredMeditationSessionList.length})',
                       style: AppStyles.headingPrimary(
                           context: context,
                           fontSize: 18,
@@ -74,7 +76,7 @@ class _BinauralBeatsPageState extends State<BinauralBeatsPage> {
                   ),
                 ),
                 spacerH(10),
-                provider.filteredBinauralBeatsList.isEmpty
+                provider.filteredMeditationSessionList.isEmpty
                     ? SizedBox(
                         width: w,
                         height: h - 300,
@@ -92,8 +94,8 @@ class _BinauralBeatsPageState extends State<BinauralBeatsPage> {
                                   ? 160
                                   : 100),
                           itemBuilder: (context, index) {
-                            final bb =
-                                provider.filteredBinauralBeatsList[index];
+                            final ms =
+                                provider.filteredMeditationSessionList[index];
 
                             return Padding(
                               padding: const EdgeInsets.symmetric(
@@ -112,14 +114,15 @@ class _BinauralBeatsPageState extends State<BinauralBeatsPage> {
                                   // });
                                 },
                                 child: ReusableImageContainer(
-                                  imageUrl: bb.imageUrl,
-                                  title: bb.title,
-                                  time: bb.time,
+                                  imageUrl: ms.imageUrl,
+                                  title: ms.title,
+                                  time: ms.time,
                                 ),
                               ),
                             );
                           },
-                          itemCount: provider.filteredBinauralBeatsList.length,
+                          itemCount:
+                              provider.filteredMeditationSessionList.length,
                         ),
                       ),
               ],

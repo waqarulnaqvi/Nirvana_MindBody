@@ -34,6 +34,7 @@ class AudioPlayerProvider extends ChangeNotifier {
   final internetChecker = InternetConnectionChecker.createInstance();
   PageController _pageController = PageController();
   late final ConcatenatingAudioSource _allAudio;
+  Timer? _snackBarTimer;
 
   //
   AudioPlayerProvider() {
@@ -454,6 +455,19 @@ class AudioPlayerProvider extends ChangeNotifier {
     _player.setSpeed(speed);
     notifyListeners();
   }
+
+//Reusable SnackBar
+  void reusableSnackBar(BuildContext context) {
+    if (_snackBarTimer != null && _snackBarTimer!.isActive) {
+      return; // Do nothing if the timer is already running
+    }
+
+    _snackBarTimer = Timer(Duration(seconds: 2), () {
+      IconSnackBar.show(context,
+          label: "No internet connection!", snackBarType: SnackBarType.alert);
+      _snackBarTimer = null; // Reset the timer after execution
+    });
+  }
 }
 
 //Enum
@@ -463,8 +477,6 @@ class AudioPlayerHandler extends BaseAudioHandler {
   // Implement necessary methods (for now, it can be empty)
 }
 
-void reusableSnackBar(BuildContext context) => IconSnackBar.show(context,
-    label: "No internet connection!", snackBarType: SnackBarType.alert);
 
 //
 // Future<void> _init() async {
