@@ -110,7 +110,7 @@ class AudioPlayerProvider extends ChangeNotifier {
                   album: 'Nirvana Fit',
                   title: e.title,
                   artist: e.subtitle,
-                  artUri: Uri.file("https://images.pexels.com/photos/1052150/pexels-photo-1052150.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"),
+                  artUri: Uri.parse("https://images.pexels.com/photos/1052150/pexels-photo-1052150.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"),
                 )),
           )
           .toList(),
