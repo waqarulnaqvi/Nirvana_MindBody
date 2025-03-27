@@ -106,7 +106,7 @@ class _MeditationSessionPageState extends State<MeditationSessionPage> {
                                       soothingMusicContentsList.length + index;
 
                                   Navigator.pushNamed(
-                                      context, Paths.audioPlayerPage,
+                                      context, Paths.audioVideoPlayerPage,
                                       arguments: idx);
                                   // 'index':index,
                                   // arguments:{

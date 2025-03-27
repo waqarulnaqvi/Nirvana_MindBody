@@ -3,7 +3,7 @@ class AudioPlayerModel{
   String subtitle;
   String audioUrl;
   String imageUrl;
-  String? firebaseImageUrl;
+  String firebaseImageUrl;
 
-  AudioPlayerModel({required this.title,required this.subtitle, required this.audioUrl, required this.imageUrl,this.firebaseImageUrl});
+  AudioPlayerModel({required this.title,required this.subtitle, required this.audioUrl, required this.imageUrl,required this.firebaseImageUrl});
 }

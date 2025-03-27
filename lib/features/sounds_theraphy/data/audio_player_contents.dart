@@ -116,105 +116,105 @@ final List<AudioPlayerModel> audioPlayerList = [
     subtitle: '(Headphones Recommended)',
     audioUrl:
         "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%2Fdeepsleep.mp3?alt=media&token=2314bc5e-4ca0-47b2-8216-f4ed1a645ee2",
-    imageUrl: StaticAssets.deepSleepBB,
+    imageUrl: StaticAssets.deepSleepBB, firebaseImageUrl: 'https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%20images%2Fdeep_sleep.jpeg?alt=media&token=d6535e0a-3307-456e-b0df-d1f99326dff2',
   ),
   AudioPlayerModel(
     title: "Creativity Boost",
     subtitle: '(Headphones Recommended)',
     audioUrl:
         "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%2Fcreativityboost.mp3?alt=media&token=96aa373c-67a9-445b-9831-a726b8670691",
-    imageUrl: StaticAssets.creativityBoostBB,
+    imageUrl: StaticAssets.creativityBoostBB, firebaseImageUrl: 'https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%20images%2Fcreativity_boost.jpeg?alt=media&token=1d445653-d48a-40ad-81ff-6ffc19eb6349',
   ),
   AudioPlayerModel(
     title: "Memory Boost",
     subtitle: '(Headphones Recommended)',
     audioUrl:
         "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%2Fmemoryboost.mp3?alt=media&token=fb42211a-7182-43fe-b0ff-5afcc909235b",
-    imageUrl: StaticAssets.memoryBoostBB,
+    imageUrl: StaticAssets.memoryBoostBB, firebaseImageUrl: 'https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%20images%2Fmemory_boost.jpeg?alt=media&token=7a97413f-149b-44f2-830a-09e3125d876a',
   ),
   AudioPlayerModel(
     title: "Unlock Hidden Genius",
     subtitle: '(Headphones Recommended)',
     audioUrl:
         "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%2Funlockhiddengenius.mp3?alt=media&token=5f15782d-aa93-4689-b898-dbd2c66031b0",
-    imageUrl: StaticAssets.unlockHiddenGeniusBB,
+    imageUrl: StaticAssets.unlockHiddenGeniusBB, firebaseImageUrl: 'https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%20images%2Funlock_hidden_genius.jpeg?alt=media&token=5b5cf868-046f-4e95-a21c-0d2e82700e8c',
   ),
   AudioPlayerModel(
     title: "Nirvana Meditation Aid",
     subtitle: '(Headphones Recommended)',
     audioUrl:
         "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%2Fnirvanameditationaid.mp3?alt=media&token=af524dc5-d68e-4dbe-bb39-b2175fcd47ad",
-    imageUrl: StaticAssets.nirvanaMeditationAidBB,
+    imageUrl: StaticAssets.nirvanaMeditationAidBB, firebaseImageUrl: '',
   ),
   AudioPlayerModel(
     title: "Enhanced Focus",
     subtitle: '(Headphones Recommended)',
     audioUrl:
         "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%2Fenhancedfocus.mp3?alt=media&token=7b1066d3-d6e5-4ccb-bd44-3f7ad8308cd5",
-    imageUrl: StaticAssets.enhancedFocusBB,
+    imageUrl: StaticAssets.enhancedFocusBB, firebaseImageUrl: 'https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%20images%2Fnirvana_meditation_aid.jpeg?alt=media&token=05c64451-dfb7-4057-a3bf-7b52fb2f3aae',
   ),
   AudioPlayerModel(
     title: "Mood Enhancement",
     subtitle: '(Headphones Recommended)',
     audioUrl:
         "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%2Fmoodenhancement.mp3?alt=media&token=b629ebe7-ab75-4929-a3a4-89a5fa33d5c6",
-    imageUrl: StaticAssets.moodEnhancementBB,
+    imageUrl: StaticAssets.moodEnhancementBB, firebaseImageUrl: 'https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%20images%2Fmood_enhancement.jpeg?alt=media&token=dbbab473-b10b-407f-ba90-1bf47406e80a',
   ),
   AudioPlayerModel(
     title: "Relaxation & Stress Relief",
     subtitle: '(Headphones Recommended)',
     audioUrl:
         "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%2Frelaxationandstressrelief.mp3?alt=media&token=cf2ba8ed-4d3b-4c61-859b-9b67c0e88ecc",
-    imageUrl: StaticAssets.relaxationAndStressReliefBB,
+    imageUrl: StaticAssets.relaxationAndStressReliefBB, firebaseImageUrl: 'https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%20images%2Frelaxation_and_stress_relief.jpeg?alt=media&token=ae3923d1-72d0-4d1e-bf4f-7151faca875f',
   ),
   AudioPlayerModel(
     title: "Improved Brain Sync",
     subtitle: '(Headphones Recommended)',
     audioUrl:
         "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%2Fimprovedbrainsync.mp3?alt=media&token=449ac909-6b88-44c0-bcab-2ba7f6503ad2",
-    imageUrl: StaticAssets.improvedBrainSyncBB,
+    imageUrl: StaticAssets.improvedBrainSyncBB, firebaseImageUrl: 'https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%20images%2Fimproved_brain_sync.jpeg?alt=media&token=dfdf0a5c-efc3-4bd9-9986-5cd60f29ca12',
   ),
   AudioPlayerModel(
     title: "Deep Concentration (Gamma)",
     subtitle: '(Headphones Recommended)',
     audioUrl:
         "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%2Fdeepconcentrationgamma.mp3?alt=media&token=cd14cdcd-a343-419c-92f3-35aaa62bdef6",
-    imageUrl: StaticAssets.deepConcentrationGammaBB,
+    imageUrl: StaticAssets.deepConcentrationGammaBB, firebaseImageUrl: 'https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%20images%2Fdeep_concentration_gamma.jpeg?alt=media&token=d177159b-d05a-4c4e-921c-1e950673cfec',
   ),
   AudioPlayerModel(
     title: "Alertness & Energy (Beta)",
     subtitle: '(Headphones Recommended)',
     audioUrl:
         "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%2Falertnessandenergybeta.mp3?alt=media&token=c00b40bf-aa06-4997-a9ab-c5f679a24571",
-    imageUrl: StaticAssets.alertnessAndEnergyBetaBB,
+    imageUrl: StaticAssets.alertnessAndEnergyBetaBB, firebaseImageUrl: 'https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%20images%2Falertness_and_energy_beta.jpeg?alt=media&token=35bb5ada-c778-435d-95df-e94b37fbd09d',
   ),
   AudioPlayerModel(
     title: "Relaxed & Awake (Alpha)",
     subtitle: '(Headphones Recommended)',
     audioUrl:
         "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%2Frelaxedandawakealpha.mp3?alt=media&token=c47455de-4c5b-4205-96e9-6c1f9ab02cdb",
-    imageUrl: StaticAssets.relaxedAndAwakeAlphaBB,
+    imageUrl: StaticAssets.relaxedAndAwakeAlphaBB, firebaseImageUrl: 'https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%20images%2Frelaxed_and_awake_alpha.jpeg?alt=media&token=5de298fe-4704-42c3-b305-599d5d0ca739',
   ),
   AudioPlayerModel(
     title: "Deep Relaxation (Theta)",
     subtitle: '(Headphones Recommended)',
     audioUrl:
         "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%2Fdeeprelaxationtheta.mp3?alt=media&token=923a54cf-e230-4cb1-8164-d17da21421a7",
-    imageUrl: StaticAssets.deepRelaxationThetaBB,
+    imageUrl: StaticAssets.deepRelaxationThetaBB, firebaseImageUrl: 'https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%20images%2Fdeep_relaxation_theta.jpeg?alt=media&token=dfa5a209-8c74-4595-8349-3ef1314cf437',
   ),
   AudioPlayerModel(
     title: "Lucid Dreaming (Alpha & Theta)",
     subtitle: '(Headphones Recommended)',
     audioUrl:
         "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%2Fluciddreamingalphaandtheta.mp3?alt=media&token=4ff3e202-2cc7-47a3-9989-6a852abd7608",
-    imageUrl: StaticAssets.lucidDreamingAlphaAndThetaBB,
+    imageUrl: StaticAssets.lucidDreamingAlphaAndThetaBB, firebaseImageUrl: 'https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%20images%2Flucid_dreaming_alpha_and_theta.jpeg?alt=media&token=d941bd11-05e3-4a89-ac22-c9d9cac7be61',
   ),
   AudioPlayerModel(
     title: "Astral Projection (Delta)",
     subtitle: '(Headphones Recommended)',
     audioUrl:
         "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%2Fastralprojectiondelta.mp3?alt=media&token=92d07cab-a460-476a-a2a3-453f8490b991",
-    imageUrl: StaticAssets.astralProjectionDeltaBB,
+    imageUrl: StaticAssets.astralProjectionDeltaBB, firebaseImageUrl: 'https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%20images%2Fastral_projection_delta.jpeg?alt=media&token=deaef4b7-915a-43c6-9895-e7a13c26a4e3',
   ),
 ];
 

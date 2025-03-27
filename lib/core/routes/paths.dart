@@ -8,4 +8,6 @@ class Paths {
   static const String binauralBeatsPage = '/binaural_beats_page';
   static const String audioPlayerPage = '/audio_player_page';
   static const String meditationSessionPage = '/meditation_session_page';
+  static const String videoPlayerPage = '/video_player_page';
+  static const String audioVideoPlayerPage = '/audio_video_player_page';
 }

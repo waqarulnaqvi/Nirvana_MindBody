@@ -99,7 +99,7 @@ class AudioPlayerProvider extends ChangeNotifier {
                   album: 'Nirvana Fit',
                   title: e.title,
                   artist: e.subtitle,
-                  artUri: Uri.parse(e.firebaseImageUrl ?? e.imageUrl),
+                  artUri: Uri.parse(e.firebaseImageUrl),
                 )),
           )
           .toList(),
