@@ -1,15 +1,12 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_icon_snackbar/flutter_icon_snackbar.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:nirvanafit/core/constants/prefs_keys.dart';
 import 'package:nirvanafit/core/local/prefs_helper.dart';
-import 'package:path_provider/path_provider.dart';
 import '../../../../core/data/models/audio_model.dart';
 import '../../../../core/local/db_helper.dart';
 import '../../data/audio_player_contents.dart';
@@ -91,14 +88,6 @@ class AudioPlayerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Future<Uri> getAssetUri(String url) async {
-  //   final ByteData data = await rootBundle.load(url);
-  //   final tempDir = await getTemporaryDirectory();
-  //   final file = File('${tempDir.path}/your_image.png');
-  //   await file.writeAsBytes(data.buffer.asUint8List(), flush: true);
-  //   return Uri.file(file.path);
-  // }
-
 
   Future<void> _init() async {
     _allAudio = ConcatenatingAudioSource(
@@ -110,7 +99,7 @@ class AudioPlayerProvider extends ChangeNotifier {
                   album: 'Nirvana Fit',
                   title: e.title,
                   artist: e.subtitle,
-                  artUri: Uri.parse("https://images.pexels.com/photos/1052150/pexels-photo-1052150.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"),
+                  artUri: Uri.parse(e.firebaseImageUrl ?? e.imageUrl),
                 )),
           )
           .toList(),
@@ -478,6 +467,16 @@ class AudioPlayerProvider extends ChangeNotifier {
 
 //Enum
 enum RepeatMode { repeatFalse, repeatAll, repeatOnce }
+
+
+// Future<Uri> getAssetUri(String url) async {
+//   final ByteData data = await rootBundle.load(url);
+//   final tempDir = await getTemporaryDirectory();
+//   final file = File('${tempDir.path}/your_image.png');
+//   await file.writeAsBytes(data.buffer.asUint8List(), flush: true);
+//   return Uri.file(file.path);
+// }
+
 
 // _notificationInit();
 
