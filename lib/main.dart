@@ -1,4 +1,3 @@
-import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:just_audio_background/just_audio_background.dart';
@@ -13,27 +12,21 @@ import 'features/profile/viewmodel/providers/more_apps_provider.dart';
 import 'package:provider/provider.dart';
 
 
-void main() async {
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize AudioService with the correct handler
-  // final audioHandler = await AudioService.init(
-  //   builder: () => AudioPlayerHandler(),
-  //   config: const AudioServiceConfig(
-  //     androidNotificationChannelId: 'com.mysteriouscoder.nirvanamindbody.audio',
-  //     androidNotificationChannelName: 'Audio Playback',
-  //     androidNotificationOngoing: true,
-  //   ),
-  // );
+
+  await JustAudioBackground.init(
+    androidNotificationChannelId: 'com.mysteriouscoder.nirvanamindbody.audio',
+    androidNotificationChannelName: 'Audio Playback',
+    androidNotificationOngoing: true,
+  );
+
 
 
   await _loadFonts();
-  // Initialize JustAudioBackground for audio playback in the background
-  // await JustAudioBackground.init(
-  //   androidNotificationChannelId: 'com.mysteriouscoder.nirvanamindbody.audio',
-  //   androidNotificationChannelName: 'Audio Playback',
-  //   androidNotificationOngoing: true,
-  // );
+
 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,

@@ -26,4 +26,10 @@ class AppColors{
 
   static const Color redOrange = Color(0xffffab91);
   static const Color babyBlue = Color(0xff81deea);
+
+  static const Color lightGreen= Color(0xFFB6E7B8);
+  static const Color redPink = Color(0xfff48fb1);
+  static const Color violet = Color(0xffcf94da);
+  static const Color deepPurple = Color(0xFF673AB7);
+
 }

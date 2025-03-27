@@ -63,7 +63,7 @@ class ReusableStylishContainer extends StatelessWidget {
                   spacerH(5),
                   Text(description,
                       style: AppStyles.descriptionPrimary(context: context,color: Colors.white,fontSize: 15),
-                  textAlign: TextAlign.center),
+                 ),
                   Spacer(),
 
                   Card(

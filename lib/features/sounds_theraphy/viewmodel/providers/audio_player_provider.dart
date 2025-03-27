@@ -1,12 +1,15 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_icon_snackbar/flutter_icon_snackbar.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:nirvanafit/core/constants/prefs_keys.dart';
 import 'package:nirvanafit/core/local/prefs_helper.dart';
+import 'package:path_provider/path_provider.dart';
 import '../../../../core/data/models/audio_model.dart';
 import '../../../../core/local/db_helper.dart';
 import '../../data/audio_player_contents.dart';
@@ -42,29 +45,11 @@ class AudioPlayerProvider extends ChangeNotifier {
     prefsHelper = PrefsHelper();
     _fetchAudioReport();
     _init();
-    // _notificationInit();
     _initializeTotalTimeSpend();
     _monitorInternetConnection();
   }
 
-  // Future<void> _notificationInit() async {
-  //   await _player.setAudioSource(
-  //     ConcatenatingAudioSource(
-  //       children: [
-  //         AudioSource.uri(
-  //           Uri.parse('https://your-audio-file-url.mp3'),
-  //           tag: MediaItem(
-  //             id: '1',
-  //             album: "Album Name",
-  //             title: "Song Title",
-  //             artist: "Artist Name",
-  //             artUri: Uri.parse("https://your-album-art-url.jpg"),
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
+
 
   // Check internet connection
   void _monitorInternetConnection() {
@@ -106,14 +91,35 @@ class AudioPlayerProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Future<Uri> getAssetUri(String url) async {
+  //   final ByteData data = await rootBundle.load(url);
+  //   final tempDir = await getTemporaryDirectory();
+  //   final file = File('${tempDir.path}/your_image.png');
+  //   await file.writeAsBytes(data.buffer.asUint8List(), flush: true);
+  //   return Uri.file(file.path);
+  // }
+
+
   Future<void> _init() async {
     _allAudio = ConcatenatingAudioSource(
       children: audioPlayerList
-          .map((e) => AudioSource.uri(Uri.parse(e.audioUrl)))
+          .map(
+            (e) => AudioSource.uri(Uri.parse(e.audioUrl),
+                tag: MediaItem(
+                  id: '0',
+                  album: 'Nirvana Fit',
+                  title: e.title,
+                  artist: e.subtitle,
+                  artUri: Uri.file("https://images.pexels.com/photos/1052150/pexels-photo-1052150.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"),
+                )),
+          )
           .toList(),
     );
 
-    await _player.setAudioSource(_allAudio);
+    await _player.setAudioSource(
+      _allAudio,
+    );
+
     _player.setLoopMode(LoopMode.off);
     _player.setSpeed(_playbackSpeed);
     playerPosition();
@@ -473,10 +479,78 @@ class AudioPlayerProvider extends ChangeNotifier {
 //Enum
 enum RepeatMode { repeatFalse, repeatAll, repeatOnce }
 
-class AudioPlayerHandler extends BaseAudioHandler {
-  // Implement necessary methods (for now, it can be empty)
-}
+// _notificationInit();
 
+// Future<void> _notificationInit() async {
+//   _player.playbackEventStream.listen((event) {
+//     playbackState.add(_player.playbackState);
+  // }, onError: (Object e, StackTrace stackTrace) {
+  //   playbackState.addError(e, stackTrace);
+  // });
+// }
+
+// Future<void> _notificationInit() async {
+//   await _player.setAudioSource(
+//     ConcatenatingAudioSource(
+//       children: [
+//         AudioSource.uri(
+//           Uri.parse('https://your-audio-file-url.mp3'),
+//           tag: MediaItem(
+//             id: '1',
+//             album: "Album Name",
+//             title: "Song Title",
+//             artist: "Artist Name",
+//             artUri: Uri.parse("https://your-album-art-url.jpg"),
+//           ),
+//         ),
+//       ],
+//     ),
+//   );
+// }
+
+// final List<MediaItem> mediaQueue = audioPlayerList.map((e) => MediaItem(
+//   id: e.audioUrl, // a unique id, can be the URL or another unique string
+//   album: 'Album Name',  // update as needed
+//   title: e.title,       // assuming each item has a title
+//   artist: e.subtitle,     // assuming each item has an artist field
+//   artUri: Uri.parse(e.audioUrl), // update if you have an art URL
+// )).toList();
+
+// await (audioHandler as AudioPlayerHandler).customLoad(
+//   queue: mediaQueue,
+//   audioSource: _allAudio,
+// );
+
+// late AudioHandler audioHandler;
+
+// audioHandler = await AudioService.init(
+//   builder: () => AudioPlayerHandler(),
+//   config: const AudioServiceConfig(
+//     androidNotificationChannelId: 'com.mysteriouscoder.nirvanamindbody.audio',
+//     androidNotificationChannelName: 'Audio playback',
+//     androidNotificationOngoing: true,
+//   ),
+// );
+
+// class AudioPlayerHandler extends BaseAudioHandler with SeekHandler  {
+//   final AudioPlayer _player = AudioPlayer();
+//
+//     Future<void> customLoad({
+//     required List<MediaItem> queue,
+//     required AudioSource audioSource,
+//   }) async {
+//     // Update the queue so background notifications have the correct info.
+//     updateQueue(queue);
+//
+//     // Set the first media item (if needed) for immediate playback info.
+//     if (queue.isNotEmpty) {
+//       mediaItem.add(queue.first);
+//     }
+//
+//     // Load the audio source on the player.
+//     await _player.setAudioSource(audioSource);
+//   }
+// }
 
 //
 // Future<void> _init() async {
