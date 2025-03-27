@@ -16,7 +16,8 @@ final List<AudioPlayerModel> audioPlayerList = [
     subtitle: Constants.appTitle,
     audioUrl:
         "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/soothing%20music%2Fmeditativeandhealingmusic.mp3?alt=media&token=c38896d5-effa-4978-b816-d695c9ff712c",
-    imageUrl: StaticAssets.meditationAndHealingMusicSM, firebaseImageUrl: 'https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/soothing%20music%20images%2Fmeditation_and_healing_music.jpeg?alt=media&token=6a02e63c-bab1-4222-8b28-595353b9edeb',
+    imageUrl: StaticAssets.meditationAndHealingMusicSM,
+    firebaseImageUrl: 'https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/soothing%20music%20images%2Fmeditation_and_healing_music.jpeg?alt=media&token=6a02e63c-bab1-4222-8b28-595353b9edeb',
   ),
   AudioPlayerModel(
     title: "Nature Sounds",
@@ -30,7 +31,8 @@ final List<AudioPlayerModel> audioPlayerList = [
     subtitle: Constants.appTitle,
     audioUrl:
         "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/soothing%20music%2Fchilloutmusic.mp3?alt=media&token=1520097e-9cce-4256-a6e8-12a07e865452",
-    imageUrl: StaticAssets.chillOutMusicSM, firebaseImageUrl: 'https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/soothing%20music%20images%2Fchill_out_music.jpeg?alt=media&token=ffc04987-36c3-41ea-bad5-58e90b7875a9',
+    imageUrl: StaticAssets.chillOutMusicSM,
+    firebaseImageUrl: 'https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/soothing%20music%20images%2Fchill_out_music.jpeg?alt=media&token=ffc04987-36c3-41ea-bad5-58e90b7875a9',
   ),
   AudioPlayerModel(
     title: "Ambient Music",
@@ -116,7 +118,8 @@ final List<AudioPlayerModel> audioPlayerList = [
     subtitle: '(Headphones Recommended)',
     audioUrl:
         "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%2Fdeepsleep.mp3?alt=media&token=2314bc5e-4ca0-47b2-8216-f4ed1a645ee2",
-    imageUrl: StaticAssets.deepSleepBB, firebaseImageUrl: 'https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%20images%2Fdeep_sleep.jpeg?alt=media&token=d6535e0a-3307-456e-b0df-d1f99326dff2',
+    imageUrl: StaticAssets.deepSleepBB,
+    firebaseImageUrl: 'https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%20images%2Fdeep_sleep.jpeg?alt=media&token=d6535e0a-3307-456e-b0df-d1f99326dff2',
   ),
   AudioPlayerModel(
     title: "Creativity Boost",
@@ -172,7 +175,8 @@ final List<AudioPlayerModel> audioPlayerList = [
     subtitle: '(Headphones Recommended)',
     audioUrl:
         "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%2Fimprovedbrainsync.mp3?alt=media&token=449ac909-6b88-44c0-bcab-2ba7f6503ad2",
-    imageUrl: StaticAssets.improvedBrainSyncBB, firebaseImageUrl: 'https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%20images%2Fimproved_brain_sync.jpeg?alt=media&token=dfdf0a5c-efc3-4bd9-9986-5cd60f29ca12',
+    imageUrl: StaticAssets.improvedBrainSyncBB,
+    firebaseImageUrl: 'https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%20images%2Fimproved_brain_sync.jpeg?alt=media&token=dfdf0a5c-efc3-4bd9-9986-5cd60f29ca12',
   ),
   AudioPlayerModel(
     title: "Deep Concentration (Gamma)",
@@ -215,6 +219,53 @@ final List<AudioPlayerModel> audioPlayerList = [
     audioUrl:
         "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%2Fastralprojectiondelta.mp3?alt=media&token=92d07cab-a460-476a-a2a3-453f8490b991",
     imageUrl: StaticAssets.astralProjectionDeltaBB, firebaseImageUrl: 'https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%20images%2Fastral_projection_delta.jpeg?alt=media&token=deaef4b7-915a-43c6-9895-e7a13c26a4e3',
+  ),
+
+
+  //Guided Meditation Music
+  AudioPlayerModel(
+    title: "Morning Guided Meditation",
+    subtitle: 'Nirvana Fit',
+    audioUrl:
+    "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%2Fastralprojectiondelta.mp3?alt=media&token=92d07cab-a460-476a-a2a3-453f8490b991",
+    imageUrl: StaticAssets.moodEnhancementBB, firebaseImageUrl: 'https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%20images%2Fmood_enhancement.jpeg?alt=media&token=dbbab473-b10b-407f-ba90-1bf47406e80a',
+  ),
+
+  AudioPlayerModel(
+    title: "How to do Meditation?",
+    subtitle: 'Nirvana Fit',
+    audioUrl:
+    "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%2Fastralprojectiondelta.mp3?alt=media&token=92d07cab-a460-476a-a2a3-453f8490b991",
+    firebaseImageUrl: 'https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/soothing%20music%20images%2Fmeditation_and_healing_music.jpeg?alt=media&token=6a02e63c-bab1-4222-8b28-595353b9edeb',
+    imageUrl: StaticAssets.meditationAndHealingMusicSM,
+  ),
+
+  AudioPlayerModel(
+    title: "Evening Guided Meditation",
+    subtitle: 'Nirvana Fit',
+    audioUrl:
+    "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%2Fastralprojectiondelta.mp3?alt=media&token=92d07cab-a460-476a-a2a3-453f8490b991",
+    firebaseImageUrl: 'https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/soothing%20music%20images%2Fchill_out_music.jpeg?alt=media&token=ffc04987-36c3-41ea-bad5-58e90b7875a9',
+    imageUrl: StaticAssets.chillOutMusicSM,
+  ),
+
+  AudioPlayerModel(
+    title: "Night Guided Meditation",
+    subtitle: 'Nirvana Fit',
+    audioUrl:
+    "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%2Fastralprojectiondelta.mp3?alt=media&token=92d07cab-a460-476a-a2a3-453f8490b991",
+    imageUrl: StaticAssets.deepSleepBB,
+    firebaseImageUrl: 'https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%20images%2Fdeep_sleep.jpeg?alt=media&token=d6535e0a-3307-456e-b0df-d1f99326dff2',
+
+  ),
+
+  AudioPlayerModel(
+    title: "Guided Meditation for Anxiety",
+    subtitle: 'Nirvana Fit',
+    audioUrl:
+    "https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%2Fastralprojectiondelta.mp3?alt=media&token=92d07cab-a460-476a-a2a3-453f8490b991",
+    imageUrl: StaticAssets.improvedBrainSyncBB,
+    firebaseImageUrl: 'https://firebasestorage.googleapis.com/v0/b/brainbooster-4aab3.appspot.com/o/binaural%20beats%20images%2Fimproved_brain_sync.jpeg?alt=media&token=dfdf0a5c-efc3-4bd9-9986-5cd60f29ca12',
   ),
 ];
 

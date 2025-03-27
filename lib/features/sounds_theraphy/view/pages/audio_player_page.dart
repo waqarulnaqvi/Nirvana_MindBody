@@ -12,8 +12,9 @@ import '../widgets/rotating_audio_disk.dart';
 
 class AudioPlayerPage extends StatefulWidget {
   final int index;
+  final bool isAppBar;
 
-  const AudioPlayerPage({super.key, this.index = 0});
+  const AudioPlayerPage({super.key, this.index = 0, this.isAppBar=true});
 
   @override
   State<AudioPlayerPage> createState() => _AudioPlayerPageState();
@@ -49,10 +50,10 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
     final player = provider.player;
     final currentIndex = provider.currentIndex;
     return Scaffold(
-      appBar: ReusableAppBar(
+      appBar: widget.isAppBar? ReusableAppBar(
         text: 'Audio Player',
         isCenterText: false,
-      ),
+      ):null,
       body: Consumer<AudioPlayerProvider>(builder: (context, provider, child) {
         return SingleChildScrollView(
           child: Column(
@@ -143,7 +144,7 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
               spacerH(10),
               _internetConnectivity(w: w, theme: theme,provider: provider),
               spacerH(),
-              
+
             ],
           ),
         );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nirvanafit/features/sounds_theraphy/data/binaural_beats_contents.dart';
 import 'package:nirvanafit/features/sounds_theraphy/data/soothing_music_contents.dart';
 import 'package:nirvanafit/features/sounds_theraphy/viewmodel/providers/audio_player_provider.dart';
 import 'package:nirvanafit/features/sounds_theraphy/viewmodel/providers/content_filter_provider.dart';
@@ -103,7 +104,7 @@ class _MeditationSessionPageState extends State<MeditationSessionPage> {
                               child: InkWell(
                                 onTap: () {
                                   int idx =
-                                      soothingMusicContentsList.length + index;
+                                      soothingMusicContentsList.length +binauralBeatsContentsList.length + index;
 
                                   Navigator.pushNamed(
                                       context, Paths.audioVideoPlayerPage,

@@ -35,6 +35,10 @@ class BottomAudioPlayer extends StatelessWidget {
               ),
               child: InkWell(
                 onTap: () {
+                  p.currentIndex>=30
+                      ? Navigator.pushNamed(context, Paths.audioVideoPlayerPage,
+                          arguments: p.currentIndex)
+                      :
                   Navigator.pushNamed(context, Paths.audioPlayerPage,
                       arguments: p.currentIndex);
                 },

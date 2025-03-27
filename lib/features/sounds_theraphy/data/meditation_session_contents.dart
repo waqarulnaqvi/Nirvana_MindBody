@@ -5,21 +5,26 @@ final List<AudioModel> meditationSessionContentsList = [
   AudioModel(
     title: "Morning Guided Meditation",
     time: "4 min 3 sec",
-    imageUrl: StaticAssets.deepSleepBB,
+    imageUrl: StaticAssets.moodEnhancementBB,
   ),
   AudioModel(
-    title: "How to do Meditation",
+    title: "How to do Meditation?",
     time: "4 min 3 sec",
-    imageUrl: StaticAssets.creativityBoostBB,
+    imageUrl: StaticAssets.meditationAndHealingMusicSM,
   ),
   AudioModel(
-    title: "Relaxation & Stress Relief",
+    title: "Evening Guided Meditation",
     time: "4 min 3 sec",
-    imageUrl: StaticAssets.memoryBoostBB,
+    imageUrl: StaticAssets.chillOutMusicSM,
   ),
   AudioModel(
     title: "Night Guided Meditation",
     time: "4 min 3 sec",
-    imageUrl: StaticAssets.unlockHiddenGeniusBB,
+      imageUrl: StaticAssets.deepSleepBB
+  ),
+  AudioModel(
+    title: "Guided Meditation for Anxiety",
+    time: "4 min 3 sec",
+    imageUrl: StaticAssets.improvedBrainSyncBB,
   ),
 ];

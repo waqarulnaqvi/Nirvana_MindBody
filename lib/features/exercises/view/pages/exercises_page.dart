@@ -27,6 +27,7 @@ class ExercisesPage extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         context: context,
                         color: theme.primary),
+                    indicatorColor: theme.primary,
                     indicatorSize: TabBarIndicatorSize.tab,
                     tabs: [
                       Tab(text: 'Men'),
