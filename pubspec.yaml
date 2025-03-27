@@ -35,6 +35,7 @@ dependencies:
   shared_preferences: ^2.5.2                 # For storing key-value pairs
 
   internet_connection_checker: ^3.0.1        # For checking internet connectivity
+  youtube_player_flutter: ^9.1.1             # For playing youtube videos
 #  change_app_package_name: ^1.5.0
 
 dev_dependencies:

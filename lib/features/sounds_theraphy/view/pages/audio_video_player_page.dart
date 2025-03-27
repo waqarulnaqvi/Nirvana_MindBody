@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:nirvanafit/features/sounds_theraphy/data/binaural_beats_contents.dart';
+import 'package:nirvanafit/features/sounds_theraphy/data/soothing_music_contents.dart';
 import 'package:nirvanafit/features/sounds_theraphy/view/pages/video_player_page.dart';
 import 'package:nirvanafit/features/sounds_theraphy/viewmodel/providers/audio_player_provider.dart';
 import 'package:provider/provider.dart';
@@ -40,26 +42,30 @@ class _AudioVideoPlayerPageState extends State<AudioVideoPlayerPage>  with Singl
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
+    final Orientation o=MediaQuery.of(context).orientation;
     return Scaffold(
-      appBar: const ReusableAppBar(
+      appBar: (o.name=="portrait")? const ReusableAppBar(
         text: 'Audio & Video Player',
         isCenterText: false,
-      ),
+      ) : null,
       body: Column(
         children: [
-          TabBar(
-            controller: _tabController,
-              indicatorSize: TabBarIndicatorSize.tab,
-              indicatorColor: theme.primary,
-              labelStyle: AppStyles.headingPrimary(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  context: context,
-                  color: theme.primary),
-              tabs: [
-                Tab(text: 'Audio'),
-                Tab(text: 'Video'),
-              ]),
+          Visibility(
+            visible: (o.name=="portrait"),
+            child: TabBar(
+              controller: _tabController,
+                indicatorSize: TabBarIndicatorSize.tab,
+                indicatorColor: theme.primary,
+                labelStyle: AppStyles.headingPrimary(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    context: context,
+                    color: theme.primary),
+                tabs: [
+                  Tab(text: 'Audio'),
+                  Tab(text: 'Video'),
+                ]),
+          ),
           Expanded(
               child: TabBarView(
                   controller: _tabController,

@@ -18,7 +18,7 @@ final List<AudioModel> meditationSessionContentsList = [
     imageUrl: StaticAssets.chillOutMusicSM,
   ),
   AudioModel(
-    title: "Night Guided Meditation",
+    title: "Guided Meditation Before Sleep",
     time: "4 min 3 sec",
       imageUrl: StaticAssets.deepSleepBB
   ),
