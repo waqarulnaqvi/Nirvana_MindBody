@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:nirvanafit/core/constants/prefs_keys.dart';
 import 'package:nirvanafit/core/theme/app_styles.dart';
-import 'package:nirvanafit/shared/view/widgets/bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:nirvanafit/shared/view/widgets/reusable_circular_image.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/foundation.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import '../../../../core/local/prefs_helper.dart';
+import '../../../../core/routes/paths.dart';
 import '../../data/page_view_model_contents.dart';
 
 class OnboardingPage extends StatefulWidget {
@@ -21,20 +20,16 @@ class _OnboardingPageState extends State<OnboardingPage> {
   int currentPage = 0;
 
   Future<void> _completeOnboarding() async {
-    PrefsHelper prefs=PrefsHelper();
+    PrefsHelper prefs = PrefsHelper();
     prefs.setBoolValue(PrefsKeys.isSeenOnBoard, true);
     if (mounted) {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomNavBar()));
+      Navigator.pushReplacementNamed(context, Paths.bottomNavBar);
     }
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
-
 
     return IntroductionScreen(
       key: introKey,
@@ -42,28 +37,30 @@ class _OnboardingPageState extends State<OnboardingPage> {
       allowImplicitScrolling: false,
       // autoScrollDuration: 2000,
       infiniteAutoScroll: false,
-      globalHeader : currentPage!=0 ? Align(
-        alignment: Alignment.topRight,
-        child: SafeArea(
-          child: Padding(
-              padding: EdgeInsets.only(top: 16, right: 16),
-              child: ReusableCircularImage()
-          ),
-        ),
-      ):null,
+      globalHeader: currentPage != 0
+          ? Align(
+              alignment: Alignment.topRight,
+              child: SafeArea(
+                child: Padding(
+                    padding: EdgeInsets.only(top: 16, right: 16),
+                    child: ReusableCircularImage()),
+              ),
+            )
+          : null,
       // ),
-      pages: pageViewModelList(theme,context),
-      onDone: () =>    _completeOnboarding(),
-      onSkip: () =>    _completeOnboarding(), // You can override onSkip callback
+      pages: pageViewModelList(theme, context),
+      onDone: () => _completeOnboarding(),
+      onSkip: () => _completeOnboarding(),
+      // You can override onSkip callback
       showSkipButton: true,
       skipOrBackFlex: 0,
       nextFlex: 0,
       showBackButton: false,
       //rtl: true, // Display as right-to-left
-      back:  Icon(Icons.arrow_back,color:theme.surface ),
-      skip:  Text('Skip', style: AppStyles.descriptionPrimary(context: context)),
-      next:Icon(Icons.arrow_forward,color:theme.surface),
-      done:  Text('Done', style: AppStyles.descriptionPrimary(context: context)),
+      back: Icon(Icons.arrow_back, color: theme.surface),
+      skip: Text('Skip', style: AppStyles.descriptionPrimary(context: context)),
+      next: Icon(Icons.arrow_forward, color: theme.surface),
+      done: Text('Done', style: AppStyles.descriptionPrimary(context: context)),
       curve: Curves.fastLinearToSlowEaseIn,
       controlsMargin: const EdgeInsets.all(16),
       controlsPadding: kIsWeb
@@ -78,7 +75,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
           borderRadius: BorderRadius.all(Radius.circular(25.0)),
         ),
       ),
-      dotsContainerDecorator:  ShapeDecoration(
+      dotsContainerDecorator: ShapeDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
@@ -89,7 +86,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
         ),
         shadows: [
           BoxShadow(
-            color : theme.primary,
+            color: theme.primary,
             offset: const Offset(0, 6),
             blurRadius: 0,
           ),

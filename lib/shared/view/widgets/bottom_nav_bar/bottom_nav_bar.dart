@@ -4,7 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nirvanafit/features/exercises/view/pages/exercises_page.dart';
 import 'package:nirvanafit/features/meditations/view/pages/meditations_page.dart';
 import 'package:nirvanafit/features/profile/view/pages/profile_page.dart';
-import '../../../../features/sounds_theraphy/view/pages/audio_player_page.dart';
 import '../../../../features/sounds_theraphy/view/pages/sounds_therapy_page.dart';
 
 class BottomNavBar extends StatefulWidget {
