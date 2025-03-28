@@ -54,7 +54,7 @@ class BottomAudioPlayer extends StatelessWidget {
                     ),
                     spacerW(15),
                     SizedBox(
-                      width: w*0.4,
+                      width: w*0.35,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
@@ -85,6 +85,17 @@ class BottomAudioPlayer extends StatelessWidget {
                     ),
                     Spacer(),
                     //Play Button
+
+
+                    ReusableImageButton(
+                        onTap:() => p.previousAudio(context),
+                      url: StaticAssets.previousIconAudioPlayer,
+                      color: p.currentIndex == 0
+                          ? Colors.grey
+                          : theme.onSurface,
+                      width: 20,
+                    ),
+                    spacerW(10),
                     ReusableImageButton(
                         onTap:() => p.togglePlay(context),
                         url: p.isPlaying

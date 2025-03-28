@@ -1,5 +1,5 @@
+import 'package:nirvanafit/features/sounds_theraphy/model/audio_model.dart';
 import '../../../core/constants/static_assets.dart';
-import '../../../core/data/models/audio_model.dart';
 
 final List<AudioModel> binauralBeatsContentsList = [
   AudioModel(

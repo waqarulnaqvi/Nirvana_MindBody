@@ -7,9 +7,9 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:nirvanafit/core/constants/prefs_keys.dart';
 import 'package:nirvanafit/core/local/prefs_helper.dart';
-import '../../../../core/data/models/audio_model.dart';
 import '../../../../core/local/db_helper.dart';
 import '../../data/audio_player_contents.dart';
+import '../../model/audio_model.dart';
 
 class AudioPlayerProvider extends ChangeNotifier {
   final AudioPlayer _player = AudioPlayer();
@@ -44,8 +44,34 @@ class AudioPlayerProvider extends ChangeNotifier {
     _init();
     _initializeTotalTimeSpend();
     _monitorInternetConnection();
+    _initPauseAudio();
+    _initPreviousNext();
   }
 
+
+  // For audio control through notification
+  void _initPauseAudio() {
+    _player.playerStateStream.listen((state) {
+      if (!state.playing && state.processingState != ProcessingState.completed) {
+        _isPlaying = false;
+        notifyListeners();
+      }else if(state.playing){
+        _isPlaying = true;
+      }
+    });
+  }
+
+  void _initPreviousNext(){
+    _player.sequenceStateStream.listen((sequenceState) {
+      if (sequenceState?.currentIndex != null) {
+        _currentIndex = sequenceState!.currentIndex;
+        if(_ignoreController) {
+          _ignoreController = false;
+        }
+        notifyListeners();
+      }
+    });
+  }
 
 
   // Check internet connection
@@ -150,23 +176,19 @@ class AudioPlayerProvider extends ChangeNotifier {
 
   @override
   void dispose() {
-    _timer?.cancel();
-    _player.stop(); // Stop the audio player
-    _player.dispose(); // Dispose of the audio player
-    _pageController.dispose(); // Dispose of the PageController
-    _addAudioToLocalDB();
-    // Future.microtask(() async {
-    //   try {
-    //     await _fetchAudioReport();
-    //     if (kDebugMode) {
-    //       print("Fetched audio report successfully");
-    //     }
-    //   } catch (e) {
-    //     if (kDebugMode) {
-    //       print("Error fetching audio: $e");
-    //     }
-    //   }
-    // });
+    try {
+      _snackBarTimer?.cancel();
+      _timer?.cancel();
+      _player.stop(); // Stop the audio player
+      _player.dispose(); // Dispose of the audio player
+      _pageController.dispose(); // Dispose of the PageController
+      _addAudioToLocalDB();
+    }
+    catch (e) {
+      if (kDebugMode) {
+        print("Error disposing: $e");
+      }
+    }
     super.dispose();
   }
 
@@ -176,6 +198,8 @@ class AudioPlayerProvider extends ChangeNotifier {
   bool get isAnimateController => _isAnimateController;
 
   Duration get totalAudioTime => _totalTimeSpend;
+
+  Duration get timeSpend => _timeSpend;
 
   bool get ignoreController => _ignoreController;
 
@@ -467,6 +491,19 @@ class AudioPlayerProvider extends ChangeNotifier {
 
 //Enum
 enum RepeatMode { repeatFalse, repeatAll, repeatOnce }
+
+// Future.microtask(() async {
+//   try {
+//     await _fetchAudioReport();
+//     if (kDebugMode) {
+//       print("Fetched audio report successfully");
+//     }
+//   } catch (e) {
+//     if (kDebugMode) {
+//       print("Error fetching audio: $e");
+//     }
+//   }
+// });
 
 
 // Future<Uri> getAssetUri(String url) async {

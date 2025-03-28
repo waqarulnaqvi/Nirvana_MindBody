@@ -34,7 +34,8 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
     final Orientation o = MediaQuery.of(context).orientation;
     final double w = MediaQuery.of(context).size.width;
     final double h = MediaQuery.of(context).size.height;
-    return WillPopScope(
+    return
+      WillPopScope(
       onWillPop: () async {
         if (o.name == "landscape") {
           SystemChrome.setPreferredOrientations([

@@ -6,12 +6,12 @@ import 'package:nirvanafit/shared/view/widgets/reusable_app_bar.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/theme/app_styles.dart';
 import '../../../../shared/view/widgets/reusable_heading.dart';
+import '../../../sounds_theraphy/view/widgets/rotating_audio_disk.dart';
 import '../../../sounds_theraphy/viewmodel/providers/audio_player_provider.dart';
 import '../widgets/drawer/custom_drawer.dart';
 import '../widgets/more_apps_carousel.dart';
 
 class ProfilePage extends StatefulWidget {
-
   const ProfilePage({super.key});
 
   @override
@@ -21,8 +21,10 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   DBHelper? dbHelper;
+
   // List<Map<String,dynamic>> provider.userAudioReport = [];
-  int time=0;
+  int time = 0;
+
   @override
   void initState() {
     dbHelper = DBHelper();
@@ -39,7 +41,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
-    final theme=Theme.of(context).colorScheme;
+    final theme = Theme.of(context).colorScheme;
     return Scaffold(
       key: _scaffoldKey,
       endDrawer: CustomDrawer(h: h, w: w * 0.7),
@@ -56,86 +58,116 @@ class _ProfilePageState extends State<ProfilePage> {
         children: [
           Positioned.fill(
             child: Consumer(
-      builder: (context, AudioPlayerProvider provider, child) {
+                builder: (context, AudioPlayerProvider provider, child) {
+              final List tat =
+                  provider.totalAudioTime.toString().split(".")[0].split(":");
 
-        final List tat=provider.totalAudioTime.toString().split(".")[0].split(":");
-        return provider.userAudioReport.isEmpty ?
-        Center(
-          child: Text("No Report Available",
-            style: AppStyles.headingPrimary(
-                context: context, color: theme.onSurface, fontSize: 18),),
-        )
-            : Column(
+              return provider.userAudioReport.isEmpty
+                  ? Center(
+                      child: Text(
+                        "No Report Available",
+                        style: AppStyles.headingPrimary(
+                            context: context,
+                            color: theme.onSurface,
+                            fontSize: 18),
+                      ),
+                    )
+                  : Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                    padding: const EdgeInsets.fromLTRB(15, 20,15,20),
-                    child: ReusableHeading(text: 'Mindfulness Report', icon: FontAwesomeIcons.chartLine)),
-
-                Expanded(
-
-                  child: ListView.builder(
+                      children: [
+                        Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 20, 15, 20),
+                            child: ReusableHeading(
+                                text: 'Mindfulness Report',
+                                icon: FontAwesomeIcons.chartLine)),
+                        Expanded(
+                          child: ListView.builder(
                             shrinkWrap: true,
-                            padding: EdgeInsets.only( bottom: 20),
+                            padding: EdgeInsets.only(bottom: 20),
                             itemCount: provider.userAudioReport.length,
                             itemBuilder: (context, index) {
-                  List time = provider.userAudioReport[index].time.split(":");
+                              final List time = provider
+                                  .userAudioReport[index].time
+                                  .split(":");
+                              final Duration duration = provider.timeSpend + Duration(hours: int.parse(time[0]), minutes: int.parse(time[1]), seconds: int.parse(time[2]));
+                              final ts = duration.toString().split(".")[0].split(":");
 
-                  if (time.length < 3) {
-                    time = [time[0], time[0], time[0]];
-                  }
 
-                  return ListTile(
-                    leading: ClipOval(
-                      child: staticImage(
-                          assetName: provider.userAudioReport[index].imageUrl, width: 60, height: 60),
-                    ),
-                    title: Text(provider.userAudioReport[index].title, style: AppStyles.headingPrimary(
-                        context: context, color: theme.onSurface, fontSize: 18),),
-                    subtitle: Text("Spend time : ${time[0] == "0"
-                        ? ""
-                        : "${time[0]} h :"} ${time[1] == "00"
-                        ? ""
-                        : "${time[1]} m :"} ${time[2].toString().split(".")[0]} s",
-                      style: AppStyles.descriptionPrimary(
-                          context: context, color: theme.onSurface),),
-                  );
+                              final bool currentIndex = provider
+                                      .playlist[provider.currentIndex].title ==
+                                  provider.userAudioReport[index].title;
+
+                              return ListTile(
+                                leading: currentIndex
+                                    ? SizedBox(
+                                        height: 60,
+                                        width: 60,
+                                        child: RotatingAudioDisk(
+                                          image: provider
+                                              .userAudioReport[index].imageUrl,
+                                        ),
+                                      )
+                                    : ClipOval(
+                                        child: staticImage(
+                                            assetName: provider
+                                                .userAudioReport[index]
+                                                .imageUrl,
+                                            width: 60,
+                                            height: 60),
+                                      ),
+                                title: Text(
+                                  provider.userAudioReport[index].title,
+                                  style: AppStyles.headingPrimary(
+                                      context: context,
+                                      color: theme.onSurface,
+                                      fontSize: 18),
+                                ),
+                                subtitle: Text(
+                                  currentIndex
+                                      ? "Spend time : ${ts[0] == "0" ? "" : "${ts[0]} h :"} ${ts[1] == "00" ? "" : "${ts[1]} m :"} ${ts[2].toString().split(".")[0]} s"
+                                      : "Spend time : ${time[0] == "0" ? "" : "${time[0]} h :"} ${time[1] == "00" ? "" : "${time[1]} m :"} ${time[2].toString().split(".")[0]} s",
+                                  style: AppStyles.descriptionPrimary(
+                                      context: context, color: theme.onSurface),
+                                ),
+                              );
                             },
                           ),
-                ),
-
-                spacerH(8),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                  child: Divider(
-                    color: theme.onSurface,
-                    thickness: 0.4,
-                  ),
-                ),
-                spacerH(8),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Total Time", style: AppStyles.headingPrimary(
-                          context: context, color: theme.onSurface, fontSize: 18),),
-                      Text("${tat[0] == "0"
-                      ? ""
-                          : "${tat[0]} h :"} ${tat[1] == "00"
-                      ? ""
-                          : "${tat[1]} m :"} ${tat[2].toString().split(".")[0]} s", style: AppStyles.headingPrimary(
-                          context: context, color: theme.onSurface, fontSize: 16),),
-                    ],
-                  ),
-                ),
-
-                spacerH(110),
-
-              ],
-            );
-      }
-            ),
+                        ),
+                        spacerH(8),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                          child: Divider(
+                            color: theme.onSurface,
+                            thickness: 0.4,
+                          ),
+                        ),
+                        spacerH(8),
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Total Time",
+                                style: AppStyles.headingPrimary(
+                                    context: context,
+                                    color: theme.onSurface,
+                                    fontSize: 18),
+                              ),
+                              Text(
+                                "${tat[0] == "0" ? "" : "${tat[0]} h :"} ${tat[1] == "00" ? "" : "${tat[1]} m :"} ${tat[2].toString().split(".")[0]} s",
+                                style: AppStyles.headingPrimary(
+                                    context: context,
+                                    color: theme.onSurface,
+                                    fontSize: 16),
+                              ),
+                            ],
+                          ),
+                        ),
+                        spacerH(110),
+                      ],
+                    );
+            }),
 
             // child: SingleChildScrollView(
             //     child: Column(

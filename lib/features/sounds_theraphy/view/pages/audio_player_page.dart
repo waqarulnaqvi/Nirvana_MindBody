@@ -24,7 +24,9 @@ class _AudioPlayerPageState extends State<AudioPlayerPage> {
   @override
   void initState() {
     super.initState();
-    providerInitialize();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      providerInitialize();
+    });
     // _player.setAsset(StaticAssets.soothingMusicMp3);
   }
 

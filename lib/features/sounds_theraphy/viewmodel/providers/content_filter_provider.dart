@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nirvanafit/features/sounds_theraphy/data/meditation_session_contents.dart';
-import '../../../../core/data/models/audio_model.dart';
 import '../../data/binaural_beats_contents.dart';
 import '../../data/faq_contents.dart';
 import '../../data/soothing_music_contents.dart';
+import '../../model/audio_model.dart';
 import '../../model/faq_model.dart';
 
 class ContentFilterProvider extends ChangeNotifier {

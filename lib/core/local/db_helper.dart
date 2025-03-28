@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:flutter/foundation.dart';
-import 'package:nirvanafit/core/data/models/audio_model.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
+import '../../features/sounds_theraphy/model/audio_model.dart';
 
 class DBHelper {
   static const String audioTableName = "audio";
